@@ -1,0 +1,53 @@
+
+
+/**
+ * Represents a credit for an actor
+ * @author Ramon
+ *
+ */
+public class ActingCredit extends Credit{
+
+	private String role;
+	private String billing;
+	
+	public ActingCredit(Media media, MediaType mediaType, String archiveFootage, String uncredited, String role, String billing)
+	{
+		super(media, mediaType, MakerType.ACTOR, archiveFootage, uncredited);
+		this.role = role;
+		this.billing = billing;
+	}
+	
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	/**
+	 * @return the billing
+	 */
+	public String getBilling() {
+		return billing;
+	}
+
+	/**
+	 * @param billing the billing to set
+	 */
+	public void setBilling(String billing) {
+		this.billing = billing;
+	}
+	
+	public String toString()
+	{
+		return super.toString() + " " + archiveFootage + " " + uncredited;
+	}
+
+}

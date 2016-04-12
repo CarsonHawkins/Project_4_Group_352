@@ -30,15 +30,16 @@ public class Credit implements Serializable{
 	private MakerType makerType;
 	protected String archiveFootage;
 	protected String uncredited;
+	private MediaMaker maker;
 	
-	public Credit(Media media, MediaType mediaType, MakerType makerType, String archiveFootage, String uncredited)
+	public Credit(Media media, MediaType mediaType, MakerType makerType, String archiveFootage, String uncredited, MediaMaker maker)
 	{
 		this.media = media;
 		this.mediaType = mediaType;
 		this.makerType = makerType;
 		this.archiveFootage = archiveFootage;
 		this.uncredited = uncredited;
-	}
+		this.maker = maker;	}
 	
 	public String toString()
 	{

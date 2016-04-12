@@ -10,9 +10,9 @@ public class ActingCredit extends Credit{
 	private String role;
 	private String billing;
 	
-	public ActingCredit(Media media, MediaType mediaType, String archiveFootage, String uncredited, String role, String billing)
+	public ActingCredit(Media media, MediaType mediaType, String archiveFootage, String uncredited, String role, String billing, MediaMaker maker)
 	{
-		super(media, mediaType, MakerType.ACTOR, archiveFootage, uncredited);
+		super(media, mediaType, MakerType.ACTOR, archiveFootage, uncredited, maker);
 		this.role = role;
 		this.billing = billing;
 	}

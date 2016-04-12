@@ -54,6 +54,7 @@ public class MediaMakerDataBase implements Serializable
 		
 		ArrayList<Credit> movieCredits = new ArrayList<Credit>();
 		ArrayList<Credit> episodeCredits = new ArrayList<Credit>();
+		Actor actor = null;
 		while(nextLine != null)
 		{	
 			if (nextLine.length() >0 && nextLine.charAt(0) != '\t')
@@ -190,13 +191,13 @@ public class MediaMakerDataBase implements Serializable
 				if (!mdbCreditSeries.equals(""))
 				{
 					TVEpisode episode = new TVEpisode(mdbCreditSeries,mdbReleaseYear,mdbCreditInfo, mdbEpisodeYear);
-					ActingCredit episodeCredit = new ActingCredit(episode, Credit.MediaType.EPISODE, mdbArchiveFootage,mdbUncredited,mdbActorRole,mdbBilling);
+					ActingCredit episodeCredit = new ActingCredit(episode, Credit.MediaType.EPISODE, mdbArchiveFootage,mdbUncredited,mdbActorRole,mdbBilling,actor);
 					episodeCredits.add(episodeCredit);
 				}
 				else if (!mdbCreditMovie.equals(""))
 				{
 					Movie movie = new Movie(mdbCreditMovie,mdbReleaseYear,mdbMediaType,mdbReleaseYear);
-					ActingCredit movieCredit = new ActingCredit(movie, Credit.MediaType.MOVIE,mdbArchiveFootage,mdbUncredited,mdbActorRole,mdbBilling);
+					ActingCredit movieCredit = new ActingCredit(movie, Credit.MediaType.MOVIE,mdbArchiveFootage,mdbUncredited,mdbActorRole,mdbBilling,actor);
 					movieCredits.add(movieCredit);
 				}
 			}
@@ -233,6 +234,7 @@ public class MediaMakerDataBase implements Serializable
 		
 		ArrayList<Credit> movieCredits = new ArrayList<Credit>();
 		ArrayList<Credit> episodeCredits = new ArrayList<Credit>();
+		MediaMaker maker = null;
 		while(nextLine != null)
 		{	
 			if (nextLine.length() >0 && nextLine.charAt(0) != '\t')
@@ -268,8 +270,8 @@ public class MediaMakerDataBase implements Serializable
 				String fullName = (mdbMediaFirstName + " " + mdbMediaLastName + " " + mdbMediaDisambiguationNumber).trim();
 				if (!mediaMakerMap.containsKey(fullName))
 				{
-					MediaMaker newDirector = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
-					mediaMakerMap.put(fullName,newDirector);
+					maker = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+					mediaMakerMap.put(fullName,maker);
 				}
 				else
 				{
@@ -356,13 +358,13 @@ public class MediaMakerDataBase implements Serializable
 				if (!mdbCreditSeries.equals(""))
 				{
 					TVEpisode episode = new TVEpisode(mdbCreditSeries,mdbReleaseYear,mdbCreditInfo,mdbEpisodeYear);
-					Credit episodeCredit = new Credit(episode, Credit.MediaType.EPISODE, type, mdbArchiveFootage, mdbUncredited);
+					Credit episodeCredit = new Credit(episode, Credit.MediaType.EPISODE, type, mdbArchiveFootage, mdbUncredited, maker);
 					episodeCredits.add(episodeCredit);
 				}
 				else if (!mdbCreditMovie.equals(""))
 				{
 					Movie movie = new Movie(mdbCreditMovie,mdbReleaseYear,mdbMediaType,mdbEpisodeYear);
-					Credit movieCredit = new Credit(movie, Credit.MediaType.MOVIE, type, mdbArchiveFootage,mdbUncredited);
+					Credit movieCredit = new Credit(movie, Credit.MediaType.MOVIE, type, mdbArchiveFootage,mdbUncredited, maker);
 					movieCredits.add(movieCredit);
 				}
 			}

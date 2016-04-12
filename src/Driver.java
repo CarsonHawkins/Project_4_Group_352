@@ -87,7 +87,7 @@ public class Driver
 		
 		//Create the TV database
 		TVDataBase tvDataBase = new TVDataBase();
-		displaySeries = tvDataBase.tvDataBase(seriesFile);
+		displaySeries = tvDataBase.importTvDataBase(seriesFile);
 	
 		MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
 		
@@ -489,9 +489,9 @@ public class Driver
 			//questionReplies[14] = promptFilename("Enter the name of the file containing producer data:");
 			//questionReplies[15] = promptFilename("Enter the name of the file containing director data:");
 			
-			dataBase.actorDataBase(questionReplies[13]);
-			dataBase.producerDataBase(questionReplies[14]);
-			dataBase.directorDataBase(questionReplies[15]);
+			dataBase.importActorDataBase(questionReplies[13]);
+			dataBase.importProducerDataBase(questionReplies[14]);
+			dataBase.importDirectorDataBase(questionReplies[15]);
 		}
 		else if(questionReplies[10].equalsIgnoreCase("b"))
 			questionReplies[16] = promptFilename("Enter the name of the file containing the database information");

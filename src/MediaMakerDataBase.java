@@ -42,7 +42,7 @@ public class MediaMakerDataBase implements Serializable
 	 * @return 
 	 * An ArrayList<Actor> objects
 	 */
-	public LinkedHashMap<String, MediaMaker> actorDataBase(String fileName)throws IOException
+	public LinkedHashMap<String, MediaMaker> importActorDataBase(String fileName)throws IOException
 	{
 		String nextLine;
 		
@@ -221,7 +221,7 @@ public class MediaMakerDataBase implements Serializable
 	 * @return 
 	 * An ArrayList<Director> objects
 	 */
-	public LinkedHashMap<String, MediaMaker> nonActorDataBase(String fileName, Credit.MakerType type)throws IOException
+	private LinkedHashMap<String, MediaMaker> importNonActorDataBase(String fileName, Credit.MakerType type)throws IOException
 	{
 		String nextLine;
 		
@@ -402,9 +402,9 @@ public class MediaMakerDataBase implements Serializable
 	 * @return 
 	 * An ArrayList<Actor> objects
 	 */
-	public LinkedHashMap<String, MediaMaker> producerDataBase(String fileName)throws IOException
+	public LinkedHashMap<String, MediaMaker> importProducerDataBase(String fileName)throws IOException
 	{
-		return nonActorDataBase(fileName, Credit.MakerType.PRODUCER);
+		return importNonActorDataBase(fileName, Credit.MakerType.PRODUCER);
 	}
 	
 	/**
@@ -418,9 +418,9 @@ public class MediaMakerDataBase implements Serializable
 	 * @return 
 	 * An ArrayList<Actor> objects
 	 */
-	public LinkedHashMap<String, MediaMaker> directorDataBase(String fileName)throws IOException
+	public LinkedHashMap<String, MediaMaker> importDirectorDataBase(String fileName)throws IOException
 	{
-		return nonActorDataBase(fileName, Credit.MakerType.DIRECTOR);
+		return importNonActorDataBase(fileName, Credit.MakerType.DIRECTOR);
 	}
 	
 	/*

@@ -48,7 +48,7 @@ public class TVDataBase implements Serializable
 	 * @return:
 	 * An ArrayList of type Series which will store all of the SeriesObjects.
 	 */
-	public ArrayList<Series> tvDataBase(String fileName) throws IOException
+	public ArrayList<Series> importTvDataBase(String fileName) throws IOException
 	{
 		String nextLine;
 		

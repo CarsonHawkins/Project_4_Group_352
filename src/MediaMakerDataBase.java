@@ -44,7 +44,7 @@ public class MediaMakerDataBase implements Serializable
 	 */
 	public LinkedHashMap<String, MediaMaker> importActorDataBase(String fileName)throws IOException
 	{
-		String nextLine;
+		String nextLine; 
 		
 		FileReader fileReader = new FileReader(fileName);
 		

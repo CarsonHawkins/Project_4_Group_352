@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 import org.junit.Test;
 
-public class CreditTest {
+public class CreditTest { 
 
 	public static void main(String[] args)
 	{

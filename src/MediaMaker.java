@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
  * </P>
  * @version 1.0
  */
-public class MediaMaker implements Serializable
+public class MediaMaker  extends ListItem implements Serializable
 {
 	/**
 	 * 

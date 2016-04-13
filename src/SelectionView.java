@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -56,6 +57,8 @@ public class SelectionView extends View
 	@Override
 	protected void initComponents()
 	{
+		File f = new FileSelectionView().getSelectedFile();
+		
 		this.setTitle("MDb");
 		this.setSize(600, 400);
 

@@ -22,7 +22,7 @@ public class DisplayView extends View
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getActionCommand().equals(EventMessages.DATA_CHANGED))
+		if (e.getActionCommand().equals("Info Changed"))
 		{
 			initComponents();
 		}

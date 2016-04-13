@@ -59,7 +59,7 @@ public class TVDataBase implements Serializable
 		String list[];
 				
 		episodeList = new ArrayList<TVEpisode>();
-		seriesList = new ArrayList<Series>();
+		setSeriesList(new ArrayList<Series>());
 		episodeTitleList = new ArrayList<TVEpisode>();
 		seriesTitleList = new ArrayList<Series>();
 		
@@ -90,7 +90,7 @@ public class TVDataBase implements Serializable
 				Series seriesObject = new Series(mdbSeriesName,mdbSeriesStartYear,mdbSeriesYearRange);
 				Series seriesTitle = new Series(mdbSeriesName);
 				
-				seriesList.add(seriesObject);
+				getSeriesList().add(seriesObject);
 				seriesTitleList.add(seriesTitle);
 				
 			}
@@ -132,16 +132,16 @@ public class TVDataBase implements Serializable
 			nextLine = br.readLine();
 		}
 			
-		for(int index = 0; index < seriesList.size(); index++)
+		for(int index = 0; index < getSeriesList().size(); index++)
 		{
-			System.out.println(seriesList.get(index).toString());
+			System.out.println(getSeriesList().get(index).toString());
 		}
 		for(int index = 0; index < episodeList.size(); index++)
 		{
 			System.out.println(episodeList.get(index).toString());
 		}
 			br.close();
-			return seriesList;
+			return getSeriesList();
 	}
 	
 	
@@ -168,7 +168,7 @@ public class TVDataBase implements Serializable
 		{
 			if(questions[2] == "p")
 			{
-			for(Series seriesFound : seriesList)
+			for(Series seriesFound : getSeriesList())
 			{
 				System.out.println(seriesFound.getSeriesName());
 				// This will be the comparison conditional being used. This also will take into account the 
@@ -182,7 +182,7 @@ public class TVDataBase implements Serializable
 			}
 			else
 			{
-				for(Series seriesFound : seriesList)
+				for(Series seriesFound : getSeriesList())
 				{
 					specificTitleSearch(seriesFound,positiveList,seriesTitleList);
 				}
@@ -191,9 +191,9 @@ public class TVDataBase implements Serializable
 		
 		else
 		{
-			for(Series seriesFound : seriesList)
+			for(Series seriesFound : getSeriesList())
 			{
-				yearSearch(seriesFound,seriesList,seriesTitleList);
+				yearSearch(seriesFound,getSeriesList(),seriesTitleList);
 			}
 		}
 
@@ -346,6 +346,16 @@ public class TVDataBase implements Serializable
 				  
 		//Will return -1 because it was not found in the ArrayList  
 		return displaySeries;  
+	}
+
+
+	public ArrayList<Series> getSeriesList() {
+		return seriesList;
+	}
+
+
+	public void setSeriesList(ArrayList<Series> seriesList) {
+		this.seriesList = seriesList;
 	}  
 
 	  

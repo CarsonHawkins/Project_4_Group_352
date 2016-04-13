@@ -88,7 +88,7 @@ public class MediaMaker  extends ListItem implements Serializable
 	 */
 	public String toString()
 	{
-		return mdbMediaLastName + ", " + mdbMediaFirstName + mdbMediaDisambiguationNumber;
+		return (mdbMediaLastName + ", " + mdbMediaFirstName + " " + mdbMediaDisambiguationNumber).trim();
 	}
 
 	public ArrayList<Credit> getSeriesCredits() {

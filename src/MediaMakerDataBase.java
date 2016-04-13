@@ -87,11 +87,11 @@ public class MediaMakerDataBase implements Serializable
 				movieCredits = new ArrayList<Credit>(); 
 				episodeCredits = new ArrayList<Credit>();
 				
-				String fullName = (mdbMediaFirstName + " " + mdbMediaLastName + " " + mdbMediaDisambiguationNumber).trim();
+				String fullName = (mdbMediaLastName + ", " + mdbMediaFirstName + " " + mdbMediaDisambiguationNumber).trim();
 				if (!mediaMakerMap.containsKey(fullName))
 				{
-					Actor newActor = new Actor(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
-					mediaMakerMap.put(fullName,newActor);
+					actor = new Actor(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+					mediaMakerMap.put(actor.toString() ,actor);
 				}
 				else
 				{
@@ -267,11 +267,10 @@ public class MediaMakerDataBase implements Serializable
 				movieCredits = new ArrayList<Credit>(); 
 				episodeCredits = new ArrayList<Credit>();
 				
-				String fullName = (mdbMediaFirstName + " " + mdbMediaLastName + " " + mdbMediaDisambiguationNumber).trim();
 				if (!mediaMakerMap.containsKey(fullName))
 				{
 					maker = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
-					mediaMakerMap.put(fullName,maker);
+					mediaMakerMap.put(maker.toString() ,maker);
 				}
 				else
 				{

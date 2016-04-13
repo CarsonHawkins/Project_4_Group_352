@@ -10,17 +10,16 @@ public class MediaModel {
 	public TVDataBase seriesDataBase = new TVDataBase();
 	public MovieDataBase movieDataBase = new MovieDataBase();
 	public MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
-	public ArrayList<ListItems> listItems;
-	
-	private FileWriter fw;
-	private BufferedWriter bw;
-	
+	public ArrayList<ListItem> listItems;
 	
 	public Movie movie = new Movie();
 	public Series series =  new Series();
 	public Actor actor = new Actor();
 	public Director director = new Director();
 	public Producer producer = new Producer();
+	
+	private FileWriter fw;
+	private BufferedWriter bw;
 	
 	public void addMovie(String title, String date, String releaseForm, String release){
 		this.movie = new Movie(title, date, releaseForm, release);
@@ -53,14 +52,14 @@ public class MediaModel {
 	}
 	
 	
-	public void export(String fileName)
+	public void export(String fileName) throws IOException
 	{
 		fw = new FileWriter(fileName);
 		bw = new BufferedWriter(fw);
 		
 		for (ListItem i : listItems)
 		{
-			bw.write(i.toString());
+			bw.write(i.toString() + "\n");
 		}
 		processEvent(EventMessages.FILE_EXPORTED);
 	}

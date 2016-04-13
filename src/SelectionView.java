@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 public class SelectionView extends View
 {
+	/////// Only exists for testing purposes
 	public static void main(String[] args){new SelectionView();};
 	
 	/** The panel that contains the other panels */
@@ -210,5 +211,23 @@ public class SelectionView extends View
 	public void addClearAllListener(ActionListener listener)
 	{
 		addListenerToComponent(editClearAllItem, listener);
+	}
+	
+	/**
+	 * Add a pieChart listener
+	 * @param listener
+	 */
+	public void addPieChartListener(ActionListener listener)
+	{
+		addListenerToComponent(displayPieChartItem, listener);
+	}
+	
+	/**
+	 * Add a pieChart listener
+	 * @param listener
+	 */
+	public void addHistogramListener(ActionListener listener)
+	{
+		addListenerToComponent(displayHistogramItem, listener);
 	}
 }

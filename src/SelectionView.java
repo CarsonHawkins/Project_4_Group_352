@@ -113,7 +113,7 @@ public class SelectionView extends View
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getActionCommand().equals("model data changed"))
+		if (e.getActionCommand().equals(EventMessages.DATA_CHANGED))
 		{
 			/* Enables save/export options if model has objects, else disables them */
 			fileSaveItem.setEnabled(true/*model.hasObjects()*/);

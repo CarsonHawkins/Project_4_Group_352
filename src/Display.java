@@ -28,7 +28,6 @@ public class Display extends JPanel
 
 	private ChartType chartType;
 	private MediaMaker maker;
-	private JFrame frame;
 	
 	public Display(ChartType chartType, MediaMaker maker)
 	{
@@ -38,27 +37,7 @@ public class Display extends JPanel
 		}
 		
 		this.chartType = chartType;
-		this.maker = maker;
-		
-		frame = new JFrame();
-		frame.add(this);
-		frame.setVisible(true);
-		frame.setResizable(false);
-		this.setVisible(true);
-		
-		//ToolTipManager.sharedInstance().registerComponent(this);
-		if (chartType == ChartType.PIE_CHART)
-		{
-			frame.setTitle(maker.getMdbMediaFirstName() + " " + maker.getMdbMediaLastName() + " - Percentage of Credits"/*maker.getName()*/);
-			frame.setSize(new Dimension(1280, 680));
-
-		}
-		if (chartType == ChartType.HISTOGRAM)
-		{
-			frame.setTitle(maker.getMdbMediaFirstName() + " " + maker.getMdbMediaLastName() + " - Credits over Time"/*maker.getName()*/);
-			frame.setSize(new Dimension(1280, 680));
-			
-		}
+		this.maker = maker; 
 	}
 	
 	

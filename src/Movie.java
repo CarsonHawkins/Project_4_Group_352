@@ -29,9 +29,7 @@ public class Movie implements Comparable<Movie>
 
 	/** releaseForm tells the user in what form the movie was release i.e. TV / DVD */
 	private String releaseForm = null;
-
-	private ArrayList<Movie> movieCollection = new ArrayList<Movie>();
-
+	
 	private ArrayList<String> movieTitles = new ArrayList<String>();
 
 	/**Movie() with no parameters is a constructor that will assign null to the 
@@ -243,55 +241,6 @@ public class Movie implements Comparable<Movie>
 		this.movieRelease = movieDate;
 	}
 
-	/**This method will have the entire method search and invoke separate methods to find the appropriate information that will be displayed to 
-	 * the user. 
-	 * 
-	 * @param questionReplies		The user answers that will determine many of the variables
-	 * @param movieFile				The names of the movieFile in case the Array needs to be reset. 
-	 * @return						Returns index of the movies found.
-	 * @throws IOException			To read in the file. 
-	 */
-	public ArrayList<String> movieSearch(String[] questionReplies, String movieFile) throws IOException {
-
-
-		movieCollection = new ArrayList<Movie>(readMovies(movieFile));
-
-		movieTitles = new ArrayList<String>(readTitles(movieCollection));
-
-		ArrayList<String> moviesFound = new ArrayList<String>();
-
-		Movie movieTitle = new Movie(questionReplies[4]);
-		//If the user want to do a specific search it will direct the program here. 
-		//This following section will primarily be based off of the user wanting to search by title. 
-		if (questionReplies[1].equalsIgnoreCase("T") || questionReplies[1].equalsIgnoreCase("B")) {
-
-			//If the user want to do a specific search it will direct the program here.
-			if(questionReplies[2].equalsIgnoreCase("E")) {
-
-				//The users input will use the specificTitleSearch and every time it find the movie that is being searched it will increase
-				//count. If no movie is when searching for the movie it will return 0; 					
-				moviesFound = movieTitle.specificSearch(movieTitles, movieCollection);
-			}
-
-			//If the user wants to do a partial search it will redirect the program here. 
-			else if(questionReplies[2].equalsIgnoreCase("P")) {
-
-				movieTitle = new Movie(questionReplies[4]);
-
-				moviesFound = movieTitle.containsTitleSearch(movieCollection);		
-			}
-		}
-
-		if (questionReplies[1].equalsIgnoreCase("Y") || questionReplies[1].equalsIgnoreCase("B")) {
-
-			Movie movieYear = new Movie(questionReplies[5]);
-			//The users input will use the yearSearch and every time it find the movie that is being searched it will increase
-			moviesFound = movieYear.yearSearch(movieCollection);
-		}
-
-		return moviesFound;
-	}
-
 	/**The containsTitle method will run through a loop of all of the lines containing the movie information in the file
 	 * and determine whether a keyword is present in the title. If it is present in the movie line, then it will parse the
 	 * line and print out the information of the movie. If found it will increase the variable count. 
@@ -470,36 +419,6 @@ public class Movie implements Comparable<Movie>
 			moviesFound.add(movieCollection.get(titleIndex.get(i)).toString());
 		}
 		return moviesFound;
-	}
-
-	/**This methods clears the movie data in the ArrayList movieCollection and reinserts the movie data
-	 * back on to the ArrayList. While going through parsing, it modify's each line and disrupts the 
-	 * search method.
-	 * @param sortType			The collection of movies where the data is store. 
-	 * @param fileName			The name of the file to receive the data. 
-	 * @throws IOException		To read in the file. 
-	 */
-	public ArrayList<Movie> readMovies(String fileName) throws IOException {
-
-		///Initializes the variable nextLine and call in the File to be able to read the Lines from it 
-		FileReader fr = new FileReader(fileName);
-		BufferedReader br = new BufferedReader(fr);
-		String nextLine = br.readLine();
-
-		//readLines is calling the method that will individually read each line in the file.
-		//It will be a loop that will repeatedly change the nextLine to the following line in the File.
-		while(nextLine != null) {
-
-			//Will used the method readLines and read in the movie information into the movieCollection.
-			movieCollection.add(parseLine(nextLine));
-			nextLine = br.readLine();
-		}
-		//Sorts the movieCollection ArrayList. 
-		Collections.sort(movieCollection);
-
-		br.close();
-
-		return movieCollection;
 	}
 
 	/**The method readInTitles goes through each line of the movie information and sections out only the title, so it could be stored in an 

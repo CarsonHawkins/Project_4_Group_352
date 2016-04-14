@@ -128,6 +128,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			
+			
 		}
 	}
 	public class EditEditListener implements ActionListener {
@@ -136,6 +137,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 	public class EditDeleteListener implements ActionListener {
@@ -144,6 +146,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 	public class EditClearListener implements ActionListener {
@@ -152,6 +155,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 	public class EditClearAllListener implements ActionListener {
@@ -160,6 +164,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 	public class DisplayPieChartListener implements ActionListener {
@@ -168,6 +173,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 	public class DisplayHistogramListener implements ActionListener {
@@ -176,6 +182,7 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
 		}
 	}
 }

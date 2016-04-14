@@ -12,41 +12,35 @@ public class MediaModel {
 	public MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
 	public ArrayList<ListItem> listItems;
 	
-	public Movie movie = new Movie();
-	public Series series =  new Series();
-	public Actor actor = new Actor();
-	public Director director = new Director();
-	public Producer producer = new Producer();
-	
 	private FileWriter fw;
 	private BufferedWriter bw;
 	
 	public void addMovie(String title, String date, String releaseForm, String release){
-		this.movie = new Movie(title, date, releaseForm, release);
+		Movie movie = new Movie(title, date, releaseForm, release);
 		movieDataBase.getMovieList().addMovie(movie);
 		processEvent(EventMessages.MOVIE_ADDED);
 	}
 	
 	public void addSeries(String name, String startYear, String episodeYear){
-		this.series = new Series(name, startYear, episodeYear);
+		Series series = new Series(name, startYear, episodeYear);
 		seriesDataBase.getSeriesList().add(series);
 		processEvent(EventMessages.SERIES_ADDED);
 	}
 	
 	public void addActor(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
-		this.actor = new Actor(lastName, firstName, num, movieCredits, seriesCredits);
+		Actor actor = new Actor(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(actor.toString(), actor);
 		processEvent(EventMessages.ACTOR_ADDED);
 	}
 	
 	public void addDirector(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
-		this.director = new Director(lastName, firstName, num, movieCredits, seriesCredits);
+		Director director = new Director(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(director.toString(), director);
 		processEvent(EventMessages.DIRECTOR_ADDED);
 	}
 	
 	public void addProducer(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
-		this.producer = new Producer(lastName, firstName, num, movieCredits, seriesCredits);
+		Producer producer = new Producer(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(producer.toString(),producer);
 		processEvent(EventMessages.PRODUCER_ADDED);
 	}
@@ -88,13 +82,13 @@ public class MediaModel {
 		}
 	}
 	
-	public void importFileMovie(String fileName){
+	public void importFileMovie(String fileName) throws IOException{
 		movieDataBase.importMovieDataBase(fileName);
 		processEvent(EventMessages.MOVIE_IMPORT_FILE);
 	}
 	
-	public void loadFileMovie(String fileName){
-		movie.loadFile(fileName);
+	public void loadFileMovie(String fileName) throws IOException{
+		movieDataBase.loadFile(fileName);
 		processEvent(EventMessages.MOVIE_LOAD_FILE);
 	}
 	
@@ -103,8 +97,8 @@ public class MediaModel {
 		processEvent(EventMessages.SERIES_IMPORT_FILE);
 	}
 	
-	public void loadFileSeries(String fileName){
-		series.loadFile(fileName);
+	public void loadFileSeries(String fileName) throws IOException{
+		seriesDataBase.loadFile(fileName);
 		processEvent(EventMessages.SERIES_LOAD_FILE);
 	}
 	
@@ -113,18 +107,18 @@ public class MediaModel {
 		processEvent(EventMessages.ACTOR_IMPORT_FILE);
 	}
 	
-	public void loadFileActor(String fileName){
-		actor.loadFile(fileName);
+	public void loadFileActor(String fileName) throws IOException{
+		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.ACTOR_LOAD_FILE);
 	}
 	
-	public void importFileDirecotr(String fileName) throws IOException{
+	public void importFileDirector(String fileName) throws IOException{
 		mediaMakerDataBase.importDirectorDataBase(fileName);
 		processEvent(EventMessages.DIRECTOR_IMPORT_FILE);
 	}
 	
-	public void loadFileDirector(String fileName){
-		director.loadFile(fileName);
+	public void loadFileDirector(String fileName) throws IOException{
+		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DIRECTOR_LOAD_FILE);
 	}
 	
@@ -133,8 +127,8 @@ public class MediaModel {
 		processEvent(EventMessages.PRODUCER_IMPORT_FILE);
 	}
 	
-	public void loadFileProducer(String fileName){
-		producer.loadFile(fileName);
+	public void loadFileProducer(String fileName) throws IOException{
+		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.PRODUCER_LOAD_FILE);
 	}
 	

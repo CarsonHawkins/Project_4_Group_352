@@ -267,15 +267,15 @@ public class MediaMakerDataBase implements Serializable
 				movieCredits = new ArrayList<Credit>(); 
 				episodeCredits = new ArrayList<Credit>();
 				
-				if (!mediaMakerMap.containsKey(fullName))
+				maker = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+				if (!mediaMakerMap.containsKey(maker.toString()))
 				{
-					maker = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
 					mediaMakerMap.put(maker.toString() ,maker);
 				}
 				else
 				{
-					movieCredits = mediaMakerMap.get(fullName).getMovieCredits();
-					episodeCredits = mediaMakerMap.get(fullName).getSeriesCredits();
+					movieCredits = mediaMakerMap.get(maker.toString()).getMovieCredits();
+					episodeCredits = mediaMakerMap.get(maker.toString()).getSeriesCredits();
 				}
 				
 				//Cut out the actor name because we're finished with it
@@ -507,5 +507,14 @@ public class MediaMakerDataBase implements Serializable
 	public MediaMaker get(String name)
 	{
 		return mediaMakerMap.get(name);
+	}
+	
+	/**
+	 * Load a file and add it to the database
+	 * @param fileName
+	 */
+	public void loadFile(String fileName)
+	{
+		//TODO: load a file using object IO
 	}
 }

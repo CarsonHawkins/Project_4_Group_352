@@ -358,7 +358,14 @@ public class TVDataBase implements Serializable
 		this.seriesList = seriesList;
 	}  
 
-	  
+	/**
+	 * Load a file and add it to the database
+	 * @param fileName
+	 */
+	public void loadFile(String fileName)
+	{
+		//TODO: load a file using object IO
+	}
 
 
 }

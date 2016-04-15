@@ -4,6 +4,6 @@
  * @author dlsch
  *
  */
-public class Media extends ListItem{
+public abstract class Media extends ListItem{
 
 }

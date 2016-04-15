@@ -4,7 +4,7 @@
  * @author dlsch
  *
  */
-public class ListItem
+public abstract class ListItem
 {
-
+	public abstract String getDisplayText();
 }

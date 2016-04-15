@@ -16,7 +16,7 @@ import javax.swing.JRadioButton;
 public class SelectionView extends View
 {
 	/////// Only exists for testing purposes
-	public static void main(String[] args){new SelectionView();};
+	//public static void main(String[] args){new SelectionView();};
 	
 	/** The panel that contains the other panels */
 	JPanel containerPanel,
@@ -60,6 +60,8 @@ public class SelectionView extends View
 				 directorsButton,
 				 producersButton;
 	
+	MediaModel model;
+	
 	public SelectionView()
 	{
 		super();
@@ -68,9 +70,6 @@ public class SelectionView extends View
 	@Override
 	protected void initComponents()
 	{
-		String s = new FileTypeSelector().showDialog("test file");
-		System.out.println(s);
-		
 		this.setTitle("MDb");
 		this.setSize(600, 400);
 
@@ -102,7 +101,11 @@ public class SelectionView extends View
 		  editMenu.add(editClearItem);
 		  editMenu.add(editClearAllItem);
 		 displayMenu = new JMenu("Display");
+		  displayPieChartItem = new JMenuItem("Pie chart");
+		  displayHistogramItem = new JMenuItem("Histogram");
 		menuBar.add(fileMenu);
+		  displayMenu.add(displayPieChartItem);
+		  displayMenu.add(displayHistogramItem);
 		menuBar.add(editMenu);
 		menuBar.add(displayMenu);
 		
@@ -144,6 +147,11 @@ public class SelectionView extends View
 		this.setJMenuBar(menuBar);
 		this.add(containerPanel);
 		this.setVisible(true);
+	}
+	
+	public void setModel(MediaModel m)
+	{
+		this.model = m;
 	}
 	
 	@Override

@@ -438,4 +438,10 @@ public class Movie extends Media implements Comparable<Movie>
 		}
 		return movieTitles;
 	}
+
+	@Override
+	public String getDisplayText()
+	{
+		return "Movie: " + movieTitle + " (" + movieDate + ") " + releaseForm;
+	}
 }

@@ -117,4 +117,10 @@ public class MediaMaker  extends ListItem implements Serializable
 	{
 		aInputStream.defaultReadObject();
 	}
+
+	@Override
+	public String getDisplayText()
+	{
+		return "Media maker: " + toString();
+	}
 }	

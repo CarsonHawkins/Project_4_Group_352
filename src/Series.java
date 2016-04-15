@@ -23,7 +23,7 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	private static final long serialVersionUID = -864529516154819206L;
 	private String seriesName;
 	private String seriesStartYear;
-	private String seriesYearRange;
+	private String seriesEndYear;
 	
 	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
 	
@@ -35,7 +35,7 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	{
 		seriesName        = "";
 		seriesStartYear   = "";
-		seriesYearRange   = "";
+		seriesEndYear   = "";
 		
 	}
 	
@@ -50,18 +50,18 @@ public class Series extends Media implements Comparable<Series>, Serializable
  		//The Movie constructor will assign movieTitle to the Class Movie movieTitle 
  		this.seriesName = seriesName; 
  		seriesStartYear   = "";
-		seriesYearRange   = "";
+ 		seriesEndYear   = "";
 		
  	} 
 
 	/*
 	 * The overloaded TvSeries constructor which will create Movie objects.
 	 */
-	public Series(String mdbSeriesName,String mdbSeriesStartYear,String mdbSeriesEpisodeYear)
+	public Series(String mdbSeriesName,String mdbSeriesStartYear,String mdbSeriesEndYear)
 	{
 		seriesName          = mdbSeriesName;
 		seriesStartYear     = mdbSeriesStartYear;
-		seriesYearRange     = mdbSeriesEpisodeYear;
+		seriesEndYear     = mdbSeriesEndYear;
 		
 	}
 	
@@ -104,9 +104,9 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	/**
 	 * @return the seriesEpisodeYear
 	 */
-	public String getSeriesEpisodeYear() 
+	public String getSeriesEndYear() 
 	{
-		return seriesYearRange;
+		return seriesEndYear;
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class Series extends Media implements Comparable<Series>, Serializable
 		 */
 	public String toString()
 	{
-		return seriesName + " " + seriesStartYear + " " + seriesYearRange;
+		return seriesName + " (" + seriesStartYear + "-" + seriesEndYear + ")";
 	} 
 	
 	public void writeObject(ObjectOutputStream aOutputStream) throws IOException 
@@ -144,6 +144,12 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		aInputStream.defaultReadObject();
+	}
+
+	@Override
+	public String getDisplayText()
+	{
+		return seriesName + " (" + seriesStartYear + "-" + seriesEndYear + ")";
 	}
 
 }

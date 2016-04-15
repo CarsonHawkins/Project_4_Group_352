@@ -39,4 +39,10 @@ public class Director extends MediaMaker
 	{
 		return null;
 	}
+	
+	@Override
+	public String getDisplayText()
+	{
+		return "Director: " + super.getDisplayText();
+	}
 }

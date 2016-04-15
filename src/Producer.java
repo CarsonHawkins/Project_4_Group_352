@@ -55,4 +55,10 @@ public class Producer extends MediaMaker implements Serializable
 	{
 		aInputStream.defaultReadObject();
 	}
+	
+	@Override
+	public String getDisplayText()
+	{
+		return "Producer: " + super.getDisplayText();
+	}
 }

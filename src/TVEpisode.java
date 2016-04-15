@@ -128,4 +128,9 @@ import java.util.Comparator;
 		{
 			aInputStream.defaultReadObject();
 		}
+		
+		public String getDisplayText()
+		{
+			return "Episode: " + episodeInfo + " (" + episodeYear + "): " + episodeName;
+		}
 }

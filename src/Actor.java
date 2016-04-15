@@ -37,4 +37,10 @@ public class Actor extends MediaMaker
 	{
 		return (super.getMdbMediaLastName() + ", " + super.getMdbMediaFirstName() + " " + super.getMdbMediaDisambiguationNumber()).trim();
 	}
+	
+	@Override
+	public String getDisplayText()
+	{
+		return "Actor: " + super.getDisplayText();
+	}
 }

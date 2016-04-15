@@ -88,11 +88,8 @@ public class TVDataBase implements Serializable
 				
 				
 				Series seriesObject = new Series(mdbSeriesName,mdbSeriesStartYear,mdbSeriesYearRange);
-				Series seriesTitle = new Series(mdbSeriesName);
 				
-				getSeriesList().add(seriesObject);
-				seriesTitleList.add(seriesTitle);
-				
+				getSeriesList().add(seriesObject);				
 			}
 			else
 			{
@@ -126,6 +123,13 @@ public class TVDataBase implements Serializable
 				
 				episodeList.add(episodeObject);
 				episodeTitleList.add(episodeTitle);
+				
+				Series parentSeries = getByTitle(mdbEpisodeSeriesName);
+				if (parentSeries != null)
+				{
+					parentSeries.getEpisodeList().add(episodeObject);
+				}
+					
 				
 			}
 			
@@ -357,6 +361,21 @@ public class TVDataBase implements Serializable
 	public void setSeriesList(ArrayList<Series> seriesList) {
 		this.seriesList = seriesList;
 	}  
+	
+	/**
+	 *  Finds a series by title
+	 * @param title
+	 * @return
+	 */
+	public Series getByTitle(String title)
+	{
+		for (Series s : this.seriesList)
+		{
+			if (s.getSeriesName().equals(title))
+				return s;
+		}
+		return null;
+	}
 
 	/**
 	 * Load a file and add it to the database

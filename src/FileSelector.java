@@ -18,7 +18,7 @@ public class FileSelector
 	{
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(false);
-		chooser.showOpenDialog(null);
+		chooser.showSaveDialog(null);
 		return chooser.getSelectedFile().getAbsolutePath();
 	}
 	
@@ -30,7 +30,7 @@ public class FileSelector
 	{
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(true);
-		chooser.showSaveDialog(null);
+		chooser.showOpenDialog(null);
 		return Arrays.stream(chooser.getSelectedFiles()).map(file -> file.getAbsolutePath()).toArray(String[]::new);
 	}
 }

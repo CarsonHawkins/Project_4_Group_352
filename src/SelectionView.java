@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class SelectionView extends View
 {
@@ -48,6 +49,16 @@ public class SelectionView extends View
 			  editClearAllItem,
 			  displayPieChartItem,
 			  displayHistogramItem;
+	
+	Box buttonBox;
+	JRadioButton mediaButton,
+				 moviesButton,
+				 seriesButton,
+				 episodesButton,
+				 makersButton,
+				 actorsButton,
+				 directorsButton,
+				 producersButton;
 	
 	public SelectionView()
 	{
@@ -102,6 +113,26 @@ public class SelectionView extends View
 		controlsPanel = new JPanel();
 		controlsPanel.setPreferredSize(new Dimension(200,400));
 		controlsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		buttonBox = Box.createVerticalBox();
+		mediaButton = new JRadioButton("Media");
+		moviesButton = new JRadioButton("Movies");
+		seriesButton = new JRadioButton("Series");
+		episodesButton = new JRadioButton("Episodes");
+		makersButton = new JRadioButton("Makers");
+		actorsButton = new JRadioButton("Actors");
+		directorsButton = new JRadioButton("Directors");
+		producersButton = new JRadioButton("Producers");
+		buttonBox.add(mediaButton);
+		buttonBox.add(moviesButton);
+		buttonBox.add(seriesButton);
+		buttonBox.add(episodesButton);
+		buttonBox.add(makersButton);
+		buttonBox.add(actorsButton);
+		buttonBox.add(directorsButton);
+		buttonBox.add(producersButton);
+		
+		controlsPanel.add(buttonBox);
 
 		dataPanel = new JPanel();
 		dataPanel.setPreferredSize(new Dimension(400,400));

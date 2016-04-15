@@ -25,7 +25,9 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	private String seriesStartYear;
 	private String seriesYearRange;
 	
+	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
 	
+
 	/*
 	 * The default constructor of the TvSeries class.
 	 */
@@ -114,7 +116,16 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	{
 		return TvSeriesYearComparator;
 	}
+	
+	public ArrayList<TVEpisode> getEpisodeList()
+	{
+		return episodeList;
+	}
 
+	public void setEpisodeList(ArrayList<TVEpisode> episodeList)
+	{
+		this.episodeList = episodeList;
+	}
 	/*
 		 * (non-Javadoc)
 		 * @see java.lang.Object#toString()

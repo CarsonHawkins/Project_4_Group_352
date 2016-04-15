@@ -75,6 +75,8 @@ public class MovieDataBase extends Movie implements Serializable
 		movieTitles = new ArrayList<String>(readTitles(movieList));
 
 		ArrayList<String> moviesFound = new ArrayList<String>();
+		
+		//TODO Needs to be modified to work with the new way of searching for movies. 
 
 		Movie movieTitle = new Movie(questions[4]);
 		//If the user want to do a specific search it will direct the program here. 

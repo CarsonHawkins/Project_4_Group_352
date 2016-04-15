@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Eric_Morales
  * March 4th, 2016
  */
-public class Movie implements Comparable<Movie>
+public class Movie extends Media implements Comparable<Movie>
 {
 	/** movieTitle will hold the name of the title that the user is searching for. */
 	private String movieTitle;

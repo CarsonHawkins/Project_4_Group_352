@@ -49,7 +49,7 @@ public class Credit implements Serializable{
 	public String outputString()
 	{
 		if (media instanceof Movie)
-			return makerType.name() + ": " + mediaType.name() + ": " + ((Movie)media).getMovieTitle();
+			return makerType.name() + ": " + mediaType.name() + ": " + ((Movie)media).getTitle();
 		else
 			return makerType.name() + ": " + mediaType.name() + ": " + ((TVEpisode)media).getEpisodeName();
 	}

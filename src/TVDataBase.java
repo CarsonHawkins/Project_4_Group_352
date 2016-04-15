@@ -26,7 +26,7 @@ public class TVDataBase implements Serializable
 	private static final long serialVersionUID = 3385515282733881905L;
 	private String mdbSeriesName;
 	private String mdbSeriesStartYear;
-	private String mdbSeriesYearRange;
+	private String mdbSeriesEndYear;
 	private ArrayList<TVEpisode> episodeList;
 	private ArrayList<TVEpisode> episodeTitleList;
 	
@@ -75,8 +75,8 @@ public class TVDataBase implements Serializable
 				
 				if (rangeMatcher.find())
 				{
-					mdbSeriesYearRange = rangeMatcher.group(0);
 					mdbSeriesStartYear = rangeMatcher.group(1);
+					mdbSeriesEndYear = rangeMatcher.group(2);
 				}
 				
 				Matcher nameMatcher = Pattern.compile(Regexes.TV_SERIES_TITLE).matcher(nextLine);
@@ -87,7 +87,7 @@ public class TVDataBase implements Serializable
 				}
 				
 				
-				Series seriesObject = new Series(mdbSeriesName,mdbSeriesStartYear,mdbSeriesYearRange);
+				Series seriesObject = new Series(mdbSeriesName,mdbSeriesStartYear,mdbSeriesEndYear);
 				
 				getSeriesList().add(seriesObject);				
 			}

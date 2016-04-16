@@ -100,7 +100,14 @@ import java.util.Comparator;
 		{
 			return episodeYear;
 		}
-
+		
+		/**
+		 * @return the episodeInfo
+		 */
+		public String getEpisodeInfo() {
+			return episodeInfo;
+		}
+		
 		/**
 		 * @return the tvseriesyearcomparator
 		 */

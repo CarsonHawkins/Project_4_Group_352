@@ -356,6 +356,10 @@ public class TVDataBase implements Serializable
 	public ArrayList<Series> getSeriesList() {
 		return seriesList;
 	}
+	
+	public ArrayList<TVEpisode> getEpisodeList(){
+		return episodeList;
+	}
 
 
 	public void setSeriesList(ArrayList<Series> seriesList) {

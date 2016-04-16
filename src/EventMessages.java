@@ -18,7 +18,7 @@ public class EventMessages
 	public static final String PRODUCER_ADDED = "PRODUCER ADDED TO THE DATABASE";
 	public static final String FILE_SAVED = "FILE SAVED USING OBJECT I/O";
 	public static final String FILE_EXPORTED = "FILE EXPORTED AS A TEXT FILE";
-
+	public static final String EPISODE_ADDED = "EPISODE ADDED TO THE DATABASE";
 	
 	
 	

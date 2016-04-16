@@ -24,6 +24,8 @@ public class MovieDataBase extends Movie implements Serializable
 	private static final long serialVersionUID = -5949244929456781510L;
 
 	private ArrayList<Movie> movieList = new ArrayList<>();
+	
+
 	private ArrayList<String> movieTitles = new ArrayList<>();
 	
 	/*
@@ -119,6 +121,13 @@ public class MovieDataBase extends Movie implements Serializable
 	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		aInputStream.defaultReadObject();
+	}
+	
+	/**
+	 * @return the movieList
+	 */
+	public ArrayList<Movie> getMovieList() {
+		return movieList;
 	}
 	
 	/**

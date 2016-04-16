@@ -5,6 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class MediaModel {
 	public ArrayList<ActionListener> list;
 	public TVDataBase seriesDataBase = new TVDataBase();
@@ -21,10 +24,35 @@ public class MediaModel {
 		processEvent(EventMessages.MOVIE_ADDED);
 	}
 	
-	public void addSeries(String name, String startYear, String episodeYear){
-		Series series = new Series(name, startYear, episodeYear);
+	public void addSeries(String name, String startYear, String endYear, String episodeYear){
+		Series series = new Series(name, startYear, endYear,episodeYear);
 		seriesDataBase.getSeriesList().add(series);
 		processEvent(EventMessages.SERIES_ADDED);
+	}
+	
+	public void addEpisode(String name, String startYear, String episodeInfo, String episodeYear, Series series){
+		
+		for(TVEpisode episode : series.getEpisodeList()){
+			if (episode.getEpisodeInfo().equals(episodeInfo)){
+				JFrame frame = new JFrame("Error");
+				JOptionPane.showMessageDialog(frame, "That season number and episode number already exist for this series.");
+				return;
+			}
+			
+			else{
+				if(Integer.parseInt(episodeYear) < Integer.parseInt(series.getSeriesStartYear()) 
+						|| Integer.parseInt(episodeYear) > Integer.parseInt(series.getSeriesEndYear())){
+					JFrame frame = new JFrame("Error");
+					JOptionPane.showMessageDialog(frame, "That episode year is not in the range of the series.");
+				}
+				else{
+					TVEpisode tvEpisode = new TVEpisode(name, startYear, episodeInfo, episodeYear, series);
+					seriesDataBase.getEpisodeList().add(tvEpisode);
+					processEvent(EventMessages.EPISODE_ADDED);
+				}
+		
+			}
+		}		
 	}
 	
 	public void addActor(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
@@ -45,6 +73,61 @@ public class MediaModel {
 		processEvent(EventMessages.PRODUCER_ADDED);
 	}
 	
+	public void createItemList(RadioButtonStates states)
+	{
+		this.listItems.clear();
+		
+		if(states.isMediaSelected()){
+			listItems.addAll(movieDataBase.getMovieList());
+			listItems.addAll(seriesDataBase.getSeriesList());
+			listItems.addAll(seriesDataBase.getEpisodeList());
+		}
+		
+		else
+		{
+			if(states.isMoviesSelected())
+			{
+				listItems.addAll(movieDataBase.getMovieList());
+			}
+			if(states.isSeriesSelected()){
+				listItems.addAll(seriesDataBase.getSeriesList());
+			}
+			if(states.isEpisodesSelected()){
+				listItems.addAll(seriesDataBase.getEpisodeList());
+			}
+		}
+		
+		if(states.isMakersSelected()){
+			listItems.addAll(mediaMakerDataBase.getMediaMakerMap().values());
+		}
+		
+		else
+		{
+			if (states.isActorsSelected()){
+				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
+				{
+					if (maker instanceof Actor)
+						listItems.add(maker);
+				}
+			}
+			
+			if(states.isDirectorsSelected()){
+				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
+				{
+					if (maker instanceof Director)
+						listItems.add(maker);
+				}	
+			}
+			
+			if(states.isProducersSelected()){
+				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
+				{
+					if (maker instanceof Producer)
+						listItems.add(maker);
+				}
+			}
+		}
+	}
 	
 	public void export(String fileName) throws IOException
 	{
@@ -77,8 +160,13 @@ public class MediaModel {
 	}
 	
 	public void processEvent(String message){
-		for (ActionListener action : list){
-			action.actionPerformed(new ActionEvent( this, 0, message));
+		if(list.isEmpty()){
+			return;
+		} 
+		else {
+			for (ActionListener action : list) {
+				action.actionPerformed(new ActionEvent(this, 0, message));
+			}
 		}
 	}
 	

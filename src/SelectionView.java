@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -12,6 +14,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class SelectionView extends View
 {
@@ -72,6 +76,7 @@ public class SelectionView extends View
 	{
 		this.setTitle("MDb");
 		this.setSize(600, 400);
+		
 
 		menuBar = new JMenuBar();
 		 fileMenu = new JMenu("File");
@@ -118,11 +123,11 @@ public class SelectionView extends View
 		controlsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		buttonBox = Box.createVerticalBox();
-		mediaButton = new JRadioButton("Media");
+		mediaButton = new JRadioButton("All Media");
 		moviesButton = new JRadioButton("Movies");
 		seriesButton = new JRadioButton("Series");
 		episodesButton = new JRadioButton("Episodes");
-		makersButton = new JRadioButton("Makers");
+		makersButton = new JRadioButton("All Makers");
 		actorsButton = new JRadioButton("Actors");
 		directorsButton = new JRadioButton("Directors");
 		producersButton = new JRadioButton("Producers");
@@ -147,6 +152,7 @@ public class SelectionView extends View
 		this.setJMenuBar(menuBar);
 		this.add(containerPanel);
 		this.setVisible(true);
+
 	}
 	
 	public void setModel(MediaModel m)
@@ -158,12 +164,22 @@ public class SelectionView extends View
 	public void actionPerformed(ActionEvent e)
 	{
 		/* Enables save/export options if model has objects, else disables them */
-		fileSaveItem.setEnabled(true/*model.hasObjects()*/);
-		fileExportItem.setEnabled(true/*model.hasObjects()*/);
-		editEditItem.setEnabled(true/*model.hasObjects()*/);
-		editDeleteItem.setEnabled(true/*model.hasObjects()*/);
-		editClearItem.setEnabled(true/*model.hasObjects()*/);
-		editClearAllItem.setEnabled(true/*model.hasObjects()*/);
+		boolean enableButtons = !model.listItems.isEmpty();
+		fileSaveItem.setEnabled(enableButtons);
+		fileExportItem.setEnabled(enableButtons);
+		editEditItem.setEnabled(enableButtons);
+		editDeleteItem.setEnabled(enableButtons);
+		editClearItem.setEnabled(enableButtons);
+		editClearAllItem.setEnabled(enableButtons);
+		
+		// Enables the add button only if an appropriate thing is selected
+		RadioButtonStates s = getButtonStates();
+		editAddItem.setEnabled(s.isMoviesSelected() ||
+							   s.isSeriesSelected() ||
+							   s.isMakersSelected() ||
+							   s.isActorsSelected() ||
+							   s.isDirectorsSelected() ||
+							   s.isProducersSelected());
 		
 	}
 
@@ -269,5 +285,30 @@ public class SelectionView extends View
 	public void addHistogramListener(ActionListener listener)
 	{
 		addListenerToComponent(displayHistogramItem, listener);
+	}
+	
+	public void addRadiobuttonChangedListener(ItemListener listener)
+	{
+		mediaButton.addItemListener(listener);
+		moviesButton.addItemListener(listener);
+		seriesButton.addItemListener(listener);
+		episodesButton.addItemListener(listener);
+		makersButton.addItemListener(listener);
+		actorsButton.addItemListener(listener);
+		directorsButton.addItemListener(listener);
+		producersButton.addItemListener(listener);
+	}
+	
+	public RadioButtonStates getButtonStates()
+	{
+		return new RadioButtonStates(
+				mediaButton.isSelected(),
+				moviesButton.isSelected(),
+				seriesButton.isSelected(),
+				episodesButton.isSelected(),
+				makersButton.isSelected(),
+				actorsButton.isSelected(),
+				directorsButton.isSelected(),
+				producersButton.isSelected());
 	}
 }

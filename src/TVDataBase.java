@@ -369,8 +369,12 @@ public class TVDataBase implements Serializable
 	 */
 	public Series getByTitle(String title)
 	{
+		if (seriesList.isEmpty())
+			return null;
 		for (Series s : this.seriesList)
 		{
+			if (s.getSeriesName() == null)
+				continue;
 			if (s.getSeriesName().equals(title))
 				return s;
 		}

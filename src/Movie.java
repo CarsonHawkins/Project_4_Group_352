@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +22,7 @@ public class Movie extends Media implements Comparable<Movie>
 	private String movieDate;
 
 	/** movieRelease tells the user when the movie was release */
+	@SuppressWarnings("unused")
 	private String movieRelease;
 
 	/** releaseForm tells the user in what form the movie was release i.e. TV / DVD */

@@ -113,6 +113,21 @@ public class MediaMaker  extends ListItem implements Serializable
 		 aOutputStream.defaultWriteObject();
 	 }
 	
+	public void setMdbMediaFirstName(String mdbMediaFirstName)
+	{
+		this.mdbMediaFirstName = mdbMediaFirstName;
+	}
+
+	public void setMdbMediaLastName(String mdbMediaLastName)
+	{
+		this.mdbMediaLastName = mdbMediaLastName;
+	}
+
+	public void setMdbMediaDisambiguationNumber(String mdbMediaDisambiguationNumber)
+	{
+		this.mdbMediaDisambiguationNumber = mdbMediaDisambiguationNumber;
+	}
+
 	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		aInputStream.defaultReadObject();

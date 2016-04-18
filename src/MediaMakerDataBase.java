@@ -1,7 +1,11 @@
 import java.awt.List;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,7 +120,6 @@ public class MediaMakerDataBase implements Serializable
 				String mdbArchiveFootage = "";
 				String mdbUncredited = "";
 				String mdbEpisodeYear = "";
-				
 				String mdbCreditSeries = "";
 				String mdbCreditInfo = "";
 				
@@ -479,11 +482,7 @@ public class MediaMakerDataBase implements Serializable
  			 MediaMaker maker = this.get(key);
  		
  			 return maker;
- 		
-
  	} 
-
-	
 	
 	/**
 	 * @return the mediaMakerMap
@@ -509,6 +508,8 @@ public class MediaMakerDataBase implements Serializable
 		return mediaMakerMap.get(name);
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////  the below code probably doesn't work right yet
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
@@ -516,5 +517,61 @@ public class MediaMakerDataBase implements Serializable
 	public void loadFile(String fileName)
 	{
 		//TODO: load a file using object IO
+		FileInputStream fileInputStream = new FileInputStream(fileName);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		Object object;
+		//TODO: use instance of to determine the object type to make and add it to
+		while(objectInputStream.readObject() != null){
+			object = objectInputStream.readObject();
+			//FIXME
+			if(object.instanceOf()){
+				Actor actor = (Actor) object;
+				mediaMakerMap.put(actor.toString(), actor);
+			}
+			if (object.instanceOf()){
+				Director director = (Director) object;
+				mediaMakerMap.put(director.toString(), director);
+			}
+			if (object.instanceOf()){
+				Producer producer = (Producer) object;
+				mediaMakerMap.put(producer.toString(), producer);
+			}
+		}
+		objectInputStream.close();
+		return;
+	}
+	
+	public void saveFile(String fileName){
+
+		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		ArrayList<Actor> outputActors;
+		ArrayList<Director> outputDirectors;
+		ArrayList<Producer> outputProducers;
+		for(MediaMaker maker : mediaMakerMap.values()){
+			//FIXME
+			if(maker.instanceOf()){
+				outputActors.add((Actor) maker);
+			}
+			if(maker.instanceOf()){
+				outputDirectors.add((Director) maker);
+			}
+			if(maker.instanceOf()){
+				outputProducers.add((Producer) maker);
+			}
+		}
+		//FIXME
+		for(Actor actor : outputActors){
+			objectOutputStream.writeObject(actor);
+		}
+		for(Director director : outputDirectors){
+			objectOutputStream.writeObject(director);
+		}
+		for(Producer producer : outputProducers){
+			objectOutputStream.writeObject(producer);
+		}
+		objectOutputStream.close();
+
+	
 	}
 }

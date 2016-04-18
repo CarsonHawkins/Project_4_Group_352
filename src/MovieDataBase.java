@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -130,12 +132,36 @@ public class MovieDataBase extends Movie implements Serializable
 		return movieList;
 	}
 	
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////// NOT SURE IF THESE METHODS ARE WRITTEN CORRECTLY.
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFile(String fileName)
+	public void loadFile(String fileName) throws IOException, ClassNotFoundException
 	{
-		//TODO: load a file using object IO
+		FileInputStream fileInputStream = new FileInputStream(fileName);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		Object object;
+		while(objectInputStream.readObject() != null){
+			object = objectInputStream.readObject();
+			Movie movie = (Movie) object;
+			movieList.add(movie);
+		}
+		objectInputStream.close();
+		return;
+	}
+	
+	public void saveFile(String fileName) throws IOException{
+		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		for(Movie movie : movieList){
+			objectOutputStream.writeObject(movie);
+		}
+			objectOutputStream.close();
+
 	}
 }

@@ -1,21 +1,22 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class SelectionView extends View
 {
@@ -28,6 +29,9 @@ public class SelectionView extends View
 		   controlsPanel,
 	/** The panel that contains the data */
 		   dataPanel;
+	
+	JScrollPane scrollPane;
+	JTextArea textArea;
 	
 	/** The menu bar at the top */
 	JMenuBar menuBar;
@@ -55,6 +59,7 @@ public class SelectionView extends View
 			  displayHistogramItem;
 	
 	Box buttonBox;
+	ButtonGroup group;
 	JRadioButton mediaButton,
 				 moviesButton,
 				 seriesButton,
@@ -63,6 +68,7 @@ public class SelectionView extends View
 				 actorsButton,
 				 directorsButton,
 				 producersButton;
+	
 	
 	MediaModel model;
 	
@@ -76,7 +82,6 @@ public class SelectionView extends View
 	{
 		this.setTitle("MDb");
 		this.setSize(600, 400);
-		
 
 		menuBar = new JMenuBar();
 		 fileMenu = new JMenu("File");
@@ -131,6 +136,16 @@ public class SelectionView extends View
 		actorsButton = new JRadioButton("Actors");
 		directorsButton = new JRadioButton("Directors");
 		producersButton = new JRadioButton("Producers");
+		group = new ButtonGroup();
+		group.add(mediaButton);
+		group.add(moviesButton);
+		group.add(seriesButton);
+		group.add(episodesButton);
+		group.add(makersButton);
+		group.add(actorsButton);
+		group.add(directorsButton);
+		group.add(producersButton);
+
 		buttonBox.add(mediaButton);
 		buttonBox.add(moviesButton);
 		buttonBox.add(seriesButton);
@@ -139,13 +154,19 @@ public class SelectionView extends View
 		buttonBox.add(actorsButton);
 		buttonBox.add(directorsButton);
 		buttonBox.add(producersButton);
+
 		
 		controlsPanel.add(buttonBox);
 
 		dataPanel = new JPanel();
 		dataPanel.setPreferredSize(new Dimension(400,400));
 		dataPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+		textArea = new JTextArea("hello\nMy name is textarea\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nI scroll");
+		scrollPane = new JScrollPane(textArea);
+		dataPanel.setLayout(new BorderLayout());
+		dataPanel.add(scrollPane, BorderLayout.CENTER);
+		textArea.setLineWrap(true);  
+		textArea.setWrapStyleWord(true); 
 		containerPanel.add(controlsPanel);
 		containerPanel.add(dataPanel);
 
@@ -186,7 +207,7 @@ public class SelectionView extends View
 	private void addListenerToComponent(AbstractButton b, ActionListener l)
 	{
 		if (b != null)
-		b.addActionListener(l);
+			b.addActionListener(l);
 	}
 	/**
 	 * Add a save listener

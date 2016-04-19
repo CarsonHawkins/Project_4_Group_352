@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class FileTypeSelector
 {
-	public String showDialog(String fileName)
+	public static String showDialog(String fileName)
 	{
 		String[] options = {"Movies", "TV Series", "Actors", "Producers", "Directors"};
 	    int code = -1;

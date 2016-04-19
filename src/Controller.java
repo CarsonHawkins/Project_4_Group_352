@@ -193,7 +193,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Remove object from hashmap
+				//Remove object from hash-map
 				model.mediaMakerDataBase.getMediaMakerMap().remove(makerToEdit.toString());
 				
 				//Change the object
@@ -237,7 +237,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			model.clearAll(selectionView.getSelectionItem());
+			model.clearAll();
 			
 		}
 	}
@@ -265,9 +265,27 @@ public class Controller {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			model.setButtonStates(selectionView.getButtonStates());
+			RadioButtonStates states = selectionView.getButtonStates();
+			model.setButtonStates(states);
 			model.createDisplayItemList();
-			model.processEvent(EventMessages.DATA_CHANGED);			
+			model.processEvent(EventMessages.DATA_CHANGED);	
+			
+			if (states.isMediaSelected())
+				selectionView.setDataLabel("Media");
+			else if (states.isMoviesSelected())
+				selectionView.setDataLabel("Movie");
+			else if (states.isEpisodesSelected())
+				selectionView.setDataLabel("Episode");
+			else if (states.isSeriesSelected())
+				selectionView.setDataLabel("Series");
+			else if (states.isMakersSelected())
+				selectionView.setDataLabel("Makers");
+			else if (states.isActorsSelected())
+				selectionView.setDataLabel("Actor");
+			else if (states.isDirectorsSelected())
+				selectionView.setDataLabel("Director");
+			else if (states.isProducersSelected())
+				selectionView.setDataLabel("Producer");
 		}
 	}
 }

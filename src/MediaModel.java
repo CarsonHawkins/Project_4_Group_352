@@ -1,8 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -142,15 +144,31 @@ public class MediaModel {
 		fw = new FileWriter(fileName);
 		bw = new BufferedWriter(fw);
 		
-		for (ListItem i : displayList)
+		String type = new FileTypeSelector().showDialog(fileName);
+		
+		if (type.equals("Movies"))
 		{
-			bw.write(i.toString() + "\n");
+			for (ListItem i : movieDataBase.getMovieList())
+			{
+				//FIXME: use the methods from Daniel to get the format of the items
+				bw.write();
+			}
 		}
+		bw.close();
 		processEvent(EventMessages.FILE_EXPORTED);
 	}
 	
-	public  void save(String fileName){
-		//TODO: finish this method for writing using I/O
+	public  void save() throws IOException{
+		
+		//TODO: use fileSelector to determine where the user wishes to save to
+		String location = FileSelector.showSaveDialog();
+		FileOutputStream out = new FileOutputStream(location);
+		ObjectOutputStream oos = new ObjectOutputStream(out);
+		
+		for (ListItem item : displayList){
+			oos.writeObject(item);
+		}
+		oos.close();
 		processEvent(EventMessages.FILE_SAVED);
 	}
 	
@@ -235,6 +253,41 @@ public class MediaModel {
 	
 	public void loadFileProducer(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
+		processEvent(EventMessages.DATA_CHANGED);
+	}
+	
+	public void delete(ListItem item){
+	
+		if (item instanceof Movie){
+			movieDataBase.getMovieList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof MediaMaker){
+			mediaMakerDataBase.getMediaMakerMap().remove(item.toString());
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof TVEpisode){
+			seriesDataBase.getEpisodeList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof Series){
+			seriesDataBase.getSeriesList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+	}
+	
+	public void clear(){
+		for (ListItem item : displayList){
+			displayList.clear();
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+	}
+	
+	public void clearAll(){
+		movieDataBase.getMovieList().clear();
+		mediaMakerDataBase.getMediaMakerMap().clear();
+		seriesDataBase.getEpisodeList().clear();
+		seriesDataBase.getSeriesList().clear();
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	

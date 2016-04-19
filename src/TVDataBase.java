@@ -1,6 +1,11 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -388,10 +393,49 @@ public class TVDataBase implements Serializable
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
+	 * @throws IOException 
 	 */
-	public void loadFile(String fileName)
+	public void loadFile(String fileName) throws IOException
 	{
-		//TODO: load a file using object IO
+		FileInputStream fileInputStream = new FileInputStream(fileName);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		// TODO: use intance of to determine whether it is episode or series
+		Object object;
+		while(objectInputStream.readObject() != null){
+			object = objectInputStream.readObject();
+			//FIXME
+			if(object instanceof TVEpisode){
+				TVEpisode episode = (TVEpisode) object;
+				episodeList.add(episode);
+			}
+			if (object instanceof Series){
+				Series series = (Series) object;
+				seriesList.add(series);
+			}
+		}
+		objectInputStream.close();
+		return;
+	}
+	
+	public void saveFile(String fileName) throws IOException{
+		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		
+		//FIXME
+		if(){
+			for(Series series : seriesList){
+				objectOutputStream.writeObject(series);
+			}
+		}
+		
+		// FIXME
+		if(){
+			for(TVEpisode episode : episodeList){
+				objectOutputStream.writeObject(episode);
+			}
+		}
+			objectOutputStream.close();
+
 	}
 
 

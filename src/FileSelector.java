@@ -14,7 +14,7 @@ public class FileSelector
 	 * Opens a save dialog and returns the result
 	 * @return
 	 */
-	public String showSaveDialog()
+	public static String showSaveDialog()
 	{
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(false);
@@ -26,7 +26,7 @@ public class FileSelector
 	 * Opens an open dialog and returns the result(s)
 	 * @return
 	 */
-	public String[] showOpenDialog()
+	public static String[] showOpenDialog()
 	{
 		JFileChooser chooser = new JFileChooser();
 		chooser.setMultiSelectionEnabled(true);

@@ -100,6 +100,8 @@ public class SelectionView extends View
 	@Override
 	protected void initComponents()
 	{
+		new MovieEntryView();
+		
 		this.setTitle("MDb");
 		this.setSize(600, 400);
 		this.setMinimumSize(new Dimension(400,280));

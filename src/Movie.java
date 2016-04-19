@@ -26,7 +26,7 @@ public class Movie extends Media implements Comparable<Movie>
 	private String movieRelease;
 
 	/** releaseForm tells the user in what form the movie was release i.e. TV / DVD */
-	private String releaseForm = null;
+	private String releaseForm = "";
 	
 	private ArrayList<String> movieTitles = new ArrayList<String>();
 
@@ -36,7 +36,7 @@ public class Movie extends Media implements Comparable<Movie>
 	public Movie() {
 
 		//Creating a movie constructor with no parameters will default into null.
-		this.movieTitle = null;
+		this.movieTitle = "";
 	}
 
 	/**Movie(String movieTitle) will assign the parameter movieTitle onto the Movie class 
@@ -49,9 +49,9 @@ public class Movie extends Media implements Comparable<Movie>
 
 		//The Movie constructor will assign movieTitle to the Class Movie movieTitle
 		this.movieTitle = movieTitle;
-		this.movieDate = null;
-		this.movieRelease = null; 
-		this.releaseForm = null;
+		this.movieDate = "";
+		this.movieRelease = ""; 
+		this.releaseForm = "";
 	}
 
 	public Movie(String movieTitle, String movieDate) {
@@ -59,8 +59,8 @@ public class Movie extends Media implements Comparable<Movie>
 		//The Movie constructor will assign movieTitle to the Class Movie movieTitle
 		this.movieTitle = movieTitle;
 		this.movieDate = movieDate;
-		this.movieRelease = null; 
-		this.releaseForm = null;
+		this.movieRelease = ""; 
+		this.releaseForm = "";
 	}
 
 	public Movie(String movieTitle, String movieDate, String movieRelease) {
@@ -69,7 +69,7 @@ public class Movie extends Media implements Comparable<Movie>
 		this.movieTitle = movieTitle;
 		this.movieDate = movieDate;
 		this.movieRelease = movieRelease; 
-		this.releaseForm = null;
+		this.releaseForm = "";
 	}
 
 	public Movie(String movieTitle, String movieDate, String movieRelease, String releaseForm) {
@@ -232,6 +232,18 @@ public class Movie extends Media implements Comparable<Movie>
 
 		return movieDate;
 
+	}
+	
+	
+
+	public String getReleaseForm()
+	{
+		return releaseForm;
+	}
+
+	public void setReleaseForm(String releaseForm)
+	{
+		this.releaseForm = releaseForm;
 	}
 
 	public void setYear(String movieDate) {

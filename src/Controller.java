@@ -152,11 +152,11 @@ public class Controller {
 				try {
 					MediaMaker maker = entryView.instantiate();
 					if (maker instanceof Actor)
-						model.addActor(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+						model.addActor(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 					if (maker instanceof Director)
-						model.addDirector(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+						model.addDirector(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 					if (maker instanceof Producer) 
-						model.addProducer(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+						model.addProducer(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 					
 				} catch (InstantiationException e1) {
 					e1.printStackTrace();
@@ -226,7 +226,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			model.clear();
+			model.clear(selectionView.getSelectedItem());
 			
 		}
 	}
@@ -237,7 +237,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			model.clearAll();
+			model.clearAll(selectionView.getSelectionItem());
 			
 		}
 	}
@@ -247,7 +247,6 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
-			//TODO
 			selectionView.showPieChart((MediaMaker)selectionView.getSelectedItem());
 			
 		}
@@ -258,7 +257,6 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
-			//TODO
 			selectionView.showHistogram((MediaMaker)selectionView.getSelectedItem());			
 		}
 	}

@@ -42,7 +42,7 @@ public class Producer extends MediaMaker implements Serializable
 	 */
 	public String toString()
 	{
-		return null;
+		return super.toString();
 	}
 	
 	public void writeObject(ObjectOutputStream aOutputStream) throws IOException 
@@ -59,6 +59,6 @@ public class Producer extends MediaMaker implements Serializable
 	@Override
 	public String getDisplayText()
 	{
-		return "Producer: " + super.getDisplayText();
+		return "Producer: " + toString();
 	}
 }

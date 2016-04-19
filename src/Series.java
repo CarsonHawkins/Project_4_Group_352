@@ -149,7 +149,7 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	@Override
 	public String getDisplayText()
 	{
-		return seriesName + " (" + seriesStartYear + "-" + seriesEndYear + ")";
+		return "Series: " + seriesName + " (" + seriesStartYear + "-" + seriesEndYear + ")";
 	}
 
 }

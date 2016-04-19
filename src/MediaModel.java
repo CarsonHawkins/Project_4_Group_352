@@ -9,25 +9,28 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MediaModel {
-	public ArrayList<ActionListener> list;
+	public ArrayList<ActionListener> listenerList = new ArrayList<>();
 	public TVDataBase seriesDataBase = new TVDataBase();
 	public MovieDataBase movieDataBase = new MovieDataBase();
 	public MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
-	public ArrayList<ListItem> listItems;
+	public ArrayList<ListItem> displayList = new ArrayList<>();
 	
 	private FileWriter fw;
 	private BufferedWriter bw;
 	
+	/** the state of the view's buttons, as the model remembers them */
+	private RadioButtonStates states;
+	
 	public void addMovie(String title, String date, String releaseForm, String release){
 		Movie movie = new Movie(title, date, releaseForm, release);
 		movieDataBase.getMovieList().addMovie(movie);
-		processEvent(EventMessages.MOVIE_ADDED);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
-	public void addSeries(String name, String startYear, String endYear, String episodeYear){
-		Series series = new Series(name, startYear, endYear,episodeYear);
+	public void addSeries(String name, String startYear, String endYear){
+		Series series = new Series(name, startYear, endYear);
 		seriesDataBase.getSeriesList().add(series);
-		processEvent(EventMessages.SERIES_ADDED);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void addEpisode(String name, String startYear, String episodeInfo, String episodeYear, Series series){
@@ -46,9 +49,10 @@ public class MediaModel {
 					JOptionPane.showMessageDialog(frame, "That episode year is not in the range of the series.");
 				}
 				else{
-					TVEpisode tvEpisode = new TVEpisode(name, startYear, episodeInfo, episodeYear, series);
+					TVEpisode tvEpisode = new TVEpisode(name, startYear, episodeInfo, episodeYear);
+					series.getEpisodeList().add(tvEpisode);
 					seriesDataBase.getEpisodeList().add(tvEpisode);
-					processEvent(EventMessages.EPISODE_ADDED);
+					processEvent(EventMessages.DATA_CHANGED);
 				}
 		
 			}
@@ -58,47 +62,51 @@ public class MediaModel {
 	public void addActor(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Actor actor = new Actor(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(actor.toString(), actor);
-		processEvent(EventMessages.ACTOR_ADDED);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void addDirector(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Director director = new Director(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(director.toString(), director);
-		processEvent(EventMessages.DIRECTOR_ADDED);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void addProducer(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Producer producer = new Producer(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(producer.toString(),producer);
-		processEvent(EventMessages.PRODUCER_ADDED);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
-	public void createItemList(RadioButtonStates states)
+	/**
+	 * Creates the list of objects to be displayed in the SelectionView
+	 * @param states
+	 */
+	public void createDisplayItemList()
 	{
-		this.listItems.clear();
+		this.displayList.clear();
 		
 		if(states.isMediaSelected()){
-			listItems.addAll(movieDataBase.getMovieList());
-			listItems.addAll(seriesDataBase.getSeriesList());
-			listItems.addAll(seriesDataBase.getEpisodeList());
+			displayList.addAll(movieDataBase.getMovieList());
+			displayList.addAll(seriesDataBase.getSeriesList());
+			displayList.addAll(seriesDataBase.getEpisodeList());
 		}
 		
 		else
 		{
 			if(states.isMoviesSelected())
 			{
-				listItems.addAll(movieDataBase.getMovieList());
+				displayList.addAll(movieDataBase.getMovieList());
 			}
 			if(states.isSeriesSelected()){
-				listItems.addAll(seriesDataBase.getSeriesList());
+				displayList.addAll(seriesDataBase.getSeriesList());
 			}
 			if(states.isEpisodesSelected()){
-				listItems.addAll(seriesDataBase.getEpisodeList());
+				displayList.addAll(seriesDataBase.getEpisodeList());
 			}
 		}
 		
 		if(states.isMakersSelected()){
-			listItems.addAll(mediaMakerDataBase.getMediaMakerMap().values());
+			displayList.addAll(mediaMakerDataBase.getMediaMakerMap().values());
 		}
 		
 		else
@@ -107,7 +115,7 @@ public class MediaModel {
 				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
 				{
 					if (maker instanceof Actor)
-						listItems.add(maker);
+						displayList.add(maker);
 				}
 			}
 			
@@ -115,7 +123,7 @@ public class MediaModel {
 				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
 				{
 					if (maker instanceof Director)
-						listItems.add(maker);
+						displayList.add(maker);
 				}	
 			}
 			
@@ -123,7 +131,7 @@ public class MediaModel {
 				for (MediaMaker maker: mediaMakerDataBase.getMediaMakerMap().values())
 				{
 					if (maker instanceof Producer)
-						listItems.add(maker);
+						displayList.add(maker);
 				}
 			}
 		}
@@ -134,7 +142,7 @@ public class MediaModel {
 		fw = new FileWriter(fileName);
 		bw = new BufferedWriter(fw);
 		
-		for (ListItem i : listItems)
+		for (ListItem i : displayList)
 		{
 			bw.write(i.toString() + "\n");
 		}
@@ -147,77 +155,87 @@ public class MediaModel {
 	}
 	
 	public void addActionListenener(ActionListener listener){
-		if (list == null) {
-			list = new ArrayList<ActionListener>();
+		if (listenerList == null) {
+			listenerList = new ArrayList<ActionListener>();
 		}		
-		list.add(listener);
+		listenerList.add(listener);
 	}
 	
 	public void removeActionListener(ActionListener listener) {
-		if (list != null && list.contains(listener)) {
-			list.remove(listener);
+		if (listenerList != null && listenerList.contains(listener)) {
+			listenerList.remove(listener);
 		}
 	}
 	
 	public void processEvent(String message){
-		if(list.isEmpty()){
+		
+		/* Update the model's display list */
+		if (message.equals(EventMessages.DATA_CHANGED))
+			createDisplayItemList();
+		
+		if(listenerList.isEmpty()){
 			return;
 		} 
 		else {
-			for (ActionListener action : list) {
+			for (ActionListener action : listenerList) {
 				action.actionPerformed(new ActionEvent(this, 0, message));
 			}
 		}
 	}
 	
+	public void setButtonStates(RadioButtonStates states)
+	{
+		this.states = states;
+	}
+	
 	public void importFileMovie(String fileName) throws IOException{
 		movieDataBase.importMovieDataBase(fileName);
-		processEvent(EventMessages.MOVIE_IMPORT_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void loadFileMovie(String fileName) throws IOException{
 		movieDataBase.loadFile(fileName);
-		processEvent(EventMessages.MOVIE_LOAD_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void importFileSeries(String fileName) throws IOException{
 		seriesDataBase.importTvDataBase(fileName);
-		processEvent(EventMessages.SERIES_IMPORT_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void loadFileSeries(String fileName) throws IOException{
 		seriesDataBase.loadFile(fileName);
-		processEvent(EventMessages.SERIES_LOAD_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void importFileActor(String fileName) throws IOException{
 		mediaMakerDataBase.importActorDataBase(fileName);
-		processEvent(EventMessages.ACTOR_IMPORT_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void loadFileActor(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
-		processEvent(EventMessages.ACTOR_LOAD_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
-	
+	 
 	public void importFileDirector(String fileName) throws IOException{
 		mediaMakerDataBase.importDirectorDataBase(fileName);
-		processEvent(EventMessages.DIRECTOR_IMPORT_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void loadFileDirector(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
-		processEvent(EventMessages.DIRECTOR_LOAD_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void importFileProducer(String fileName) throws IOException{
 		mediaMakerDataBase.importProducerDataBase(fileName);
-		processEvent(EventMessages.PRODUCER_IMPORT_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	public void loadFileProducer(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
-		processEvent(EventMessages.PRODUCER_LOAD_FILE);
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 }

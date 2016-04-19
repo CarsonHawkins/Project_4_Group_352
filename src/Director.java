@@ -37,12 +37,12 @@ public class Director extends MediaMaker
 	 */
 	public String toString()
 	{
-		return null;
+		return super.toString();
 	}
 	
 	@Override
 	public String getDisplayText()
 	{
-		return "Director: " + super.getDisplayText();
+		return "Director: " + toString();
 	}
 }

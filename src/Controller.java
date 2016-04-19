@@ -12,12 +12,9 @@ public class Controller {
 	private SelectionView selectionView;
 	
 	/** Creates new Controller */
-	Controller() {
-		model = new MediaModel();
-		setModel(model);
+	Controller() 
+	{
 		
-		selectionView = new SelectionView();
-		setView(selectionView);
 	}
 	
 	public void setModel(MediaModel model) { 
@@ -40,6 +37,7 @@ public class Controller {
 		selectionView.addClearAllListener(new EditClearAllListener());
 		selectionView.addPieChartListener(new DisplayPieChartListener());
 		selectionView.addHistogramListener(new DisplayHistogramListener());
+		selectionView.addRadiobuttonChangedListener(new RadiobuttonChangedListener());
 	}
 	
 	public class FileSaveListener implements ActionListener
@@ -114,6 +112,7 @@ public class Controller {
 						model.importFileDirector(fileName);
 					if (fileType.equals("Producers"))
 						model.importFileProducer(fileName);
+					
 				}
 				catch (IOException ex)
 				{
@@ -132,14 +131,16 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			RadioButtonStates states = selectionView.getButtonStates();
+			if (states.isMakersSelected())
+				entryView = new MakerEntryView(MediaMaker.class);
 			if (states.isActorsSelected())
 				entryView = new MakerEntryView(Actor.class);
 			if (states.isDirectorsSelected())
 				entryView = new MakerEntryView(Director.class);
 			if (states.isProducersSelected())
 				entryView = new MakerEntryView(Producer.class);
-			entryView.addDoneListener(new EntryDoneListener());
 			
+			entryView.addDoneListener(new EntryDoneListener());	
 			
 		}
 		
@@ -156,15 +157,19 @@ public class Controller {
 						model.addDirector(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
 					if (maker instanceof Producer) 
 						model.addProducer(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+					
 				} catch (InstantiationException e1) {
 					e1.printStackTrace();
 				} catch (IllegalAccessException e1) {
 					e1.printStackTrace();
+				} finally {
+					entryView.dispose();
 				}
 			}
 			
 		}
 	}
+	
 	public class EditEditListener implements ActionListener {
 
 		MakerEntryView entryView = null;
@@ -175,7 +180,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			
-			makerToEdit = selectionView.getSelectedItem();				
+			makerToEdit = (MediaMaker) selectionView.getSelectedItem();				
 			entryView = new MakerEntryView(makerToEdit);
 		
 			entryView.addDoneListener(new EntryDoneListener());
@@ -188,9 +193,17 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Remove object from hashmap
+				model.mediaMakerDataBase.getMediaMakerMap().remove(makerToEdit.toString());
+				
+				//Change the object
 				makerToEdit.setMdbMediaFirstName(entryView.getFirstName());
 				makerToEdit.setMdbMediaLastName(entryView.getLastName());
-				makerToEdit.setMdbMediaDisambiguationNumber(entryView.getDisambiguationNumber());				
+				makerToEdit.setMdbMediaDisambiguationNumber(entryView.getDisambiguationNumber());	
+				
+				// Add it back under new key
+				model.mediaMakerDataBase.getMediaMakerMap().put(makerToEdit.toString(), makerToEdit);
+				entryView.dispose();
 			}
 			
 		}
@@ -202,7 +215,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			model.delete(selectionView.getSelectedObject());
+			model.delete(selectionView.getSelectedItem());
 			
 		}
 	}
@@ -235,7 +248,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			selectionView.displayPieChart();
+			selectionView.showPieChart((MediaMaker)selectionView.getSelectedItem());
 			
 		}
 	}
@@ -246,7 +259,7 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//TODO
-			selectionView.displayHistogram();			
+			selectionView.showHistogram((MediaMaker)selectionView.getSelectedItem());			
 		}
 	}
 	
@@ -254,7 +267,9 @@ public class Controller {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			model.createItemList(selectionView.getButtonStates());
+			model.setButtonStates(selectionView.getButtonStates());
+			model.createDisplayItemList();
+			model.processEvent(EventMessages.DATA_CHANGED);			
 		}
 	}
 }

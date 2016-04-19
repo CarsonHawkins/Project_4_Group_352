@@ -27,15 +27,15 @@ public class TVDataBase implements Serializable
 	private String mdbSeriesName;
 	private String mdbSeriesStartYear;
 	private String mdbSeriesEndYear;
-	private ArrayList<TVEpisode> episodeList;
-	private ArrayList<TVEpisode> episodeTitleList;
+	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
+	private ArrayList<TVEpisode> episodeTitleList = new ArrayList<>();
 	
 	private String mdbEpisodeSeriesName;
 	private String mdbEpisodeStartYear;
 	private String mdbEpisodeName;
 	private String mdbEpisodeYear;
-	private ArrayList<Series> seriesList;
-	private ArrayList<Series> seriesTitleList;
+	private ArrayList<Series> seriesList = new ArrayList<>();
+	private ArrayList<Series> seriesTitleList = new ArrayList<>();
 
 	/*
 	 * This method will take in a file containing the string arguments needed to create the 
@@ -75,8 +75,8 @@ public class TVDataBase implements Serializable
 				
 				if (rangeMatcher.find())
 				{
-					mdbSeriesStartYear = rangeMatcher.group(1);
-					mdbSeriesEndYear = rangeMatcher.group(2);
+					mdbSeriesStartYear = rangeMatcher.group(2);
+					mdbSeriesEndYear = rangeMatcher.group(3);
 				}
 				
 				Matcher nameMatcher = Pattern.compile(Regexes.TV_SERIES_TITLE).matcher(nextLine);

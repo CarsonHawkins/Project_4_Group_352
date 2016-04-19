@@ -267,7 +267,12 @@ public class MediaMakerDataBase implements Serializable
 				movieCredits = new ArrayList<Credit>(); 
 				episodeCredits = new ArrayList<Credit>();
 				
-				maker = new MediaMaker(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+				if (type == Credit.MakerType.PRODUCER)
+					maker = new Producer(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+				else
+					maker = new Director(mdbMediaFirstName,mdbMediaLastName,mdbMediaDisambiguationNumber,movieCredits,episodeCredits);
+					
+				
 				if (!mediaMakerMap.containsKey(maker.toString()))
 				{
 					mediaMakerMap.put(maker.toString() ,maker);
@@ -479,11 +484,7 @@ public class MediaMakerDataBase implements Serializable
  			 MediaMaker maker = this.get(key);
  		
  			 return maker;
- 		
-
  	} 
-
-	
 	
 	/**
 	 * @return the mediaMakerMap

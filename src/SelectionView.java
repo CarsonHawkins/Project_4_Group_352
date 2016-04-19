@@ -12,6 +12,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -39,7 +40,9 @@ public class SelectionView extends View
 	/** The panel that contains the controls */
 		   controlsPanel,
 	/** The panel that contains the data */
-		   dataPanel;
+		   dataPanel,
+	/** The panel that holds the data label */
+		   dataLabelPanel;
 	
 	JScrollPane scrollPane;
 	JList<ListItem> itemList;
@@ -69,6 +72,8 @@ public class SelectionView extends View
 			  editClearAllItem,
 			  displayPieChartItem,
 			  displayHistogramItem;
+	
+	JLabel dataLabel;
 	
 	Box buttonBox;
 	ButtonGroup group;
@@ -164,6 +169,7 @@ public class SelectionView extends View
 		group.add(directorsButton);
 		group.add(producersButton);
 
+		buttonBox.add(new JLabel("Selection"));
 		buttonBox.add(mediaButton);
 		buttonBox.add(moviesButton);
 		buttonBox.add(seriesButton);
@@ -177,14 +183,24 @@ public class SelectionView extends View
 		controlsPanel.add(buttonBox);
 
 		dataPanel = new JPanel();
-		dataPanel.setPreferredSize(new Dimension(500,400));
-		dataPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		dataPanel.setSize(new Dimension(500,400));
+		dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+		
+		dataLabelPanel = new JPanel();
+		dataLabel = new JLabel("Media");
+		dataLabelPanel.add(dataLabel);
+		dataLabelPanel.setPreferredSize(new Dimension(500, 20));
+		dataLabelPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
 		itemList = new JList<ListItem>(new ListItem[0]);
 		itemList.setCellRenderer(new MyRenderer());
 		itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane = new JScrollPane(itemList);
-		dataPanel.setLayout(new BorderLayout());
-		dataPanel.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setPreferredSize(new Dimension(500, 580));
+		
+		dataPanel.add(dataLabelPanel);
+		dataPanel.add(scrollPane);
+		
 		containerPanel.add(controlsPanel);
 		containerPanel.add(dataPanel);
 
@@ -371,6 +387,11 @@ public class SelectionView extends View
 	public DisplayView showHistogram(MediaMaker maker)
 	{
 		return new DisplayView(Display.ChartType.HISTOGRAM, maker);
+	}
+	
+	public void setDataLabel(String labelText)
+	{
+		dataLabel.setText(labelText);
 	}
 	
 	/**

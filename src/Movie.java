@@ -108,8 +108,8 @@ public class Movie extends Media implements Comparable<Movie>
 		//Determining whether or not there is more than one title with the same name. 
 		if(nextLine.contains("/I")) {
 			movieDate = "(" + (nextLine.substring(nextLine.length() - 4, nextLine.length()));
-			if(nextLine.contains("/IIII")) {
-				movieDate = nextLine.substring(nextLine.length() - 4, nextLine.length()) + "/IIII";
+			if(nextLine.contains("/IV")) {
+				movieDate = nextLine.substring(nextLine.length() - 4, nextLine.length()) + "/IV";
 			}
 
 			else if(nextLine.contains("/III")) {

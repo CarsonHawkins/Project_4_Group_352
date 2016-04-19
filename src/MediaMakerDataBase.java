@@ -518,8 +518,10 @@ public class MediaMakerDataBase implements Serializable
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFile(String fileName)
+	public void loadFile(String fileName) throws ClassNotFoundException, IOException
 	{
 		//TODO: load a file using object IO
 		FileInputStream fileInputStream = new FileInputStream(fileName);
@@ -529,15 +531,15 @@ public class MediaMakerDataBase implements Serializable
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
 			//FIXME
-			if(object.instanceOf()){
+			if(object instanceof Actor){
 				Actor actor = (Actor) object;
 				mediaMakerMap.put(actor.toString(), actor);
 			}
-			if (object.instanceOf()){
+			if (object instanceof Director){
 				Director director = (Director) object;
 				mediaMakerMap.put(director.toString(), director);
 			}
-			if (object.instanceOf()){
+			if (object instanceof Producer){
 				Producer producer = (Producer) object;
 				mediaMakerMap.put(producer.toString(), producer);
 			}
@@ -546,22 +548,22 @@ public class MediaMakerDataBase implements Serializable
 		return;
 	}
 	
-	public void saveFile(String fileName){
+	public void saveFile(String fileName) throws IOException{
 
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-		ArrayList<Actor> outputActors;
-		ArrayList<Director> outputDirectors;
-		ArrayList<Producer> outputProducers;
+		ArrayList<Actor> outputActors = new ArrayList<Actor>();
+		ArrayList<Director> outputDirectors  = new ArrayList<Director>();
+		ArrayList<Producer> outputProducers = new ArrayList<Producer>();
 		for(MediaMaker maker : mediaMakerMap.values()){
 			//FIXME
-			if(maker.instanceOf()){
+			if(maker instanceof Actor){
 				outputActors.add((Actor) maker);
 			}
-			if(maker.instanceOf()){
+			if(maker instanceof Director){
 				outputDirectors.add((Director) maker);
 			}
-			if(maker.instanceOf()){
+			if(maker instanceof Producer){
 				outputProducers.add((Producer) maker);
 			}
 		}

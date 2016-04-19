@@ -238,4 +238,38 @@ public class MediaModel {
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	public void delete(ListItem item){
+		if (item instanceof Movie){
+			movieDataBase.getMovieList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof MediaMaker){
+			mediaMakerDataBase.getMediaMakerMap().remove(item.toString());
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof TVEpisode){
+			seriesDataBase.getEpisodeList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+		if (item instanceof Series){
+			seriesDataBase.getSeriesList().remove(item);
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+	}
+	
+	public void clear(){
+		for (ListItem item : displayList){
+			displayList.clear();
+			processEvent(EventMessages.DATA_CHANGED);
+		}
+	}
+	
+	public void clearAll(){
+		movieDataBase.getMovieList().clear();
+		mediaMakerDataBase.getMediaMakerMap().clear();
+		seriesDataBase.getEpisodeList().clear();
+		seriesDataBase.getSeriesList().clear();
+		processEvent(EventMessages.DATA_CHANGED);
+	}
+	
 }

@@ -404,11 +404,11 @@ public class TVDataBase implements Serializable
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
 			//FIXME
-			if( object.instanceOf()){
+			if(object instanceof TVEpisode){
 				TVEpisode episode = (TVEpisode) object;
 				episodeList.add(episode);
 			}
-			if (object.instanceOf()){
+			if (object instanceof Series){
 				Series series = (Series) object;
 				seriesList.add(series);
 			}

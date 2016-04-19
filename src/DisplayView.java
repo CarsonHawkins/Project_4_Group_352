@@ -16,13 +16,13 @@ public class DisplayView extends View
 		super();
 		this.chartType = type;
 		this.maker = maker;
-		this.actionPerformed(new ActionEvent(this, 0, "Info Changed"));
+		this.actionPerformed(new ActionEvent(this, 0, EventMessages.DATA_CHANGED));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getActionCommand().equals("Info Changed"))
+		if (e.getActionCommand().equals(EventMessages.DATA_CHANGED))
 		{
 			initComponents();
 		}
@@ -43,13 +43,13 @@ public class DisplayView extends View
 		if (chartType == Display.ChartType.PIE_CHART)
 		{
 			setTitle(maker.getMdbMediaFirstName() + " " + maker.getMdbMediaLastName() + " - Percentage of Credits"/*maker.getName()*/);
-			setSize(new Dimension(1280, 680));
+			setSize(new Dimension(640, 340));
 
 		}
 		if (chartType == Display.ChartType.HISTOGRAM)
 		{
 			setTitle(maker.getMdbMediaFirstName() + " " + maker.getMdbMediaLastName() + " - Credits over Time"/*maker.getName()*/);
-			setSize(new Dimension(1280, 680));
+			setSize(new Dimension(640, 340));
 		}
 		
 		display = new Display(chartType, maker);

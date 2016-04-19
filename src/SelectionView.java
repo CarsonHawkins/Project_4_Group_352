@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -17,7 +20,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListDataListener;
 
+/**
+ * The main view of the project
+ * @author dlsch
+ *
+ */
 public class SelectionView extends View
 {
 	/////// Only exists for testing purposes
@@ -31,7 +42,8 @@ public class SelectionView extends View
 		   dataPanel;
 	
 	JScrollPane scrollPane;
-	JTextArea textArea;
+	JList<ListItem> itemList;
+	ListModel<ListItem> itemListModel;
 	
 	/** The menu bar at the top */
 	JMenuBar menuBar;
@@ -72,6 +84,9 @@ public class SelectionView extends View
 	
 	MediaModel model;
 	
+	/**
+	 * Constructor for selectionview
+	 */
 	public SelectionView()
 	{
 		super();
@@ -82,6 +97,8 @@ public class SelectionView extends View
 	{
 		this.setTitle("MDb");
 		this.setSize(600, 400);
+		this.setMinimumSize(new Dimension(400,280));
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		menuBar = new JMenuBar();
 		 fileMenu = new JMenu("File");
@@ -124,15 +141,16 @@ public class SelectionView extends View
 		containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.X_AXIS));
 
 		controlsPanel = new JPanel();
-		controlsPanel.setPreferredSize(new Dimension(200,400));
+		controlsPanel.setPreferredSize(new Dimension(100,400));
 		controlsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		buttonBox = Box.createVerticalBox();
-		mediaButton = new JRadioButton("All Media");
+		mediaButton = new JRadioButton("Media");
+		mediaButton.setSelected(true);
 		moviesButton = new JRadioButton("Movies");
 		seriesButton = new JRadioButton("Series");
 		episodesButton = new JRadioButton("Episodes");
-		makersButton = new JRadioButton("All Makers");
+		makersButton = new JRadioButton("Makers");
 		actorsButton = new JRadioButton("Actors");
 		directorsButton = new JRadioButton("Directors");
 		producersButton = new JRadioButton("Producers");
@@ -159,14 +177,14 @@ public class SelectionView extends View
 		controlsPanel.add(buttonBox);
 
 		dataPanel = new JPanel();
-		dataPanel.setPreferredSize(new Dimension(400,400));
+		dataPanel.setPreferredSize(new Dimension(500,400));
 		dataPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		textArea = new JTextArea("hello\nMy name is textarea\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nI scroll");
-		scrollPane = new JScrollPane(textArea);
+		itemList = new JList<ListItem>(new ListItem[0]);
+		itemList.setCellRenderer(new MyRenderer());
+		itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		scrollPane = new JScrollPane(itemList);
 		dataPanel.setLayout(new BorderLayout());
 		dataPanel.add(scrollPane, BorderLayout.CENTER);
-		textArea.setLineWrap(true);  
-		textArea.setWrapStyleWord(true); 
 		containerPanel.add(controlsPanel);
 		containerPanel.add(dataPanel);
 
@@ -179,13 +197,17 @@ public class SelectionView extends View
 	public void setModel(MediaModel m)
 	{
 		this.model = m;
+		itemList.setListData(m.displayList.toArray(new ListItem[m.displayList.size()]));
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		if (model == null)
+			return;
+		
 		/* Enables save/export options if model has objects, else disables them */
-		boolean enableButtons = !model.listItems.isEmpty();
+		boolean enableButtons = !model.displayList.isEmpty();
 		fileSaveItem.setEnabled(enableButtons);
 		fileExportItem.setEnabled(enableButtons);
 		editEditItem.setEnabled(enableButtons);
@@ -202,6 +224,14 @@ public class SelectionView extends View
 							   s.isDirectorsSelected() ||
 							   s.isProducersSelected());
 		
+		itemList.setListData(model.displayList.toArray(new ListItem[model.displayList.size()]));
+
+		
+	}
+	
+	public ListItem getSelectedItem()
+	{
+		return model.displayList.get(this.itemList.getSelectedIndex());
 	}
 
 	private void addListenerToComponent(AbstractButton b, ActionListener l)
@@ -331,5 +361,34 @@ public class SelectionView extends View
 				actorsButton.isSelected(),
 				directorsButton.isSelected(),
 				producersButton.isSelected());
+	}
+	
+	public DisplayView showPieChart(MediaMaker maker)
+	{
+		return new DisplayView(Display.ChartType.PIE_CHART, maker);
+	}
+	
+	public DisplayView showHistogram(MediaMaker maker)
+	{
+		return new DisplayView(Display.ChartType.HISTOGRAM, maker);
+	}
+	
+	/**
+	 * Custom renderer for the JList so it diplays getDisplayText instead of ToString,
+	 *
+	 */
+	class MyRenderer extends DefaultListCellRenderer 
+	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+		{
+			Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		    setText(((ListItem) value).getDisplayText()); // where getValue is some method you implement that gets the text you want to render for the component
+		    return c;
+		}
 	}
 }

@@ -38,6 +38,15 @@ public class MakerEntryView extends DataEntryView
 		this.lastNameArea.setText(last);
 		this.disambiguationArea.setText(disamb);
 	}
+	
+	public MakerEntryView(MediaMaker maker)
+	{
+		super();
+		this.setTitle("Enter " + maker.getClass().getName() + " data");
+		this.firstNameArea.setText(maker.getMdbMediaFirstName());
+		this.lastNameArea.setText(maker.getMdbMediaLastName());
+		this.disambiguationArea.setText(maker.getMdbMediaDisambiguationNumber());
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0)
@@ -86,6 +95,21 @@ public class MakerEntryView extends DataEntryView
 		maker.setMdbMediaDisambiguationNumber(disambiguationArea.getText());
 		return maker;
 		
+	}
+
+	public String getFirstName()
+	{
+		return firstNameArea.getText();
+	}
+
+	public String getLastName()
+	{
+		return lastNameArea.getText();
+	}
+
+	public String getDisambiguationNumber()
+	{
+		return disambiguationArea.getText();
 	}
 
 	public void addDoneListener(ActionListener listener)

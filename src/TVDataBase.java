@@ -420,12 +420,14 @@ public class TVDataBase implements Serializable
 	public void saveFile(String fileName) throws IOException{
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		
 		//FIXME
 		if(){
 			for(Series series : seriesList){
 				objectOutputStream.writeObject(series);
 			}
 		}
+		
 		// FIXME
 		if(){
 			for(TVEpisode episode : episodeList){

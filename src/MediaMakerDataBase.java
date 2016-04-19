@@ -555,6 +555,7 @@ public class MediaMakerDataBase implements Serializable
 		ArrayList<Actor> outputActors = new ArrayList<Actor>();
 		ArrayList<Director> outputDirectors  = new ArrayList<Director>();
 		ArrayList<Producer> outputProducers = new ArrayList<Producer>();
+		
 		for(MediaMaker maker : mediaMakerMap.values()){
 			//FIXME
 			if(maker instanceof Actor){

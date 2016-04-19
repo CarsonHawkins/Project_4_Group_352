@@ -239,6 +239,7 @@ public class MediaModel {
 	}
 	
 	public void delete(ListItem item){
+	
 		if (item instanceof Movie){
 			movieDataBase.getMovieList().remove(item);
 			processEvent(EventMessages.DATA_CHANGED);

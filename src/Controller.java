@@ -125,20 +125,73 @@ public class Controller {
 
 	public class EditAddListener implements ActionListener {
 
+		MakerEntryView entryView = null;
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			RadioButtonStates states = selectionView.getButtonStates();
+			if (states.isActorsSelected())
+				entryView = new MakerEntryView(Actor.class);
+			if (states.isDirectorsSelected())
+				entryView = new MakerEntryView(Director.class);
+			if (states.isProducersSelected())
+				entryView = new MakerEntryView(Producer.class);
+			entryView.addDoneListener(new EntryDoneListener());
 			
+			
+		}
+		
+		class EntryDoneListener implements ActionListener
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					MediaMaker maker = entryView.instantiate();
+					if (maker instanceof Actor)
+						model.addActor(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+					if (maker instanceof Director)
+						model.addDirector(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+					if (maker instanceof Producer) 
+						model.addProducer(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), null, null);
+				} catch (InstantiationException e1) {
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					e1.printStackTrace();
+				}
+			}
 			
 		}
 	}
 	public class EditEditListener implements ActionListener {
 
+		MakerEntryView entryView = null;
+		MediaMaker makerToEdit = null;
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			
+			makerToEdit = selectionView.getSelectedItem();				
+			entryView = new MakerEntryView(makerToEdit);
+		
+			entryView.addDoneListener(new EntryDoneListener());
+			
+			
+		}
+		
+		class EntryDoneListener implements ActionListener
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				makerToEdit.setMdbMediaFirstName(entryView.getFirstName());
+				makerToEdit.setMdbMediaLastName(entryView.getLastName());
+				makerToEdit.setMdbMediaDisambiguationNumber(entryView.getDisambiguationNumber());				
+			}
 			
 		}
 	}
@@ -148,6 +201,8 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			//TODO
+			model.delete(selectionView.getSelectedObject());
 			
 		}
 	}
@@ -157,6 +212,8 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			//TODO
+			model.clear();
 			
 		}
 	}
@@ -166,6 +223,8 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			//TODO
+			model.clearAll();
 			
 		}
 	}
@@ -175,6 +234,8 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
+			//TODO
+			selectionView.displayPieChart();
 			
 		}
 	}
@@ -184,7 +245,8 @@ public class Controller {
 		public void actionPerformed(ActionEvent e) {
 			if (model == null)
 				return; // No model associated yet. Do nothing
-			
+			//TODO
+			selectionView.displayHistogram();			
 		}
 	}
 	

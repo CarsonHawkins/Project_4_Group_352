@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * The main driver class. Kicks it all off
  * @author dlsch
@@ -22,5 +24,18 @@ public class Driver
 		model.setButtonStates(selectionView.getButtonStates());
 		controller.setModel(model);
 		selectionView.setModel(model);
+	}
+	
+	/**
+	 * Random utility method I don't know where else to pu
+	 * @param first
+	 * @param second
+	 * @return
+	 */
+	public static <T> T[] concat(T[] first, T[] second) 
+	{
+	  T[] result = Arrays.copyOf(first, first.length + second.length);
+	  System.arraycopy(second, 0, result, first.length, second.length);
+	  return result;
 	}
 }

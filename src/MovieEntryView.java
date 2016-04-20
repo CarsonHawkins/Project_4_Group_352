@@ -11,11 +11,17 @@ public class MovieEntryView extends MediaEntryView
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/** Label for title */
 	JLabel titleLabel,
+	/** label for date */
 		   dateLabel,
+		   /** label for release  */
 		   releaseFormLabel;
+	/** textarea for title*/
 	JTextArea titleArea,
+	/** textarea for date */
 			 dateArea;
+	/** combobox for releaseform */
 	JComboBox<String> releaseFormPicker;
 			 
 	@Override
@@ -46,6 +52,11 @@ public class MovieEntryView extends MediaEntryView
 
 		this.add(panel);
 		this.setVisible(true);
+	}
+	
+	public MovieEntryView()
+	{
+		super();
 	}
 	
 	/**

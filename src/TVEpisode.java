@@ -23,6 +23,7 @@ import java.util.Comparator;
 		private String episodeStartYear;
 		private String episodeInfo;
 		private String episodeYear;
+		private Series series;
 		
 		/*
 		 * The default constructor of the TvSeries class.
@@ -108,6 +109,18 @@ import java.util.Comparator;
 			return episodeInfo;
 		}
 		
+		
+		
+		public Series getSeries()
+		{
+			return series;
+		}
+
+		public void setSeries(Series series)
+		{
+			this.series = series;
+		}
+
 		/**
 		 * @return the tvseriesyearcomparator
 		 */

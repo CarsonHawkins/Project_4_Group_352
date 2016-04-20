@@ -1,10 +1,10 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -20,10 +20,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListDataListener;
 
 /**
  * The main view of the project
@@ -86,6 +84,10 @@ public class SelectionView extends View
 				 directorsButton,
 				 producersButton;
 	
+	/**
+	 * A list of episodeentryviews used to update series lists
+	 */
+	public ArrayList<EpisodeEntryView> epEntViews;
 	
 	MediaModel model;
 	
@@ -244,7 +246,13 @@ public class SelectionView extends View
 		
 		itemList.setListData(model.displayList.toArray(new ListItem[model.displayList.size()]));
 
-		
+		if (epEntViews.size() > 0)
+		{
+			for (EpisodeEntryView eev : epEntViews)
+			{
+				eev.setSerieses();
+			}
+		}
 	}
 	
 	public ListItem getSelectedItem()

@@ -41,7 +41,7 @@ public class MovieDataBase extends Movie implements Serializable
 	 * @return 
 	 * An ArrayList<Movie> objects
 	 */
-	public ArrayList<Movie> importMovieDatabase(String fileName)throws IOException
+	public ArrayList<Movie> importMovieDataBase(String fileName)throws IOException
 	{
 		///Initializes the variable nextLine and call in the File to be able to read the Lines from it 
 		FileReader fr = new FileReader(fileName);

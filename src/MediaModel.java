@@ -11,30 +11,56 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MediaModel {
+	//make the arrayLists of actionListeners and the list of items going to be displayed
 	public ArrayList<ActionListener> listenerList = new ArrayList<>();
+	public ArrayList<ListItem> displayList = new ArrayList<>();
+	//make the dataBases for all types of data.
 	public TVDataBase seriesDataBase = new TVDataBase();
 	public MovieDataBase movieDataBase = new MovieDataBase();
 	public MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
-	public ArrayList<ListItem> displayList = new ArrayList<>();
-	
+	//make the buffWriter and fileWriter
 	private FileWriter fw;
 	private BufferedWriter bw;
 	
 	/** the state of the view's buttons, as the model remembers them */
 	private RadioButtonStates states;
 	
+	/**
+	 * The method for taking in data from the view and making a new Movie for its lists.
+	 * 
+	 * @param title : title of the movie
+	 * @param date : the date it was released
+	 * @param releaseForm : TV, DVD, or to Theater.
+	 * @param release : the year it was released
+	 */
 	public void addMovie(String title, String date, String releaseForm, String release){
 		Movie movie = new Movie(title, date, releaseForm, release);
 		movieDataBase.getMovieList().addMovie(movie);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * The method for taking in data from the view and making a new Series for its lists.
+	 * 
+	 * @param name : the name of the series
+	 * @param startYear : the year it started
+	 * @param endYear : the year it ended or if it is still going
+	 */
 	public void addSeries(String name, String startYear, String endYear){
 		Series series = new Series(name, startYear, endYear);
 		seriesDataBase.getSeriesList().add(series);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * The method for taking in data from the view and making a new Episode for its lists.
+	 * 
+	 * @param name : the name of the episode
+	 * @param startYear : the start year of the series
+	 * @param episodeInfo :  the season number and episode number
+	 * @param episodeYear : the year that the episode came out
+	 * @param series : the series that it is a part of
+	 */
 	public void addEpisode(String name, String startYear, String episodeInfo, String episodeYear, Series series){
 		
 		for(TVEpisode episode : series.getEpisodeList()){
@@ -61,18 +87,45 @@ public class MediaModel {
 		}		
 	}
 	
+	/**
+	 * The method for making a new actor object and adding it to the lists it belongs to 
+	 * 
+	 * @param lastName : the last name of the actor
+	 * @param firstName : the first name of the actor
+	 * @param num : the numeral denoting if the actor has the same name as another
+	 * @param movieCredits : the credits for all the movies the actor was in
+	 * @param seriesCredits : the credits for all of the TVSeries the actor was in
+	 */
 	public void addActor(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Actor actor = new Actor(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(actor.toString(), actor);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * The method for making a new director object and adding it to the lists it belongs to 
+	 * 
+	 * @param lastName : the last name of the director
+	 * @param firstName : the first name of the director
+	 * @param num : the numeral denoting if the director has the same name as another
+	 * @param movieCredits : the credits for all the movies the director made
+	 * @param seriesCredits : the credits for all of the TVSeries the director made
+	 */
 	public void addDirector(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Director director = new Director(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(director.toString(), director);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * The method for making a new producer object and adding it to the lists it belongs to 
+	 * 
+	 * @param lastName : the last name of the producer
+	 * @param firstName : the first name of the producer
+	 * @param num : the numeral denoting if the producer has the same name as another
+	 * @param movieCredits : the credits for all the movies the producer made
+	 * @param seriesCredits : the credits for all of the TVSeries the produicer made
+	 */
 	public void addProducer(String lastName, String firstName, String num, ArrayList<Credit> movieCredits, ArrayList<Credit> seriesCredits){
 		Producer producer = new Producer(lastName, firstName, num, movieCredits, seriesCredits);
 		mediaMakerDataBase.getMediaMakerMap().put(producer.toString(),producer);
@@ -80,8 +133,7 @@ public class MediaModel {
 	}
 	
 	/**
-	 * Creates the list of objects to be displayed in the SelectionView
-	 * @param states
+	 * Creates the list of objects to be displayed in the SelectionView.
 	 */
 	public void createDisplayItemList()
 	{
@@ -139,6 +191,12 @@ public class MediaModel {
 		}
 	}
 	
+	/**
+	 * method for exporting the file using text.
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void export(String fileName) throws IOException
 	{
 		fw = new FileWriter(fileName);
@@ -158,9 +216,13 @@ public class MediaModel {
 		processEvent(EventMessages.FILE_EXPORTED);
 	}
 	
+	/**
+	 * Method for saving the file using I/O and Serializable.
+	 * 
+	 * @throws IOException
+	 */
 	public  void save() throws IOException{
-		
-		//TODO: use fileSelector to determine where the user wishes to save to
+		// use fileSelector to determine where the user wishes to save to
 		String location = FileSelector.showSaveDialog();
 		FileOutputStream out = new FileOutputStream(location);
 		ObjectOutputStream oos = new ObjectOutputStream(out);
@@ -172,6 +234,11 @@ public class MediaModel {
 		processEvent(EventMessages.FILE_SAVED);
 	}
 	
+	/**
+	 * Method for adding actionListeners to the actionListenerList
+	 * 
+	 * @param listener : the listener that is going to be added
+	 */
 	public void addActionListenener(ActionListener listener){
 		if (listenerList == null) {
 			listenerList = new ArrayList<ActionListener>();
@@ -179,12 +246,22 @@ public class MediaModel {
 		listenerList.add(listener);
 	}
 	
+	/**
+	 * Method for removing the action listener from the actionListenerList
+	 * 
+	 * @param listener : the listener that is going to be removed
+	 */
 	public void removeActionListener(ActionListener listener) {
 		if (listenerList != null && listenerList.contains(listener)) {
 			listenerList.remove(listener);
 		}
 	}
 	
+	/**
+	 * This method will be called every time any method is performed in order to update the view.
+	 * 
+	 * @param message : the message that will be displayed
+	 */
 	public void processEvent(String message){
 		
 		/* Update the model's display list */
@@ -201,61 +278,130 @@ public class MediaModel {
 		}
 	}
 	
+	/**
+	 * Method for setting the states of the radioButtons 
+	 * 
+	 * @param states : the states of the radio buttons
+	 */
 	public void setButtonStates(RadioButtonStates states)
 	{
 		this.states = states;
 	}
 	
+	/**
+	 * Method for importing a Movie file using Text
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void importFileMovie(String fileName) throws IOException{
 		movieDataBase.importMovieDataBase(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for loading a movie file using object I/O
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void loadFileMovie(String fileName) throws IOException{
 		movieDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for importing a series file using Text
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void importFileSeries(String fileName) throws IOException{
 		seriesDataBase.importTvDataBase(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for loading a series file using object I/O
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void loadFileSeries(String fileName) throws IOException{
 		seriesDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
-	
+	/**
+	 * Method for importing an actor file using Text
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void importFileActor(String fileName) throws IOException{
 		mediaMakerDataBase.importActorDataBase(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for loading an actor file using object I/O
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void loadFileActor(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
-	 
+	/**
+	 * Method for importing a director file using Text
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void importFileDirector(String fileName) throws IOException{
 		mediaMakerDataBase.importDirectorDataBase(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for loading a director file using object I/O
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void loadFileDirector(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for importing a producer file using Text
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void importFileProducer(String fileName) throws IOException{
 		mediaMakerDataBase.importProducerDataBase(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method for loading a producer file using object I/O
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void loadFileProducer(String fileName) throws IOException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
+	/**
+	 * Method that is used when the user clicks the delete function of the edit menu.
+	 * It will delete the selected object from the displayList and its database list
+	 * 
+	 * @param item : the item that is going to be deleted
+	 */
 	public void delete(ListItem item){
 	
 		if (item instanceof Movie){
@@ -276,13 +422,19 @@ public class MediaModel {
 		}
 	}
 	
+	/**
+	 *  method for when the user selects the clear function of the edit menu.
+	 *  This will clear the display list.
+	 */
 	public void clear(){
-		for (ListItem item : displayList){
 			displayList.clear();
 			processEvent(EventMessages.DATA_CHANGED);
-		}
 	}
 	
+	/**
+	 * Method for when the user selects Clear All in the edit menu.  
+	 * This will clear all of the lists, essentially making it all start from scratch 
+	 */
 	public void clearAll(){
 		movieDataBase.getMovieList().clear();
 		mediaMakerDataBase.getMediaMakerMap().clear();

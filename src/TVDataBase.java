@@ -14,34 +14,35 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Project #2
- * CS 2334, Section ***  ***
- * *** 02-019-2016 ***
- * @author Ramon Valenzuela
+ * Project #4
+ * CS 2334, Section 013
+ * 04-21-16
+ * @author Carson Hawkins, Daniel Schon, and Eric Morales
  * <P>
- * This is the TvDataBase class of Project1. 
+ * This is the TvDataBase class of Project4. 
  * </P>
  * @version 1.0
  */
 public class TVDataBase implements Serializable
 {
-	/**
-	 * 
-	 */
+	//SerialUID to make it serializable.
 	private static final long serialVersionUID = 3385515282733881905L;
+	
+	//Variables for the series part of the TVDataBase
 	private String mdbSeriesName;
 	private String mdbSeriesStartYear;
 	private String mdbSeriesEndYear;
-	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
-	private ArrayList<TVEpisode> episodeTitleList = new ArrayList<>();
-	
+	private ArrayList<Series> seriesList = new ArrayList<>();
+	private ArrayList<Series> seriesTitleList = new ArrayList<>();
+
+	//Variables for the episode part of the TVDataBase
 	private String mdbEpisodeSeriesName;
 	private String mdbEpisodeStartYear;
 	private String mdbEpisodeName;
 	private String mdbEpisodeYear;
-	private ArrayList<Series> seriesList = new ArrayList<>();
-	private ArrayList<Series> seriesTitleList = new ArrayList<>();
-
+	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
+	private ArrayList<TVEpisode> episodeTitleList = new ArrayList<>();
+	
 	/*
 	 * This method will take in a file containing the string arguments needed to create the 
 	 * Series objects. First it will read the file line by line, parsing the strings based on 
@@ -55,25 +56,29 @@ public class TVDataBase implements Serializable
 	 */
 	public ArrayList<Series> importTvDataBase(String fileName) throws IOException
 	{
+		//The String representing the read in text
 		String nextLine;
-		
+		//FileReader and BufferedReader for reading in the contents
 		FileReader fileReader = new FileReader(fileName);
-		
 		BufferedReader br = new BufferedReader(fileReader);
-		
+		//An Array of Strings that contains
 		String list[];
-				
+		//ArrayList of Episodes and set the seriesList to be a new ArrayList
 		episodeList = new ArrayList<TVEpisode>();
 		setSeriesList(new ArrayList<Series>());
+		//ArrayLists for the Titles of the episodes and series
 		episodeTitleList = new ArrayList<TVEpisode>();
 		seriesTitleList = new ArrayList<Series>();
 		
+		//set nextLine to be the first line from the file
 		nextLine = br.readLine();
 		
+		//while nextLine isn't empty..
 		while(nextLine != null)
 		{
+			//split it at whitespace
 			list = nextLine.split("[ |\t]+");
-			
+			// if it the length of the list is 9, use the rangeMatcher to assign the variables.
 			if(list[list.length - 1].length() == 9)
 			{
 				Matcher rangeMatcher = Pattern.compile(Regexes.DATE_RANGE).matcher(nextLine);
@@ -96,6 +101,7 @@ public class TVDataBase implements Serializable
 				
 				getSeriesList().add(seriesObject);				
 			}
+			//otherwise it is an episode, so use the matcher to assign the variables.
 			else
 			{
 				// Find series name
@@ -140,11 +146,12 @@ public class TVDataBase implements Serializable
 			
 			nextLine = br.readLine();
 		}
-			
+		// when index is < the size of the seriesList, print the series.toString
 		for(int index = 0; index < getSeriesList().size(); index++)
 		{
 			System.out.println(getSeriesList().get(index).toString());
 		}
+		// when index is < the size of episodeList, print out the episode.toString
 		for(int index = 0; index < episodeList.size(); index++)
 		{
 			System.out.println(episodeList.get(index).toString());
@@ -209,7 +216,14 @@ public class TVDataBase implements Serializable
 		return positiveList;
 	}
 	 
-	
+	/**
+	 * Method for searching using a specific title
+	 * 
+	 * @param seriesTitle : 
+	 * @param seriesTitleSearch :
+	 * @param seriesList :
+	 * @return count : the count of the series that match
+	 */
 	public static int specificTitleSearch(Series seriesTitle, ArrayList<String> seriesTitleSearch, ArrayList<Series> seriesList) 
 	{ 
 		Collections.sort(seriesList);
@@ -394,12 +408,13 @@ public class TVDataBase implements Serializable
 	 * Load a file and add it to the database
 	 * @param fileName
 	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFile(String fileName) throws IOException
+	public void loadFile(String fileName) throws IOException, ClassNotFoundException
 	{
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-		// TODO: use intance of to determine whether it is episode or series
+		// TODO: use instanceof to determine whether it is episode or series
 		Object object;
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
@@ -417,24 +432,37 @@ public class TVDataBase implements Serializable
 		return;
 	}
 	
+	/**
+	 * save a file to the provided fileName
+	 * 
+	 * @param fileName :  the name of the location to be saved to
+	 * @throws IOException
+	 */
 	public void saveFile(String fileName) throws IOException{
+		// make the fileOutputStream and objectOutputStream
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		
+		// if the type of selected file is series
 		//FIXME
 		if(){
+			// for each series in serieslist..
 			for(Series series : seriesList){
+				//write the object to the file
 				objectOutputStream.writeObject(series);
 			}
 		}
-		
+		// if the type of selected file is episode
 		// FIXME
 		if(){
+			// for each episode in episodeList..
 			for(TVEpisode episode : episodeList){
+				//write the episode to the file
 				objectOutputStream.writeObject(episode);
 			}
 		}
-			objectOutputStream.close();
+		//close the oos.
+		objectOutputStream.close();
 
 	}
 

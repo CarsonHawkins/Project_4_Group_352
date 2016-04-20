@@ -10,6 +10,7 @@ public class DisplayView extends View
 	private Display.ChartType chartType;
 	private MediaMaker maker;
 	private Display display;
+	private MediaModel model;
 	
 	public DisplayView(Display.ChartType type, MediaMaker maker)
 	{
@@ -36,6 +37,11 @@ public class DisplayView extends View
 			this.remove(display);
 		}
 		
+		if (maker == null)
+		{
+			this.dispose();
+		}
+		
 		setResizable(false);
 		this.setVisible(true);
 		
@@ -57,4 +63,8 @@ public class DisplayView extends View
 		setVisible(true);
 	}
 
+	public void ActionPerformed(ActionEvent e)
+	{
+		initComponents();
+	}
 }

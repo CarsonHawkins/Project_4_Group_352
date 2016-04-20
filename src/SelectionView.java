@@ -42,7 +42,9 @@ public class SelectionView extends View
 	/** The panel that holds the data label */
 		   dataLabelPanel;
 	
+	/** scrollpane that contains items to be displayed */
 	JScrollPane scrollPane;
+	/** component that actually displays the info */
 	JList<ListItem> itemList;
 	
 	/** The menu bar at the top */
@@ -62,31 +64,48 @@ public class SelectionView extends View
 			  fileExportItem,
 	/** item that imports */
 			  fileImportItem,
+	/** item that adds */
 			  editAddItem,
+	/** item that edits */
 			  editEditItem,
+	/** item that deletes */
 			  editDeleteItem,
+	/** item that clears */
 			  editClearItem,
+	/** item that clears all */
 			  editClearAllItem,
+	/** item that displays a piechart */
 			  displayPieChartItem,
+	/** item that displays a histogram */
 			  displayHistogramItem;
 	
+	/** label for the data */
 	JLabel dataLabel;
 	
+	/** box for buttons */
 	Box buttonBox;
+	/** group for buttons */
 	ButtonGroup group;
+	/** radiobutton for media */
 	JRadioButton mediaButton,
+	/** radiobutton for movies */
 				 moviesButton,
+	 /** radiobutton for series */
 				 seriesButton,
+	 /** radiobutton for episodes */
 				 episodesButton,
+	 /** radiobutton for makers */
 				 makersButton,
+	 /** radiobutton for actors */
 				 actorsButton,
+	 /** radiobutton for directors */
 				 directorsButton,
+	 /** radiobutton for producers */
 				 producersButton;
 	
 	/**
 	 * A list of episodeentryviews used to update series lists
 	 */
-	
 	MediaModel model;
 	
 	/**
@@ -97,6 +116,7 @@ public class SelectionView extends View
 		super();
 	}
 	
+	/** Initializes the components */
 	@Override
 	protected void initComponents()
 	{
@@ -246,11 +266,13 @@ public class SelectionView extends View
 
 	}
 	
+	/**returns the selected item */
 	public ListItem getSelectedItem()
 	{
 		return model.displayList.get(this.itemList.getSelectedIndex());
 	}
 
+	/** adds a given listener to a given component */
 	private void addListenerToComponent(AbstractButton b, ActionListener l)
 	{
 		if (b != null)
@@ -355,6 +377,10 @@ public class SelectionView extends View
 		addListenerToComponent(displayHistogramItem, listener);
 	}
 	
+	/**
+	 * Adds a listener to every radiobutton
+	 * @param listener
+	 */
 	public void addRadiobuttonChangedListener(ItemListener listener)
 	{
 		mediaButton.addItemListener(listener);
@@ -367,6 +393,10 @@ public class SelectionView extends View
 		producersButton.addItemListener(listener);
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public RadioButtonStates getButtonStates()
 	{
 		return new RadioButtonStates(

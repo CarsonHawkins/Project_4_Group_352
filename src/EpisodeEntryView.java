@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -92,6 +93,13 @@ public class EpisodeEntryView extends MediaEntryView
 	public void setSerieses()
 	{
 		seriesPicker = new JComboBox<Series>((Series[]) model.seriesDataBase.getSeriesList().toArray());
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getActionCommand().equals(EventMessages.DATA_CHANGED))
+			setSerieses();
 	}
 
 }

@@ -44,7 +44,6 @@ public class SelectionView extends View
 	
 	JScrollPane scrollPane;
 	JList<ListItem> itemList;
-	ListModel<ListItem> itemListModel;
 	
 	/** The menu bar at the top */
 	JMenuBar menuBar;
@@ -87,7 +86,6 @@ public class SelectionView extends View
 	/**
 	 * A list of episodeentryviews used to update series lists
 	 */
-	public ArrayList<EpisodeEntryView> epEntViews;
 	
 	MediaModel model;
 	
@@ -246,13 +244,6 @@ public class SelectionView extends View
 		
 		itemList.setListData(model.displayList.toArray(new ListItem[model.displayList.size()]));
 
-		if (epEntViews.size() > 0)
-		{
-			for (EpisodeEntryView eev : epEntViews)
-			{
-				eev.setSerieses();
-			}
-		}
 	}
 	
 	public ListItem getSelectedItem()

@@ -221,9 +221,8 @@ public class MediaModel {
 	 * 
 	 * @throws IOException
 	 */
-	public  void save() throws IOException{
+	public void save(String location) throws IOException{
 		// use fileSelector to determine where the user wishes to save to
-		String location = FileSelector.showSaveDialog();
 		FileOutputStream out = new FileOutputStream(location);
 		ObjectOutputStream oos = new ObjectOutputStream(out);
 		

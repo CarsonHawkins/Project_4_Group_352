@@ -453,7 +453,6 @@ public class Movie extends Media
 	@Override
 	public String getFileText()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.movieTitle + " (" + movieDate.replaceAll("[()]", "") + ") " + releaseForm + "\t" + movieDate;
 	}
 }

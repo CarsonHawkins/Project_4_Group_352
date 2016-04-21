@@ -170,8 +170,7 @@ public class Series extends Media implements Serializable
 	@Override
 	public String getFileText()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.seriesName + " (" + seriesStartYear.replaceAll("[()]", "") + ")\t" + seriesStartYear + "-" + seriesEndYear;
 	}
 
 }

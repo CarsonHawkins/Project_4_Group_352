@@ -175,8 +175,7 @@ import java.util.Comparator;
 		@Override
 		public String getFileText()
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return this.episodeName + " (" + this.episodeStartYear.replaceAll("[()]", "") + ") " + episodeInfo + " " + episodeYear;
 		}
 		
 }

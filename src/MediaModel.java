@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,7 +36,7 @@ public class MediaModel {
 	 */
 	public void addMovie(String title, String date, String releaseForm, String release){
 		Movie movie = new Movie(title, date, releaseForm, release);
-		movieDataBase.getMovieList().addMovie(movie);
+		movieDataBase.getMovieList().add(movie);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
@@ -63,28 +64,32 @@ public class MediaModel {
 	 */
 	public void addEpisode(String name, String startYear, String episodeInfo, String episodeYear, Series series){
 		
-		for(TVEpisode episode : series.getEpisodeList()){
-			if (episode.getEpisodeInfo().equals(episodeInfo)){
-				JFrame frame = new JFrame("Error");
-				JOptionPane.showMessageDialog(frame, "That season number and episode number already exist for this series.");
-				return;
-			}
-			
-			else{
-				if(Integer.parseInt(episodeYear) < Integer.parseInt(series.getSeriesStartYear()) 
-						|| Integer.parseInt(episodeYear) > Integer.parseInt(series.getSeriesEndYear())){
+		this.seriesDataBase.getEpisodeList().add(new TVEpisode(name, startYear, episodeInfo, episodeYear));
+		if (series != null && series.getEpisodeList() != null)
+		{
+			for(TVEpisode episode : series.getEpisodeList()){
+				if (episode.getEpisodeInfo().equals(episodeInfo)){
 					JFrame frame = new JFrame("Error");
-					JOptionPane.showMessageDialog(frame, "That episode year is not in the range of the series.");
+					JOptionPane.showMessageDialog(frame, "That season number and episode number already exist for this series.");
+					return;
 				}
+				
 				else{
-					TVEpisode tvEpisode = new TVEpisode(name, startYear, episodeInfo, episodeYear);
-					series.getEpisodeList().add(tvEpisode);
-					seriesDataBase.getEpisodeList().add(tvEpisode);
-					processEvent(EventMessages.DATA_CHANGED);
+					if(Integer.parseInt(episodeYear) < Integer.parseInt(series.getSeriesStartYear()) 
+							|| Integer.parseInt(episodeYear) > Integer.parseInt(series.getSeriesEndYear())){
+						JFrame frame = new JFrame("Error");
+						JOptionPane.showMessageDialog(frame, "That episode year is not in the range of the series.");
+					}
+					else{
+						TVEpisode tvEpisode = new TVEpisode(name, startYear, episodeInfo, episodeYear);
+						series.getEpisodeList().add(tvEpisode);
+						seriesDataBase.getEpisodeList().add(tvEpisode);
+					}
+			
 				}
-		
-			}
-		}		
+			}	
+		}
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	/**
@@ -189,6 +194,8 @@ public class MediaModel {
 				}
 			}
 		}
+		
+		Collections.sort(displayList);
 	}
 	
 	/**
@@ -202,14 +209,14 @@ public class MediaModel {
 		fw = new FileWriter(fileName);
 		bw = new BufferedWriter(fw);
 		
-		String type = new FileTypeSelector().showDialog(fileName);
+		String type = FileTypeSelector.showDialog(fileName);
 		
 		if (type.equals("Movies"))
 		{
 			for (ListItem i : movieDataBase.getMovieList())
 			{
 				//FIXME: use the methods from Daniel to get the format of the items
-				bw.write();
+				bw.write(i.getFileText());
 			}
 		}
 		bw.close();
@@ -303,8 +310,9 @@ public class MediaModel {
 	 * 
 	 * @param fileName
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFileMovie(String fileName) throws IOException{
+	public void loadFileMovie(String fileName) throws IOException, ClassNotFoundException{
 		movieDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
@@ -325,8 +333,9 @@ public class MediaModel {
 	 * 
 	 * @param fileName
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFileSeries(String fileName) throws IOException{
+	public void loadFileSeries(String fileName) throws IOException, ClassNotFoundException{
 		seriesDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
@@ -346,8 +355,9 @@ public class MediaModel {
 	 * 
 	 * @param fileName
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFileActor(String fileName) throws IOException{
+	public void loadFileActor(String fileName) throws IOException, ClassNotFoundException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
@@ -367,8 +377,9 @@ public class MediaModel {
 	 * 
 	 * @param fileName
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFileDirector(String fileName) throws IOException{
+	public void loadFileDirector(String fileName) throws IOException, ClassNotFoundException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}
@@ -389,8 +400,9 @@ public class MediaModel {
 	 * 
 	 * @param fileName
 	 * @throws IOException
+	 * @throws ClassNotFoundException 
 	 */
-	public void loadFileProducer(String fileName) throws IOException{
+	public void loadFileProducer(String fileName) throws IOException, ClassNotFoundException{
 		mediaMakerDataBase.loadFile(fileName);
 		processEvent(EventMessages.DATA_CHANGED);
 	}

@@ -15,7 +15,7 @@ import java.util.Comparator;
 	 * </P>
 	 * @version 1.0
 	 */
-	public class TVEpisode extends Media implements Comparable<TVEpisode>, Serializable
+	public class TVEpisode extends Media implements Serializable
 	{
 		
 	private static final long serialVersionUID = 7410524650572578561L;
@@ -23,7 +23,7 @@ import java.util.Comparator;
 		private String episodeStartYear;
 		private String episodeInfo;
 		private String episodeYear;
-		private Series series;
+		private Series series = null;
 		
 		/*
 		 * The default constructor of the TvSeries class.
@@ -109,8 +109,6 @@ import java.util.Comparator;
 			return episodeInfo;
 		}
 		
-		
-		
 		public Series getSeries()
 		{
 			return series;
@@ -153,4 +151,32 @@ import java.util.Comparator;
 		{
 			return "Episode: " + episodeInfo + " (" + episodeYear + "): " + episodeName;
 		}
+
+		public void setEpisodeName(String episodeName)
+		{
+			this.episodeName = episodeName;
+		}
+
+		public void setEpisodeStartYear(String episodeStartYear)
+		{
+			this.episodeStartYear = episodeStartYear;
+		}
+
+		public void setEpisodeInfo(String episodeInfo)
+		{
+			this.episodeInfo = episodeInfo;
+		}
+
+		public void setEpisodeYear(String episodeYear)
+		{
+			this.episodeYear = episodeYear;
+		}
+
+		@Override
+		public String getFileText()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 }

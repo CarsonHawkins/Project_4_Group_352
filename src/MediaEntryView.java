@@ -16,31 +16,56 @@ public abstract class MediaEntryView extends DataEntryView
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * panel that holds the components
+	 */
 	JPanel panel;
 
+	/**
+	 * button to be clicked when done
+	 */
 	JButton doneButton;
 	
+	/**
+	 * layout
+	 */
 	GridLayout layout;
 	
+	/**
+	 * media object being created
+	 */
 	Media media;
-			   
+		
+	/**
+	 * main constructor
+	 */
 	public MediaEntryView()
 	{
 		super();
 	}
 	
+	/**
+	 * constructor for mediaentryview 
+	 * @param media
+	 */
 	public MediaEntryView(Media media)
 	{
 		super();
 		this.media = media;
 	}
-	
+
+	/**
+	 * called when an action is performed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
 		
 	}
 
+	/**
+	 * inits the components
+	 */
 	@Override
 	protected void initComponents()
 	{
@@ -53,9 +78,15 @@ public abstract class MediaEntryView extends DataEntryView
 		
 	}
 	
+	/**
+	 * method that creates an instance of the object
+	 */
 	public abstract Media instantiate() throws InstantiationException, IllegalAccessException;
 
 
+	/**
+	 * adds the listener to the done button
+	 */
 	public void addDoneListener(ActionListener listener)
 	{
 		doneButton.addActionListener(listener);

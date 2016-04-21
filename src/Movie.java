@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Eric_Morales
  * March 4th, 2016
  */
-public class Movie extends Media implements Comparable<Movie>
+public class Movie extends Media 
 {
 	/** movieTitle will hold the name of the title that the user is searching for. */
 	private String movieTitle;
@@ -200,17 +200,6 @@ public class Movie extends Media implements Comparable<Movie>
 		}
 	};
 
-	@Override
-	/**The method compare to compares the title of the users title to the title of the assigned index
-	 * of the movie collection
-	 * 
-	 * returns 			An int whether or not the title matches. 
-	 */
-	public int compareTo(Movie o) {
-
-		return (this.movieTitle.toLowerCase().compareTo(o.movieTitle.toLowerCase()));
-	}
-
 	/**The getTitle method will read in a movie line to be able to return only the title of the movie that, so it 
 	 * can be stored into an ArrayList. The function of this is to be able to search for a specific title.
 	 * 
@@ -235,6 +224,12 @@ public class Movie extends Media implements Comparable<Movie>
 	}
 	
 	
+
+
+	public void setMovieTitle(String movieTitle)
+	{
+		this.movieTitle = movieTitle;
+	}
 
 	public String getReleaseForm()
 	{
@@ -452,6 +447,13 @@ public class Movie extends Media implements Comparable<Movie>
 	@Override
 	public String getDisplayText()
 	{
-		return "Movie: " + movieTitle + " (" + movieDate + ") " + releaseForm;
+		return "Movie: " + movieTitle + " " + movieDate + " " + releaseForm;
+	}
+
+	@Override
+	public String getFileText()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

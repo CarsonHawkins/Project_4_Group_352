@@ -114,14 +114,13 @@ public class SelectionView extends View
 	public SelectionView()
 	{
 		super();
+		initComponents();
 	}
 	
 	/** Initializes the components */
 	@Override
 	protected void initComponents()
 	{
-		new MovieEntryView();
-		
 		this.setTitle("MDb");
 		this.setSize(600, 400);
 		this.setMinimumSize(new Dimension(400,280));
@@ -141,6 +140,7 @@ public class SelectionView extends View
 		  fileMenu.add(fileImportItem);
 		 editMenu = new JMenu("Edit");
 		  editAddItem = new JMenuItem("Add");
+		  editAddItem.setEnabled(false);
 		  editEditItem = new JMenuItem("Edit");
 		  editEditItem.setEnabled(false);
 		  editDeleteItem = new JMenuItem("Delete");
@@ -257,7 +257,7 @@ public class SelectionView extends View
 		RadioButtonStates s = getButtonStates();
 		editAddItem.setEnabled(s.isMoviesSelected() ||
 							   s.isSeriesSelected() ||
-							   s.isMakersSelected() ||
+							   s.isEpisodesSelected() ||
 							   s.isActorsSelected() ||
 							   s.isDirectorsSelected() ||
 							   s.isProducersSelected());
@@ -267,9 +267,14 @@ public class SelectionView extends View
 	}
 	
 	/**returns the selected item */
-	public ListItem getSelectedItem()
+	public ListItem[] getSelectedItems()
 	{
-		return model.displayList.get(this.itemList.getSelectedIndex());
+		ArrayList<ListItem> items = new ArrayList<>();
+		for (int index : this.itemList.getSelectedIndices())
+		{
+			items.add(model.displayList.get(index));
+		}
+		return (ListItem[]) items.toArray(new ListItem[0]);
 	}
 
 	/** adds a given listener to a given component */
@@ -394,7 +399,7 @@ public class SelectionView extends View
 	}
 	
 	/**
-	 * 
+	 * get the states of all the buttons 
 	 * @return
 	 */
 	public RadioButtonStates getButtonStates()
@@ -410,16 +415,30 @@ public class SelectionView extends View
 				producersButton.isSelected());
 	}
 	
+	/**
+	 * display a pie chart
+	 * @param maker
+	 * @return
+	 */
 	public DisplayView showPieChart(MediaMaker maker)
 	{
 		return new DisplayView(Display.ChartType.PIE_CHART, maker);
 	}
 	
+	/**
+	 * display a histogram
+	 * @param maker
+	 * @return
+	 */
 	public DisplayView showHistogram(MediaMaker maker)
 	{
 		return new DisplayView(Display.ChartType.HISTOGRAM, maker);
 	}
 	
+	/**
+	 * set data label
+	 * @param labelText
+	 */
 	public void setDataLabel(String labelText)
 	{
 		dataLabel.setText(labelText);
@@ -431,9 +450,6 @@ public class SelectionView extends View
 	 */
 	class MyRenderer extends DefaultListCellRenderer 
 	{
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)

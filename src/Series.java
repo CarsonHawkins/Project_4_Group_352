@@ -15,7 +15,7 @@ import java.util.Comparator;
  * </P>
  * @version 1.0
  */
-public class Series extends Media implements Comparable<Series>, Serializable
+public class Series extends Media implements Serializable
 {
 	/**
 	 * 
@@ -150,6 +150,28 @@ public class Series extends Media implements Comparable<Series>, Serializable
 	public String getDisplayText()
 	{
 		return "Series: " + seriesName + " (" + seriesStartYear + "-" + seriesEndYear + ")";
+	}
+
+	public void setSeriesName(String seriesName)
+	{
+		this.seriesName = seriesName;
+	}
+
+	public void setSeriesStartYear(String seriesStartYear)
+	{
+		this.seriesStartYear = seriesStartYear;
+	}
+
+	public void setSeriesEndYear(String seriesEndYear)
+	{
+		this.seriesEndYear = seriesEndYear;
+	}
+
+	@Override
+	public String getFileText()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

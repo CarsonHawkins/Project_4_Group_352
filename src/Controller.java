@@ -77,24 +77,24 @@ public class Controller {
 			{
 				try
 				{
-				new FileTypeSelector();
-				
-				//Gets the file type to sort correctly.
-				String fileType = FileTypeSelector.showDialog(fileName);
-				
-				//Determines the type to load to the appropriate location. 
-				if (fileType.equals("Movies"))
-					model.loadFileMovie(fileName);
-				if (fileType.equals("TV Series"))
-					model.loadFileSeries(fileName);
-				if (fileType.equals("Actors"))
-					model.loadFileActor(fileName);
-				if (fileType.equals("Directors"))
-					model.loadFileDirector(fileName);
-				if (fileType.equals("Producers"))
-					model.loadFileProducer(fileName);
+					new FileTypeSelector();
+					
+					//Gets the file type to sort correctly.
+					String fileType = FileTypeSelector.showDialog(fileName);
+					
+					//Determines the type to load to the appropriate location. 
+					if (fileType.equals("Movies"))
+						model.loadFileMovie(fileName);
+					if (fileType.equals("TV Series"))
+						model.loadFileSeries(fileName);
+					if (fileType.equals("Actors"))
+						model.loadFileActor(fileName);
+					if (fileType.equals("Directors"))
+						model.loadFileDirector(fileName);
+					if (fileType.equals("Producers"))
+						model.loadFileProducer(fileName);
 				}
-				catch (IOException ex)
+				catch (IOException | ClassNotFoundException ex)
 				{
 					ex.printStackTrace();
 				}
@@ -171,8 +171,6 @@ public class Controller {
 			//Reads in the states that were changed
 			RadioButtonStates states = selectionView.getButtonStates();
 			//Determines what type was selected to make the changes. 
-			if (states.isMakersSelected())
-				entryView = new MakerEntryView(MediaMaker.class);
 			if (states.isActorsSelected())
 				entryView = new MakerEntryView(Actor.class);
 			if (states.isDirectorsSelected())
@@ -180,9 +178,11 @@ public class Controller {
 			if (states.isProducersSelected())
 				entryView = new MakerEntryView(Producer.class);
 			if(states.isMoviesSelected())
-				entryView = new MakerEntryView(Movie.class);
+				entryView = new MovieEntryView();
 			if(states.isSeriesSelected())
-				entryView = new MakerEntryView(Series.class);
+				entryView = new SeriesEntryView();
+			if(states.isEpisodesSelected())
+				entryView = new EpisodeEntryView(model);
 			
 			//Adds the recent changes to the model. 
 			model.addActionListenener(entryView);
@@ -207,11 +207,11 @@ public class Controller {
 						MediaMaker maker = castedEntryView.instantiate();
 						//Determines the type and populate the new information 
 						if (item instanceof Actor)
-							model.addActor(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
+							model.addActor(maker.getMdbMediaFirstName(), maker.getMdbMediaLastName(),  maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 						if (item instanceof Director)
-							model.addDirector(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
+							model.addDirector(maker.getMdbMediaFirstName(), maker.getMdbMediaLastName(),  maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 						if (maker instanceof Producer) 
-							model.addProducer(maker.getMdbMediaLastName(), maker.getMdbMediaFirstName(), maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
+							model.addProducer(maker.getMdbMediaFirstName(), maker.getMdbMediaLastName(),  maker.getMdbMediaDisambiguationNumber(), maker.getMovieCredits(), maker.getSeriesCredits());
 					}
 					
 					//If it is a Media it will determine which it is to add the appropriate fields. 
@@ -222,7 +222,7 @@ public class Controller {
 						Media media = castedEntryView.instantiate();
 						//Determines the type and populates the new information.
 						if (media instanceof Movie)
-							model.addMovie(((Movie) media).getTitle(), "(" + ((Movie) media).getYear() + ")", ((Movie) media).getReleaseForm(), ((Movie) media).getYear());
+							model.addMovie(((Movie) media).getTitle(), "(" + ((Movie) media).getYear() + ")", ((Movie) media).getYear(), ((Movie) media).getReleaseForm());
 						if(media instanceof Series) 
 							model.addSeries(((Series) media).getSeriesName(), ((Series) media).getSeriesStartYear(), ((Series) media).getSeriesEndYear());
 						if(media instanceof TVEpisode)
@@ -245,9 +245,6 @@ public class Controller {
 	/** Listen to the Edits made in the view sends the new acquired information to the model. **/
 	public class EditEditListener implements ActionListener {
 
-		//Variables used to store the items. 
-		MakerEntryView entryView = null;
-		MediaMaker makerToEdit = null;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -255,12 +252,25 @@ public class Controller {
 				return; // No model associated yet. Do nothing
 			
 			//Gets the changes made. 
-			makerToEdit = (MediaMaker) selectionView.getSelectedItem();				
-			entryView = new MakerEntryView(makerToEdit);
-		
-			//Adds the listener.
-			entryView.addDoneListener(new EntryDoneListener());
+			for (ListItem itemToEdit : selectionView.getSelectedItems())
+			{
+				DataEntryView entryView = null;
 			
+				if (itemToEdit instanceof MediaMaker)
+					entryView = new MakerEntryView((MediaMaker)itemToEdit);
+				else
+				{
+					if (itemToEdit instanceof Movie)
+						entryView = new MovieEntryView((Movie) itemToEdit);
+					if (itemToEdit instanceof Series)
+						entryView = new SeriesEntryView((Series) itemToEdit);
+					if (itemToEdit instanceof TVEpisode)
+						entryView = new EpisodeEntryView(model, (TVEpisode)itemToEdit);
+				}
+				//Adds the listener.
+				entryView.addDoneListener(new EntryDoneListener(entryView, itemToEdit));
+				model.addActionListenener(entryView);
+			}
 			
 		}
 		
@@ -268,18 +278,65 @@ public class Controller {
 		class EntryDoneListener implements ActionListener
 		{
 
+			ListItem itemToEdit;
+			DataEntryView entryView;
+			
+			public EntryDoneListener(DataEntryView e, ListItem i)
+			{
+				itemToEdit = i;
+				entryView = e;
+			}
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Remove object from hash-map
-				model.mediaMakerDataBase.getMediaMakerMap().remove(makerToEdit.toString());
+				model.mediaMakerDataBase.getMediaMakerMap().remove(itemToEdit.toString());
 				
-				//Change the object
-				makerToEdit.setMdbMediaFirstName(entryView.getFirstName());
-				makerToEdit.setMdbMediaLastName(entryView.getLastName());
-				makerToEdit.setMdbMediaDisambiguationNumber(entryView.getDisambiguationNumber());	
+				if (itemToEdit instanceof MediaMaker)
+				{
+					MediaMaker maker = (MediaMaker) itemToEdit;
+					MakerEntryView mev = (MakerEntryView) entryView;
+					//Change the object
+					maker.setMdbMediaFirstName(mev.getFirstName());
+					maker.setMdbMediaLastName(mev.getLastName());
+					maker.setMdbMediaDisambiguationNumber(mev.getDisambiguationNumber());	
+
+				}
+				else
+				{
+					if (itemToEdit instanceof Movie)
+					{
+						Movie movie = (Movie) itemToEdit;
+						MovieEntryView mev = (MovieEntryView) entryView;
+						
+						movie.setMovieTitle(mev.getMovieTitle());
+						movie.setYear(mev.getMovieYear());
+						movie.setReleaseForm(mev.getReleaseForm());
+					}
+					if (itemToEdit instanceof Series)
+					{
+						Series series = (Series) itemToEdit;
+						SeriesEntryView sev = (SeriesEntryView) entryView;
+						
+						series.setSeriesName(sev.getSeriesTitle());
+						series.setSeriesStartYear(sev.getStartDate());
+						series.setSeriesEndYear(sev.getEndDate());
+					}
+					if (itemToEdit instanceof TVEpisode)
+					{
+						TVEpisode ep = (TVEpisode) itemToEdit;
+						EpisodeEntryView sev = (EpisodeEntryView) entryView;
+						
+						ep.setEpisodeInfo(sev.getEpisodeTitle());
+						ep.setEpisodeYear(sev.getEpisodeYear());
+						ep.setEpisodeName(sev.getSeries().getSeriesName());
+						ep.setEpisodeStartYear(sev.getSeries().getSeriesStartYear());
+						ep.setSeries(sev.getSeries());
+					}
+					
+				}
 				
 				// Add it back under new key
-				model.mediaMakerDataBase.getMediaMakerMap().put(makerToEdit.toString(), makerToEdit);
 				entryView.dispose();
 			}
 			
@@ -294,7 +351,10 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//Deletes the section the user wants to remove. 
-			model.delete(selectionView.getSelectedItem());
+			for (ListItem item : selectionView.getSelectedItems())
+			{
+				model.delete(item);
+			}
 			
 		}
 	}
@@ -333,7 +393,8 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//Displays the pie chart to the user. 
-			selectionView.showPieChart((MediaMaker)selectionView.getSelectedItem());
+			for(ListItem item : selectionView.getSelectedItems())
+				selectionView.showPieChart((MediaMaker) item);
 			
 		}
 	}
@@ -345,7 +406,8 @@ public class Controller {
 			if (model == null)
 				return; // No model associated yet. Do nothing
 			//Displays the Histogram to the user. 
-			selectionView.showHistogram((MediaMaker)selectionView.getSelectedItem());			
+			for(ListItem item : selectionView.getSelectedItems())
+				selectionView.showHistogram((MediaMaker) item);			
 		}
 	}
 	
@@ -363,21 +425,21 @@ public class Controller {
 			
 			//Determines what was changed. 
 			if (states.isMediaSelected())
-				selectionView.setDataLabel("Media");
+				selectionView.setDataLabel("Medias");
 			else if (states.isMoviesSelected())
-				selectionView.setDataLabel("Movie");
+				selectionView.setDataLabel("Movies");
 			else if (states.isEpisodesSelected())
-				selectionView.setDataLabel("Episode");
+				selectionView.setDataLabel("Episodes");
 			else if (states.isSeriesSelected())
 				selectionView.setDataLabel("Series");
 			else if (states.isMakersSelected())
 				selectionView.setDataLabel("Makers");
 			else if (states.isActorsSelected())
-				selectionView.setDataLabel("Actor");
+				selectionView.setDataLabel("Actors");
 			else if (states.isDirectorsSelected())
-				selectionView.setDataLabel("Director");
+				selectionView.setDataLabel("Directors");
 			else if (states.isProducersSelected())
-				selectionView.setDataLabel("Producer");
+				selectionView.setDataLabel("Producers");
 		}
 	}
 }

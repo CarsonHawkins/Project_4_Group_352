@@ -138,4 +138,13 @@ public class MediaMaker  extends ListItem implements Serializable
 	{
 		return "Media maker: " + toString();
 	}
+
+	@Override
+	public String getFileText()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }	

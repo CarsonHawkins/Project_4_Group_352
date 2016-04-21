@@ -22,32 +22,55 @@ public class MakerEntryView extends DataEntryView
 	
 	Class<?> entryType;
 		   
+	/**
+	 * constructor for makerentryview
+	 * @param makerType
+	 */
 	public MakerEntryView(Class<?> makerType)
 	{
 		super();
 		entryType = makerType;
 		this.setTitle("Enter " + makerType.getName() + " data");
+		initComponents();
 	}
 	
 
+	/**
+	 * alternate constructor with params for existing values
+	 * @param makerType
+	 * @param first
+	 * @param last
+	 * @param disamb
+	 */
 	public MakerEntryView(Class<?> makerType, String first, String last, String disamb)
 	{
 		super();
+		entryType = makerType;
+		initComponents();
 		this.setTitle("Enter " + makerType.getName() + " data");
 		this.firstNameArea.setText(first);
 		this.lastNameArea.setText(last);
 		this.disambiguationArea.setText(disamb);
 	}
 	
+	/**
+	 * alternate constructor taking a mediamaker as a parameter 
+	 * @param maker
+	 */
 	public MakerEntryView(MediaMaker maker)
 	{
 		super();
+		entryType = maker.getClass();
+		initComponents();
 		this.setTitle("Enter " + maker.getClass().getName() + " data");
 		this.firstNameArea.setText(maker.getMdbMediaFirstName());
 		this.lastNameArea.setText(maker.getMdbMediaLastName());
 		this.disambiguationArea.setText(maker.getMdbMediaDisambiguationNumber());
 	}
 
+	/**
+	 * called when an action is performed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{

@@ -1,6 +1,7 @@
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -41,6 +42,7 @@ public class MovieEntryView extends MediaEntryView
 		dateArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		releaseFormPicker = new JComboBox<>(new String[] {"Theater", "Made for TV", "Straight to video"});
 		releaseFormPicker.setBorder(BorderFactory.createLineBorder(Color.black));
+		doneButton = new JButton("Done");
 		
 		panel.add(titleLabel);
 		panel.add(titleArea);
@@ -48,6 +50,8 @@ public class MovieEntryView extends MediaEntryView
 		panel.add(dateArea);
 		panel.add(releaseFormLabel);
 		panel.add(releaseFormPicker);
+		panel.add(new JLabel(""));
+		panel.add(doneButton);
 		
 
 		this.add(panel);
@@ -57,6 +61,7 @@ public class MovieEntryView extends MediaEntryView
 	public MovieEntryView()
 	{
 		super();
+		initComponents();
 	}
 	
 	/**
@@ -66,13 +71,14 @@ public class MovieEntryView extends MediaEntryView
 	public MovieEntryView(Movie movie)
 	{
 		super(movie);
+		initComponents();
 		this.titleArea.setText(movie.getTitle());
 		this.dateArea.setText(movie.getYear());
 		if (movie.getReleaseForm().equals(""))
 			this.releaseFormPicker.setSelectedIndex(0);
-		else if (movie.getReleaseForm().equals("TV"))
+		else if (movie.getReleaseForm().contains("(TV)"))
 			this.releaseFormPicker.setSelectedIndex(1);
-		else if (movie.getReleaseForm().equals("V"))
+		else if (movie.getReleaseForm().contains("(V)"))
 			this.releaseFormPicker.setSelectedIndex(0);
 	}
 	
@@ -80,13 +86,30 @@ public class MovieEntryView extends MediaEntryView
 	public Movie instantiate()
 	{
 		String venueSymbol =  releaseFormPicker.getSelectedItem().equals("Theater") ? "" :
-							  releaseFormPicker.getSelectedItem().equals("Made for TV") ? "TV" :
-							  "V";
+							  releaseFormPicker.getSelectedItem().equals("Made for TV") ? "(TV)" :
+							  "(V)";
 		return new Movie(titleArea.getText(), 
 						 dateArea.getText(), 
 						 dateArea.getText(),
 						 venueSymbol
 						);
 		}
+	
+	public String getMovieTitle()
+	{
+		return titleArea.getText();
+	}
+	
+	public String getMovieYear()
+	{
+		return dateArea.getText();
+	}
 
+	public String getReleaseForm()
+	{
+		return releaseFormPicker.getSelectedItem().equals("Theater") ? "" :      
+	           releaseFormPicker.getSelectedItem().equals("Made for TV") ? "(TV)" :
+               "(V)";    
+	}
 }
+

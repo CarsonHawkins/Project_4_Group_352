@@ -8,9 +8,19 @@ import java.io.ObjectOutputStream;
  * @author dlsch
  *
  */
-public abstract class ListItem
+public abstract class ListItem implements Comparable<ListItem>
 {
+	/**
+	 * Get the string that represents the object as seen in the gui
+	 * @return
+	 */
 	public abstract String getDisplayText();
+	
+	/**
+	 * Gets the string that represents the object as seen in a text file
+	 * @return
+	 */
+ 	public abstract String getFileText();
 	
 	public void writeObject(ObjectOutputStream aOutputStream) throws IOException 
 	 {
@@ -21,5 +31,11 @@ public abstract class ListItem
 	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		aInputStream.defaultReadObject();
+	}
+	
+	@Override
+	public int compareTo(ListItem arg0)
+	{
+		return this.toString().compareTo(arg0.toString());
 	}
 }

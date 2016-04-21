@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -26,7 +27,7 @@ public class EpisodeEntryView extends MediaEntryView
 	JComboBox<Series> seriesPicker;
 	
 	/** a list of serieses to choose from*/
-	private Series[] serieses = {new Series()};
+	private Series[] serieses = new Series[]{};
 	private MediaModel model;
 			 
 	/** initializes the components */
@@ -46,7 +47,9 @@ public class EpisodeEntryView extends MediaEntryView
 		dateArea = new JTextArea();
 		dateArea.setBorder(BorderFactory.createLineBorder(Color.black));
 		seriesPicker = new JComboBox<Series>(serieses);
+		setSerieses();
 		seriesPicker.setBorder(BorderFactory.createLineBorder(Color.black));
+		doneButton = new JButton("Done");
 		
 		panel.add(titleLabel);
 		panel.add(titleArea);
@@ -54,6 +57,8 @@ public class EpisodeEntryView extends MediaEntryView
 		panel.add(dateArea);
 		panel.add(seriesLabel);
 		panel.add(seriesPicker);
+		panel.add(new JLabel(""));
+		panel.add(doneButton);
 		
 
 		this.add(panel);
@@ -65,6 +70,7 @@ public class EpisodeEntryView extends MediaEntryView
 	{
 		super();
 		this.model = model;
+		initComponents();
 	}
 	
 	/**
@@ -75,15 +81,19 @@ public class EpisodeEntryView extends MediaEntryView
 	{
 		super(episode);
 		this.model = model;
-		this.titleArea.setText(episode.getEpisodeInfo());
+		this.titleArea.setText(episode.getEpisodeName());
 		this.dateArea.setText(episode.getEpisodeYear());
+		initComponents();
 	}
 	
 	/** creates an instance of movie according to the entered data */
 	@Override
-	public Movie instantiate()
+	public TVEpisode instantiate()
 	{
-		return null;
+		return new TVEpisode(getSeries().getSeriesName(),
+						     getEpisodeYear(),  
+						     getEpisodeTitle(), 
+						     getSeries().getSeriesStartYear());
 	}
 	
 	/**
@@ -92,14 +102,44 @@ public class EpisodeEntryView extends MediaEntryView
 	 */
 	public void setSerieses()
 	{
-		seriesPicker = new JComboBox<Series>((Series[]) model.seriesDataBase.getSeriesList().toArray());
+		if (model == null)
+		{
+			serieses = new Series[] {new Series("No associated series")};
+		}
+		else
+		{
+			serieses = (Series[]) Driver.concat(new Series[] {new Series("No associated series", "????", "????")}, model.seriesDataBase.getSeriesList().toArray(new Series[model.seriesDataBase.getSeriesList().size()]));
+			seriesPicker.removeAllItems();
+			for (Series s: serieses)
+			{
+				seriesPicker.addItem(s);
+			}
+		}
 	}
 	
+	/**
+	 * called when an action is performed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getActionCommand().equals(EventMessages.DATA_CHANGED))
 			setSerieses();
+	}
+	
+	public String getEpisodeTitle()
+	{
+		return titleArea.getText();
+	}
+	
+	public String getEpisodeYear()
+	{
+		return dateArea.getText();
+	}
+	
+	public Series getSeries()
+	{
+		return (Series) seriesPicker.getSelectedItem();
 	}
 
 }

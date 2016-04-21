@@ -18,7 +18,6 @@ public abstract class View extends JFrame implements ActionListener
 	 */
 	public View()
 	{
-		initComponents();
 	}
 
 	/**

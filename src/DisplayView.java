@@ -7,19 +7,33 @@ import javax.xml.ws.handler.MessageContext;
 
 public class DisplayView extends View
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** type of chart */
 	private Display.ChartType chartType;
+	/** mediamaker this graph describes */
 	private MediaMaker maker;
+	/** jpanel that shows the data */
 	private Display display;
-	private MediaModel model;
-	
+
+	/**
+	 * Constructor for displayview
+	 * @param type
+	 * @param maker
+	 */
 	public DisplayView(Display.ChartType type, MediaMaker maker)
 	{
 		super();
 		this.chartType = type;
 		this.maker = maker;
-		this.actionPerformed(new ActionEvent(this, 0, EventMessages.DATA_CHANGED));
+		initComponents();
 	}
 
+	/**
+	 * method is called when an action is performed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -29,6 +43,9 @@ public class DisplayView extends View
 		}
 	}
 
+	/**
+	 * initialize the components
+	 */
 	@Override
 	protected void initComponents()
 	{
@@ -61,10 +78,5 @@ public class DisplayView extends View
 		display = new Display(chartType, maker);
 		add(display);
 		setVisible(true);
-	}
-
-	public void ActionPerformed(ActionEvent e)
-	{
-		initComponents();
 	}
 }

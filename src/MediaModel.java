@@ -11,18 +11,31 @@ import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * Project #4
+ * CS 2334, Section 013
+ * 04-21-16
+ * @author Carson Hawkins, Daniel Schon, and Eric Morales
+ * <P>
+ * This is the Model class of Project4. 
+ * </P>
+ * @version 1.0
+ */
 public class MediaModel {
-	//make the arrayLists of actionListeners and the list of items going to be displayed
+	/** An ArrayList of ActionListeners that have been registered to this object  */
 	public ArrayList<ActionListener> listenerList = new ArrayList<>();
+	/** AnArrayList of Listitems that will hold all of the Items which should be displayed in the view */
 	public ArrayList<ListItem> displayList = new ArrayList<>();
-	//make the dataBases for all types of data.
+	/** A TVDataBase that will be used to hold the lists of Episodes and Series, as well as some methods for using those lists */
 	public TVDataBase seriesDataBase = new TVDataBase();
+	/** A MovieDataBase that will be used to hold the list of Movies, as well as some methods for using that list */
 	public MovieDataBase movieDataBase = new MovieDataBase();
+	/** A MediaMakerDataBase that will be used to hold the lists of actors, directors, and producers, as well as some methods for using those lists */
 	public MediaMakerDataBase mediaMakerDataBase = new MediaMakerDataBase();
-	//make the buffWriter and fileWriter
+	/** The FileWriter that is going to be used to save/export to a file */
 	private FileWriter fw;
+	/** The BufferedWriter which will use fw and write to the file */
 	private BufferedWriter bw;
-	
 	/** the state of the view's buttons, as the model remembers them */
 	private RadioButtonStates states;
 	
@@ -63,17 +76,19 @@ public class MediaModel {
 	 * @param series : the series that it is a part of
 	 */
 	public void addEpisode(String name, String startYear, String episodeInfo, String episodeYear, Series series){
-		
+		//set the add a new TVEpisode to the episode list
 		this.seriesDataBase.getEpisodeList().add(new TVEpisode(name, startYear, episodeInfo, episodeYear));
+		// if the series is not empty, and the series.getEpisodeList isnt null..
 		if (series != null && series.getEpisodeList() != null)
 		{
 			for(TVEpisode episode : series.getEpisodeList()){
+				//check to see if each episode has a unique episodeInfo
 				if (episode.getEpisodeInfo().equals(episodeInfo)){
 					JFrame frame = new JFrame("Error");
 					JOptionPane.showMessageDialog(frame, "That season number and episode number already exist for this series.");
 					return;
 				}
-				
+				//check to see if the episode year is outside of the yearRange for the series
 				else{
 					if(Integer.parseInt(episodeYear) < Integer.parseInt(series.getSeriesStartYear()) 
 							|| Integer.parseInt(episodeYear) > Integer.parseInt(series.getSeriesEndYear())){
@@ -143,13 +158,15 @@ public class MediaModel {
 	public void createDisplayItemList()
 	{
 		this.displayList.clear();
-		
+	
+		// if media is selected add them all
 		if(states.isMediaSelected()){
 			displayList.addAll(movieDataBase.getMovieList());
 			displayList.addAll(seriesDataBase.getSeriesList());
 			displayList.addAll(seriesDataBase.getEpisodeList());
 		}
 		
+		//otherwise check the selected button and add it to the list of that type
 		else
 		{
 			if(states.isMoviesSelected())
@@ -195,6 +212,7 @@ public class MediaModel {
 			}
 		}
 		
+		//sort the displayList
 		Collections.sort(displayList);
 	}
 	
@@ -211,14 +229,72 @@ public class MediaModel {
 		
 		String type = FileTypeSelector.showDialog(fileName);
 		
+		// if the type is Movies..
 		if (type.equals("Movies"))
 		{
+			// write all of the movies to the file
 			for (ListItem i : movieDataBase.getMovieList())
 			{
 				//FIXME: use the methods from Daniel to get the format of the items
 				bw.write(i.getFileText());
 			}
 		}
+		
+		//if the type is TVSeries
+		if (type.equals("TV Series")){
+			// write all of the series to the file
+			for (ListItem i : seriesDataBase.getSeriesList())
+			{
+				//FIXME: use the methods from Daniel to get the format of the items
+				bw.write(i.getFileText());
+			}
+		}
+		
+		//if the type is TVEpisode
+		if (type.equals("TV Episode")){
+			// write all of the episode to the file
+			for (ListItem i : seriesDataBase.getEpisodeList())
+			{
+				//FIXME: use the methods from Daniel to get the format of the items
+				bw.write(i.getFileText());
+			}
+		}
+		
+		//if the type is actor...
+		if (type.equals("Actor")){
+			// write all of the actor to the file
+			for (ListItem i : mediaMakerDataBase.getMediaMakerMap().values())
+			{
+				if(i instanceof Actor){
+					//FIXME: use the methods from Daniel to get the format of the items
+					bw.write(i.getFileText());
+				}
+			}
+		}
+		
+		//if the type is director...
+		if (type.equals("Director")){
+			// write all of the actor to the file
+			for (ListItem i : mediaMakerDataBase.getMediaMakerMap().values()){
+				if(i instanceof Director){
+					//FIXME: use the methods from Daniel to get the format of the items
+					bw.write(i.getFileText());
+				}
+			}
+		}
+
+		//if the type is producer...
+		if (type.equals("Producer")){
+			// write all of the producer to the file
+			for (ListItem i : mediaMakerDataBase.getMediaMakerMap().values())
+			{
+				if(i instanceof Producer){
+					//FIXME: use the methods from Daniel to get the format of the items
+					bw.write(i.getFileText());
+				}
+			}
+		}
+		
 		bw.close();
 		processEvent(EventMessages.FILE_EXPORTED);
 	}
@@ -229,10 +305,9 @@ public class MediaModel {
 	 * @throws IOException
 	 */
 	public void save(String location) throws IOException{
-		// use fileSelector to determine where the user wishes to save to
 		FileOutputStream out = new FileOutputStream(location);
 		ObjectOutputStream oos = new ObjectOutputStream(out);
-		
+		// for each item in the displayList, write the object using IO
 		for (ListItem item : displayList){
 			oos.writeObject(item);
 		}
@@ -246,9 +321,11 @@ public class MediaModel {
 	 * @param listener : the listener that is going to be added
 	 */
 	public void addActionListenener(ActionListener listener){
+		// if the listenerList is null, make a new one
 		if (listenerList == null) {
 			listenerList = new ArrayList<ActionListener>();
 		}		
+		//add the actionListener to the listenerList
 		listenerList.add(listener);
 	}
 	
@@ -258,6 +335,7 @@ public class MediaModel {
 	 * @param listener : the listener that is going to be removed
 	 */
 	public void removeActionListener(ActionListener listener) {
+		// if the listenerList isnt empty, and contains tha listener, remove it from the list.
 		if (listenerList != null && listenerList.contains(listener)) {
 			listenerList.remove(listener);
 		}
@@ -276,7 +354,8 @@ public class MediaModel {
 		
 		if(listenerList.isEmpty()){
 			return;
-		} 
+		}
+		// for ever action listener in listenerList, use actionperformed on the actionEvent witht the message
 		else {
 			for (ActionListener action : listenerList) {
 				action.actionPerformed(new ActionEvent(this, 0, message));
@@ -415,6 +494,7 @@ public class MediaModel {
 	 */
 	public void delete(ListItem item){
 	
+		// use instanceOf to determine the type item is and remove it from the related list
 		if (item instanceof Movie){
 			movieDataBase.getMovieList().remove(item);
 			processEvent(EventMessages.DATA_CHANGED);
@@ -438,8 +518,13 @@ public class MediaModel {
 	 *  This will clear the display list.
 	 */
 	public void clear(){
-			displayList.clear();
-			processEvent(EventMessages.DATA_CHANGED);
+		// clear the dataBaseLists related to the object
+		for(ListItem item : displayList){
+			delete(item);
+		}
+		// clear the display list
+		displayList.clear();
+		processEvent(EventMessages.DATA_CHANGED);
 	}
 	
 	/**
@@ -447,6 +532,7 @@ public class MediaModel {
 	 * This will clear all of the lists, essentially making it all start from scratch 
 	 */
 	public void clearAll(){
+		// clear all of the dataBase lists and the displayList
 		movieDataBase.getMovieList().clear();
 		mediaMakerDataBase.getMediaMakerMap().clear();
 		seriesDataBase.getEpisodeList().clear();

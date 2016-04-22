@@ -25,22 +25,30 @@ import java.util.regex.Pattern;
  */
 public class TVDataBase implements Serializable
 {
-	//SerialUID to make it serializable.
+	/** Serial UID made by java */
 	private static final long serialVersionUID = 3385515282733881905L;
-	
-	//Variables for the series part of the TVDataBase
+	/** A String variable that will hold the name of the series being added */
 	private String mdbSeriesName;
+	/** A String variable that will hold the starting year of the series being added */
 	private String mdbSeriesStartYear;
+	/** A String variable that will hold the ending year of the series being added */
 	private String mdbSeriesEndYear;
+	/** An ArrayList of Series objects that will hold all of the serioes that are a part of the DataBase */
 	private ArrayList<Series> seriesList = new ArrayList<>();
+	/** An ArrayList of Series that will hold  all of the titles of the series in the DataBase */
 	private ArrayList<Series> seriesTitleList = new ArrayList<>();
 
-	//Variables for the episode part of the TVDataBase
+	/** a String variable taht will hold the name of the Series which the episode being added is a part of */
 	private String mdbEpisodeSeriesName;
+	/** A String variable that will hold the starting year of the episode that is being added to the DataBase */
 	private String mdbEpisodeStartYear;
+	/** A String variable that will hold the Name of the episode being added to the dataBase */
 	private String mdbEpisodeName;
+	/** A String variable that will hold the Year that of the episode being added to the dataBase */
 	private String mdbEpisodeYear;
+	/** An ArrayList of Episodes that will hold all of the episodes which are a part of the dataBase */
 	private ArrayList<TVEpisode> episodeList = new ArrayList<>();
+	/** An ArrayList of Episodes that will hold all of the titles of the episodes in the database */
 	private ArrayList<TVEpisode> episodeTitleList = new ArrayList<>();
 	
 	/*
@@ -372,15 +380,30 @@ public class TVDataBase implements Serializable
 	}
 
 
+	/**
+	 * Getter Method for the seriesList.
+	 * 
+	 * @return ArrayList<Series> : the ArrayList of Series for the DataBase
+	 */
 	public ArrayList<Series> getSeriesList() {
 		return seriesList;
 	}
 	
+	/**
+	 * Gedtter Method for the episodeList
+	 * 
+	 * @return ArrayList<TVEpisode> : the ArrayList of Episodes for the DataBase 
+	 */
 	public ArrayList<TVEpisode> getEpisodeList(){
 		return episodeList;
 	}
 
 
+	/**
+	 * Setter method for the SeriesList
+	 * 
+	 * @param seriesList : the ArrayList of Series that will be passed to series List
+	 */
 	public void setSeriesList(ArrayList<Series> seriesList) {
 		this.seriesList = seriesList;
 	}  
@@ -414,11 +437,10 @@ public class TVDataBase implements Serializable
 	{
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-		// TODO: use instanceof to determine whether it is episode or series
 		Object object;
+		// while the nextObject isnt null, use instanceof to determine whether it is episode or series and add it to the list
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
-			//FIXME
 			if(object instanceof TVEpisode){
 				TVEpisode episode = (TVEpisode) object;
 				episodeList.add(episode);
@@ -442,25 +464,16 @@ public class TVDataBase implements Serializable
 		// make the fileOutputStream and objectOutputStream
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-		
-		// if the type of selected file is series
-		//FIXME
-		if(){
-			// for each series in serieslist..
-			for(Series series : seriesList){
-				//write the object to the file
-				objectOutputStream.writeObject(series);
-			}
-		}
-		// if the type of selected file is episode
-		// FIXME
-		if(){
-			// for each episode in episodeList..
-			for(TVEpisode episode : episodeList){
-				//write the episode to the file
+		// for each series in serieslist..
+		for(Series series : seriesList){
+			//write the object to the file
+			objectOutputStream.writeObject(series);
+			for (TVEpisode episode : series.getEpisodeList())
+			{
 				objectOutputStream.writeObject(episode);
 			}
 		}
+		
 		//close the oos.
 		objectOutputStream.close();
 

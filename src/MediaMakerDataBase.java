@@ -16,25 +16,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Project #2
- * CS 2334, Section ******
- *** 02-019-2016 ***
- * @author Ramon Valenzuela
+ * Project #4
+ * CS 2334, Section 013
+ * 04-21-16
+ * @author Carson Hawkins, Daniel Schon, and Eric Morales
  * <P>
- * This is the MediaMakerDataBase class of Project1. 
+ * This is the MediaMakerDataBase class of Project4. 
  * </P>
  * @version 1.0
  */
 public class MediaMakerDataBase implements Serializable
 {
-
-	/**
-	 * 
-	 */
+	/** Field that java created for the serialization */
 	private static final long serialVersionUID = -5776795248719360180L;
+	/** A linkedHashMap that will have a String representation of the MediaMaker as the key, and the mediaMaker itself as the value */
 	private LinkedHashMap<String, MediaMaker> mediaMakerMap = new LinkedHashMap<String, MediaMaker>();;
 
-	
 	/*
 	 * This method will read in the file containing the information of interest and then begin parsing that 
 	 * information into Movie objects. It will achieve this by reading the data one line at a time.
@@ -49,9 +46,7 @@ public class MediaMakerDataBase implements Serializable
 	public LinkedHashMap<String, MediaMaker> importActorDataBase(String fileName)throws IOException
 	{
 		String nextLine; 
-		
 		FileReader fileReader = new FileReader(fileName);
-		
 		BufferedReader br = new BufferedReader(fileReader);
 		
 		nextLine = br.readLine();
@@ -475,7 +470,12 @@ public class MediaMakerDataBase implements Serializable
 		return positiveList;
 	}
 	 
-	
+	/**
+	 * This Method is used to search through the Map of Makers and find the one that matches the parameter
+	 * 
+	 * @param title : the name of the Maker being looked for
+	 * @return
+	 */
 	public MediaMaker specificTitleSearch(String title) 
 	{ 
  			 //containsTitle = specificSearch(movieTitle, containsTitle, fileName, movieTitleSearch); 
@@ -512,9 +512,7 @@ public class MediaMakerDataBase implements Serializable
 	{
 		return mediaMakerMap.get(name);
 	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////  the below code probably doesn't work right yet
+
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
@@ -523,14 +521,12 @@ public class MediaMakerDataBase implements Serializable
 	 */
 	public void loadFile(String fileName) throws ClassNotFoundException, IOException
 	{
-		//TODO: load a file using object IO
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		Object object;
-		//TODO: use instance of to determine the object type to make and add it to
+		// use instance of to determine the object type to make and add it to its appropriate list
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
-			//FIXME
 			if(object instanceof Actor){
 				Actor actor = (Actor) object;
 				mediaMakerMap.put(actor.toString(), actor);
@@ -548,33 +544,43 @@ public class MediaMakerDataBase implements Serializable
 		return;
 	}
 	
+	/**
+	 * Method for saving a file using an IO file.
+	 * 
+	 * @param fileName : the name of the file that it will be saved to/as
+	 * @throws IOException
+	 */
 	public void saveFile(String fileName) throws IOException{
-
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		ArrayList<Actor> outputActors = new ArrayList<Actor>();
 		ArrayList<Director> outputDirectors  = new ArrayList<Director>();
 		ArrayList<Producer> outputProducers = new ArrayList<Producer>();
 		
+		//for ever mediaMaker in mediaMakerMap..
 		for(MediaMaker maker : mediaMakerMap.values()){
-			//FIXME
+			// if it is an actor add it to the outputActors
 			if(maker instanceof Actor){
 				outputActors.add((Actor) maker);
 			}
+			// if it is a director add it to the outputDirectors
 			if(maker instanceof Director){
 				outputDirectors.add((Director) maker);
 			}
+			// if it is a producer add it to the outputProducers
 			if(maker instanceof Producer){
 				outputProducers.add((Producer) maker);
 			}
 		}
-		//FIXME
+		// write all of the objects in the outputActors to the file.
 		for(Actor actor : outputActors){
 			objectOutputStream.writeObject(actor);
 		}
+		// write all of the objects in the outputDirectors to the file.
 		for(Director director : outputDirectors){
 			objectOutputStream.writeObject(director);
 		}
+		// write all of the objects in the outputProducers to the file.
 		for(Producer producer : outputProducers){
 			objectOutputStream.writeObject(producer);
 		}

@@ -10,24 +10,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Project #3
- * CS 2334, Section ******
- * *** 02-05-2016 ***
+ * Project #4
+ * CS 2334, Section 013
+ * 04 - 21 - 2016
+ * @author Carson Hawkins, Daniel Schon, and Eric Morales
  * <P>
- * This is the MovieDataBase class of Project3. 
+ * This is the MovieDataBase class of Project4. 
  * </P>
  * @version 1.0
  */
-public class MovieDataBase extends Movie implements Serializable
-{
-	/**
-	 * 
-	 */
+public class MovieDataBase extends Movie implements Serializable{
+	/** The long variable made by java for the serialization */
 	private static final long serialVersionUID = -5949244929456781510L;
-
+	/** An ArrayList of movies, that will be used to hold the movies in the database */
 	private ArrayList<Movie> movieList = new ArrayList<>();
-	
-
+	/** An ArrayList of Strings, that will be used to hold the titles of the movies */
 	private ArrayList<String> movieTitles = new ArrayList<>();
 	
 	/*
@@ -75,12 +72,8 @@ public class MovieDataBase extends Movie implements Serializable
 	 */
 	public ArrayList<String> movieDataSearcher(String [] questions) throws IOException
 	{
-
 		movieTitles = new ArrayList<String>(readTitles(movieList));
-
 		ArrayList<String> moviesFound = new ArrayList<String>();
-		
-		//TODO Needs to be modified to work with the new way of searching for movies. 
 
 		Movie movieTitle = new Movie(questions[4]);
 		//If the user want to do a specific search it will direct the program here. 
@@ -113,13 +106,20 @@ public class MovieDataBase extends Movie implements Serializable
 
 		return moviesFound;
 	}
-	
+	/**
+	 * method for writing out an object to an IO file
+	 * @param aOutputStream : the outputStream which will be used to write the objects
+	 */
 	public void writeObject(ObjectOutputStream aOutputStream) throws IOException 
 	 {
 		 //perform the default serialization for all non-transient, non-static fields
 		 aOutputStream.defaultWriteObject();
 	 }
 	
+	/**
+	 * Method for reading in an object from an IO file
+	 * @param aInputStream :  the input stream used to read in the objects
+	 */
 	public void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		aInputStream.defaultReadObject();
@@ -132,9 +132,6 @@ public class MovieDataBase extends Movie implements Serializable
 		return movieList;
 	}
 	
-	
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////// NOT SURE IF THESE METHODS ARE WRITTEN CORRECTLY.
 	/**
 	 * Load a file and add it to the database
 	 * @param fileName
@@ -146,6 +143,7 @@ public class MovieDataBase extends Movie implements Serializable
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		Object object;
+		// while the next object isnt empty, read the object, cast it to a movie and add it tot he list of movies
 		while(objectInputStream.readObject() != null){
 			object = objectInputStream.readObject();
 			Movie movie = (Movie) object;
@@ -155,10 +153,16 @@ public class MovieDataBase extends Movie implements Serializable
 		return;
 	}
 	
-	
+	/**
+	 * Save a file using object IO to the specified file
+	 * 
+	 * @param fileName : the name of the file being saved to 
+	 * @throws IOException
+	 */
 	public void saveFile(String fileName) throws IOException{
 		FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		// for every movie in movieList, write the object to the file
 		for(Movie movie : movieList){
 			objectOutputStream.writeObject(movie);
 		}

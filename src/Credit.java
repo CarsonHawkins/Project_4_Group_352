@@ -39,7 +39,7 @@ public class Credit implements Serializable{
 		this.makerType = makerType;
 		this.archiveFootage = archiveFootage;
 		this.uncredited = uncredited;
-		this.maker = maker;	}
+		this.setMaker(maker);	}
 	
 	public String toString()
 	{
@@ -82,6 +82,16 @@ public class Credit implements Serializable{
 	public void setMakerType(MakerType makerType)
 	{
 		this.makerType = makerType;
+	}
+
+	public MediaMaker getMaker()
+	{
+		return maker;
+	}
+
+	public void setMaker(MediaMaker maker)
+	{
+		this.maker = maker;
 	}
 
 }

@@ -1,5 +1,3 @@
-import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.Arrays;
 
 import javax.swing.JFileChooser;

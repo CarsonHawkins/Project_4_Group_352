@@ -1,8 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 /**
  * Project #3
@@ -16,6 +12,11 @@ import java.util.LinkedHashMap;
 public class Actor extends MediaMaker
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Actor()
 	{
 		super();

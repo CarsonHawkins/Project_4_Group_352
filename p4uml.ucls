@@ -546,120 +546,119 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="72">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="73" name="seriesCredits"/>      
-      <multiplicity id="74" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="27" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="75">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="49"/>  
-  </nesting>  
-  <association id="76">    
-    <bendpoint x="1379" y="2682"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="77" name="maker"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="73" name="maker"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="79">    
+  <association id="75">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="76" name="seriesCredits"/>      
+      <multiplicity id="77" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="78">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="49"/>  
+  </nesting>  
+  <association id="79">    
+    <bendpoint x="1379" y="2682"/>    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="80" name="maker"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="82">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="25"/>  
   </nesting>  
-  <generalization id="80">    
+  <generalization id="83">    
     <bendpoint x="2320" y="3586"/>    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
-  <association id="81">    
+  <association id="84">    
     <bendpoint x="2841" y="2682"/>    
     <bendpoint x="2299" y="3098"/>    
     <bendpoint x="2299" y="3586"/>    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="82" name="movieDataBase"/>      
-      <multiplicity id="83" minimum="0" maximum="1"/>    
+      <attribute id="85" name="movieDataBase"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="84">    
+  <generalization id="87">    
     <end type="SOURCE" refId="29"/>    
     <end type="TARGET" refId="44"/>  
   </generalization>  
-  <generalization id="85">    
+  <generalization id="88">    
     <end type="SOURCE" refId="37"/>    
     <end type="TARGET" refId="18"/>  
   </generalization>  
-  <association id="86">    
+  <association id="89">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="87" name="movieList"/>      
-      <multiplicity id="88" minimum="0" maximum="2147483647"/>    
+      <attribute id="90" name="movieList"/>      
+      <multiplicity id="91" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="43" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="89">    
+  <generalization id="92">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <nesting id="90">    
+  <nesting id="93">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="23"/>  
   </nesting>  
-  <association id="91">    
+  <association id="94">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="92" name="mediaMakerDataBase"/>      
-      <multiplicity id="93" minimum="0" maximum="1"/>    
+      <attribute id="95" name="mediaMakerDataBase"/>      
+      <multiplicity id="96" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="41" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="94">    
+  <association id="97">    
     <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="95" name="media"/>      
-      <multiplicity id="96" minimum="0" maximum="1"/>    
+      <attribute id="98" name="media"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="97">    
+  <nesting id="100">    
     <end type="SOURCE" refId="27"/>    
     <end type="TARGET" refId="51"/>  
   </nesting>  
-  <association id="98">    
+  <association id="101">    
     <bendpoint x="2249" y="2032"/>    
     <bendpoint x="2249" y="2682"/>    
     <bendpoint x="2320" y="3098"/>    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="99" name="serieses"/>      
-      <multiplicity id="100" minimum="0" maximum="2147483647"/>    
+      <attribute id="102" name="serieses"/>      
+      <multiplicity id="103" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="46" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="101">    
+  <generalization id="104">    
     <end type="SOURCE" refId="34"/>    
     <end type="TARGET" refId="36"/>  
   </generalization>  
-  <generalization id="102">    
+  <generalization id="105">    
     <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="43"/>  
   </generalization>  
-  <association id="103">    
-    <end type="SOURCE" refId="46" navigable="false">      
-      <attribute id="104" name="episodeList"/>      
-      <multiplicity id="105" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="106">    
-    <bendpoint x="2727" y="3586"/>    
-    <end type="SOURCE" refId="19" navigable="false">      
+    <end type="SOURCE" refId="46" navigable="false">      
       <attribute id="107" name="episodeList"/>      
       <multiplicity id="108" minimum="0" maximum="2147483647"/>    
     </end>    
@@ -667,273 +666,274 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="109">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="110" name="movieCredits"/>      
-      <multiplicity id="111" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="27" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="112">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="113" name="displayList"/>      
-      <multiplicity id="114" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="115">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="116" name="model"/>      
-      <multiplicity id="117" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="118">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="7"/>  
-  </nesting>  
-  <generalization id="119">    
-    <end type="SOURCE" refId="30"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <nesting id="120">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="52"/>  
-  </nesting>  
-  <association id="121">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="122" name="series"/>      
-      <multiplicity id="123" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="46" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="124">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="4"/>  
-  </nesting>  
-  <association id="125">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="126" name="maker"/>      
-      <multiplicity id="127" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="128">    
-    <end type="SOURCE" refId="53"/>    
-    <end type="TARGET" refId="11"/>  
-  </nesting>  
-  <association id="129">    
-    <bendpoint x="2706" y="3586"/>    
+    <bendpoint x="2727" y="3586"/>    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="130" name="episodeTitleList"/>      
-      <multiplicity id="131" minimum="0" maximum="2147483647"/>    
+      <attribute id="110" name="episodeList"/>      
+      <multiplicity id="111" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="112">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="113" name="movieCredits"/>      
+      <multiplicity id="114" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="116" name="displayList"/>      
+      <multiplicity id="117" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="119" name="model"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="121">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="7"/>  
+  </nesting>  
+  <generalization id="122">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <nesting id="123">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="52"/>  
+  </nesting>  
+  <association id="124">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="125" name="series"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="127">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="4"/>  
+  </nesting>  
+  <association id="128">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="129" name="maker"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="131">    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
   <association id="132">    
+    <bendpoint x="2706" y="3586"/>    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="133" name="episodeTitleList"/>      
+      <multiplicity id="134" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="135">    
     <bendpoint x="1392" y="946"/>    
     <bendpoint x="1392" y="1452"/>    
     <bendpoint x="1419" y="1742"/>    
     <bendpoint x="1419" y="2032"/>    
     <end type="SOURCE" refId="49" navigable="false">      
-      <attribute id="133" name="itemToEdit"/>      
-      <multiplicity id="134" minimum="0" maximum="1"/>    
+      <attribute id="136" name="itemToEdit"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="135">    
+  <association id="138">    
     <end type="SOURCE" refId="41" navigable="false">      
-      <attribute id="136" name="mediaMakerMap"/>      
-      <multiplicity id="137" minimum="0" maximum="2147483647"/>    
+      <attribute id="139" name="mediaMakerMap"/>      
+      <multiplicity id="140" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="138">    
+  <nesting id="141">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="21"/>  
   </nesting>  
-  <nesting id="139">    
+  <nesting id="142">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="5"/>  
   </nesting>  
-  <nesting id="140">    
+  <nesting id="143">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="33"/>  
   </nesting>  
-  <generalization id="141">    
+  <generalization id="144">    
     <end type="SOURCE" refId="20"/>    
     <end type="TARGET" refId="55"/>  
   </generalization>  
-  <nesting id="142">    
+  <nesting id="145">    
     <end type="SOURCE" refId="27"/>    
     <end type="TARGET" refId="22"/>  
   </nesting>  
-  <generalization id="143">    
+  <generalization id="146">    
     <end type="SOURCE" refId="17"/>    
     <end type="TARGET" refId="27"/>  
   </generalization>  
-  <association id="144">    
+  <association id="147">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="145" name="chartType"/>      
-      <multiplicity id="146" minimum="0" maximum="1"/>    
+      <attribute id="148" name="chartType"/>      
+      <multiplicity id="149" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="23" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="147">    
+  <generalization id="150">    
     <end type="SOURCE" refId="44"/>    
     <end type="TARGET" refId="36"/>  
   </generalization>  
-  <association id="148">    
+  <association id="151">    
     <bendpoint x="2805" y="637"/>    
     <bendpoint x="2805" y="783"/>    
     <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="149" name="selectionView"/>      
-      <multiplicity id="150" minimum="0" maximum="1"/>    
+      <attribute id="152" name="selectionView"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="34" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="151">    
+  <nesting id="154">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="47"/>  
   </nesting>  
-  <association id="152">    
+  <association id="155">    
     <bendpoint x="1684" y="1742"/>    
     <bendpoint x="1684" y="2032"/>    
     <bendpoint x="1684" y="2682"/>    
     <end type="SOURCE" refId="55" navigable="false">      
-      <attribute id="153" name="media"/>      
-      <multiplicity id="154" minimum="0" maximum="1"/>    
+      <attribute id="156" name="media"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="155">    
+  <association id="158">    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="156" name="display"/>      
-      <multiplicity id="157" minimum="0" maximum="1"/>    
+      <attribute id="159" name="display"/>      
+      <multiplicity id="160" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="158">    
+  <generalization id="161">    
     <end type="SOURCE" refId="18"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <association id="159">    
+  <association id="162">    
     <bendpoint x="2297" y="1452"/>    
     <bendpoint x="2297" y="1742"/>    
     <end type="SOURCE" refId="34" navigable="false">      
-      <attribute id="160" name="model"/>      
-      <multiplicity id="161" minimum="0" maximum="1"/>    
+      <attribute id="163" name="model"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="162">    
+  <association id="165">    
     <end type="SOURCE" refId="49" navigable="false">      
-      <attribute id="163" name="entryView"/>      
-      <multiplicity id="164" minimum="0" maximum="1"/>    
+      <attribute id="166" name="entryView"/>      
+      <multiplicity id="167" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="44" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="165">    
+  <generalization id="168">    
     <end type="SOURCE" refId="50"/>    
     <end type="TARGET" refId="55"/>  
   </generalization>  
-  <generalization id="166">    
+  <generalization id="169">    
     <end type="SOURCE" refId="55"/>    
     <end type="TARGET" refId="44"/>  
   </generalization>  
-  <association id="167">    
+  <association id="170">    
     <bendpoint x="2862" y="2682"/>    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="168" name="seriesDataBase"/>      
-      <multiplicity id="169" minimum="0" maximum="1"/>    
+      <attribute id="171" name="seriesDataBase"/>      
+      <multiplicity id="172" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="170">    
+  <association id="173">    
     <bendpoint x="2175" y="783"/>    
     <end type="SOURCE" refId="48" navigable="false">      
-      <attribute id="171" name="entryView"/>      
-      <multiplicity id="172" minimum="0" maximum="1"/>    
+      <attribute id="174" name="entryView"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="44" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="173">    
+  <generalization id="176">    
     <end type="SOURCE" refId="43"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
-  <association id="174">    
+  <association id="177">    
     <bendpoint x="2826" y="637"/>    
     <bendpoint x="2826" y="783"/>    
     <bendpoint x="2826" y="946"/>    
     <bendpoint x="2826" y="1452"/>    
     <bendpoint x="2826" y="1742"/>    
     <end type="SOURCE" refId="53" navigable="false">      
-      <attribute id="175" name="model"/>      
-      <multiplicity id="176" minimum="0" maximum="1"/>    
+      <attribute id="178" name="model"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="177">    
+  <nesting id="180">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="48"/>  
   </nesting>  
-  <nesting id="178">    
+  <nesting id="181">    
     <end type="SOURCE" refId="53"/>    
     <end type="TARGET" refId="32"/>  
   </nesting>  
-  <nesting id="179">    
+  <nesting id="182">    
     <end type="SOURCE" refId="34"/>    
     <end type="TARGET" refId="54"/>  
   </nesting>  
-  <generalization id="180">    
+  <generalization id="183">    
     <end type="SOURCE" refId="46"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
-  <generalization id="181">    
+  <generalization id="184">    
     <bendpoint x="1398" y="1742"/>    
     <bendpoint x="1413" y="1452"/>    
     <bendpoint x="1413" y="946"/>    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="36"/>  
   </generalization>  
-  <association id="182">    
+  <association id="185">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="183" name="seriesTitleList"/>      
-      <multiplicity id="184" minimum="0" maximum="2147483647"/>    
+      <attribute id="186" name="seriesTitleList"/>      
+      <multiplicity id="187" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="46" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="185">    
-    <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="186" name="makerType"/>      
-      <multiplicity id="187" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="51" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="188">    
     <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="189" name="maker"/>      
+      <attribute id="189" name="makerType"/>      
       <multiplicity id="190" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
+    <end type="TARGET" refId="51" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

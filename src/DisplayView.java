@@ -1,9 +1,6 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JFrame;
-import javax.xml.ws.handler.MessageContext;
-
 
 /**
  * A view that holds a pie chart or histogram for a maker

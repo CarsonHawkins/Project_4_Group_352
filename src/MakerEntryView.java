@@ -9,8 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+/**
+ * allows the user to enter data about a mediamaker
+ * @author Daniel Schon
+ *
+ */
 public class MakerEntryView extends DataEntryView
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JPanel panel;
 	JLabel firstNameLabel,
 		   lastNameLabel,

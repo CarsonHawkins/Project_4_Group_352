@@ -1,4 +1,3 @@
-import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,14 +5,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.junit.Test;
-
 public class CreditTest { 
 
 	public static void main(String[] args)
 	{
 	Movie m1 = new Movie("Jurrasic Park", "1999");
-	Movie m2 = new Movie("Forriest Gump", "1994");
 	
 	Credit c1 = new Credit(m1, Credit.MediaType.EPISODE, Credit.MakerType.ACTOR, "","", new MediaMaker());
 	System.out.println(c1.toString());

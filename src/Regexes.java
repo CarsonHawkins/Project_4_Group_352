@@ -1,4 +1,9 @@
 
+/**
+ * Regular Expressions used for text parsing
+ * @author Daniel Schon
+ *
+ */
 public class Regexes 
 {
 	/** Matches on a single date of 4 numbers (or ?): xxxx */

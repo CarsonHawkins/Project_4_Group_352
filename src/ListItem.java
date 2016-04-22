@@ -5,7 +5,7 @@ import java.io.ObjectOutputStream;
 
 /**
  * Represents an item that could be displayed in the SelectView (Media or Maker)
- * @author dlsch
+ * @author Daniel Schon
  *
  */
 public abstract class ListItem implements Comparable<ListItem>

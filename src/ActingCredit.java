@@ -7,6 +7,10 @@
  */
 public class ActingCredit extends Credit{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String role;
 	private String billing;
 	

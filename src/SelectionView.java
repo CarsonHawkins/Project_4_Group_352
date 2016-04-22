@@ -275,7 +275,7 @@ public class SelectionView extends View
 							   s.isProducersSelected());
 		
 		boolean enableDisplays = false;
-		if (getSelectedItems().length > 0)
+		if (model.displayList.size() > 0 && getSelectedItems().length > 0)
 		{
 			for (ListItem item : getSelectedItems())
 			{

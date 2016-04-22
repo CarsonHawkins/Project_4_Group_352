@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -142,13 +143,22 @@ public class MovieDataBase extends Movie implements Serializable{
 	{
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-		Object object;
+		Object object = null;
 		// while the next object isnt empty, read the object, cast it to a movie and add it tot he list of movies
-		while(objectInputStream.readObject() != null){
-			object = objectInputStream.readObject();
-			Movie movie = (Movie) object;
-			movieList.add(movie);
+		try
+		{
+			while (true)
+			{
+				object = objectInputStream.readObject();
+				Movie movie = (Movie) object;
+				movieList.add(movie);
+			}
 		}
+		catch(EOFException e)
+		{
+			//this supposed to happen I guess
+		}
+			
 		objectInputStream.close();
 		return;
 	}

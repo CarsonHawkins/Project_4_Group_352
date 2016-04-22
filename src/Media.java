@@ -5,5 +5,10 @@
  *
  */
 public abstract class Media extends ListItem{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 }

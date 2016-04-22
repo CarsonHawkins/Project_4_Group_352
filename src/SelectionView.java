@@ -20,7 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -33,6 +32,11 @@ public class SelectionView extends View
 	/////// Only exists for testing purposes
 	//public static void main(String[] args){new SelectionView();};
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** The panel that contains the other panels */
 	JPanel containerPanel,
 	/** The panel that contains the controls */
@@ -452,7 +456,7 @@ public class SelectionView extends View
 	{
 		private static final long serialVersionUID = 1L;
 
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 		{
 			Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		    setText(((ListItem) value).getDisplayText()); // where getValue is some method you implement that gets the text you want to render for the component

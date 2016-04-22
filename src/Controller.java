@@ -4,6 +4,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 
+/**This class will interact with the view to have the listeners see what changes the user has created. Once it
+ * finds the changes, it will update the MediaModel to appropriately fit what the user is expecting. The controller also 
+ * sets up the Model, the view and registers the listeners. 
+ * 
+ * @author Eric_Morales
+ *
+ */
 public class Controller {
 	
 	private MediaModel model; 
@@ -394,7 +401,8 @@ public class Controller {
 				return; // No model associated yet. Do nothing
 			//Displays the pie chart to the user. 
 			for(ListItem item : selectionView.getSelectedItems())
-				selectionView.showPieChart((MediaMaker) item);
+				if (item instanceof MediaMaker)
+					selectionView.showPieChart((MediaMaker) item);
 			
 		}
 	}
@@ -407,7 +415,8 @@ public class Controller {
 				return; // No model associated yet. Do nothing
 			//Displays the Histogram to the user. 
 			for(ListItem item : selectionView.getSelectedItems())
-				selectionView.showHistogram((MediaMaker) item);			
+				if (item instanceof MediaMaker)
+					selectionView.showHistogram((MediaMaker) item);			
 		}
 	}
 	

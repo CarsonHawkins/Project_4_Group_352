@@ -15,6 +15,11 @@ import java.util.Set;
  */
 public class Movie extends Media 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** movieTitle will hold the name of the title that the user is searching for. */
 	private String movieTitle;
 

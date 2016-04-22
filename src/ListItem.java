@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 
 /**
@@ -8,8 +9,13 @@ import java.io.ObjectOutputStream;
  * @author Daniel Schon
  *
  */
-public abstract class ListItem implements Comparable<ListItem>
+public abstract class ListItem implements Comparable<ListItem>, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Get the string that represents the object as seen in the gui
 	 * @return

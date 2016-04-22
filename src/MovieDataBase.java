@@ -150,8 +150,11 @@ public class MovieDataBase extends Movie implements Serializable{
 			while (true)
 			{
 				object = objectInputStream.readObject();
-				Movie movie = (Movie) object;
-				movieList.add(movie);
+				if (object instanceof Movie)
+				{
+					Movie movie = (Movie) object;
+					movieList.add(movie);
+				}
 			}
 		}
 		catch(EOFException e)

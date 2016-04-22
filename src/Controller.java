@@ -76,7 +76,6 @@ public class Controller {
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new FileSelector();
 			//Gets the name of the file. 
 			String[] filesSelected = FileSelector.showOpenDialog();
 			
@@ -84,21 +83,11 @@ public class Controller {
 			{
 				try
 				{
-					new FileTypeSelector();
-					
-					//Gets the file type to sort correctly.
-					String fileType = FileTypeSelector.showDialog(fileName);
-					
 					//Determines the type to load to the appropriate location. 
-					if (fileType.equals("Movies"))
 						model.loadFileMovie(fileName);
-					if (fileType.equals("TV Series"))
 						model.loadFileSeries(fileName);
-					if (fileType.equals("Actors"))
 						model.loadFileActor(fileName);
-					if (fileType.equals("Directors"))
 						model.loadFileDirector(fileName);
-					if (fileType.equals("Producers"))
 						model.loadFileProducer(fileName);
 				}
 				catch (IOException | ClassNotFoundException ex)

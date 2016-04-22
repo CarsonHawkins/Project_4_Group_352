@@ -233,7 +233,6 @@ public class SelectionView extends View
 		this.setJMenuBar(menuBar);
 		this.add(containerPanel);
 		this.setVisible(true);
-
 	}
 	
 	/**
@@ -244,6 +243,7 @@ public class SelectionView extends View
 	{
 		this.model = m;
 		itemList.setListData(m.displayList.toArray(new ListItem[m.displayList.size()]));
+		this.actionPerformed(new ActionEvent(this, 0, EventMessages.DATA_CHANGED));
 	}
 	
 	@Override
@@ -265,14 +265,41 @@ public class SelectionView extends View
 		editClearItem.setEnabled(enableButtons);
 		editClearAllItem.setEnabled(enableButtons);
 		
+		if (!enableButtons)
+		{
+			fileSaveItem.setToolTipText("No items to save");
+			fileExportItem.setToolTipText("No items to export");
+			editEditItem.setToolTipText("No items to edit");
+			editDeleteItem.setToolTipText("No items to delete");
+			editClearItem.setToolTipText("No items to clear");
+			editClearAllItem.setToolTipText("No items to clear");
+		}
+		else
+		{
+			fileSaveItem.setToolTipText("");
+			fileExportItem.setToolTipText("");
+			editEditItem.setToolTipText("");
+			editDeleteItem.setToolTipText("");
+			editClearItem.setToolTipText("");
+			editClearAllItem.setToolTipText("");
+		
+		}
+		
 		// Enables the add button only if an appropriate thing is selected
 		RadioButtonStates s = getButtonStates();
-		editAddItem.setEnabled(s.isMoviesSelected() ||
+		boolean enableAddButton = s.isMoviesSelected() ||
 							   s.isSeriesSelected() ||
 							   s.isEpisodesSelected() ||
 							   s.isActorsSelected() ||
 							   s.isDirectorsSelected() ||
-							   s.isProducersSelected());
+							   s.isProducersSelected();
+
+		editAddItem.setEnabled(enableAddButton);
+		if (!enableAddButton)
+			editAddItem.setToolTipText("Cannot add selected type");
+		else
+			editAddItem.setToolTipText("");
+		
 		
 		boolean enableDisplays = false;
 		if (model.displayList.size() > 0 && getSelectedItems().length > 0)
@@ -286,6 +313,16 @@ public class SelectionView extends View
 		
 		displayHistogramItem.setEnabled(enableDisplays);
 		displayPieChartItem.setEnabled(enableDisplays);
+		if (!enableDisplays)
+		{
+			displayHistogramItem.setToolTipText("Cannot display histogram for Media type");
+			displayPieChartItem.setToolTipText("Cannot display pie chart for Media type");
+		}
+		else
+		{
+			displayHistogramItem.setToolTipText("");
+			displayPieChartItem.setToolTipText("");
+		}
 		
 		itemList.setListData(model.displayList.toArray(new ListItem[model.displayList.size()]));
 

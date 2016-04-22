@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -241,9 +240,6 @@ public class TVDataBase implements Serializable
  		 
  		while (containsTitle >= 0) 
  		{  
- 			//containsTitle = specificSearch(movieTitle, containsTitle, fileName, movieTitleSearch); 
- 			Series currentTitle = seriesList.get(containsTitle); 
- 			
 			seriesTitleSearch.remove(containsTitle); 
  			containsTitle = Collections.binarySearch(seriesTitleSearch, (seriesTitle.toString()).toLowerCase()); 
  			++count; 
@@ -269,7 +265,7 @@ public class TVDataBase implements Serializable
 		{  
 			  
 			//Spits all of the year inputs and stores them into an ArrayList.   
-			ArrayList<String> parsed = new ArrayList(Arrays.asList(seriesYear.split(", ")));  
+			ArrayList<String> parsed = new ArrayList<String>(Arrays.asList(seriesYear.split(", ")));  
 		  
 			//The loop is made to be able to reiterate the amount of year the user input. If user inputed 3 years, it loops three times.   
 			for (int index = 0; index < parsed.size(); ++index) 
@@ -306,7 +302,7 @@ public class TVDataBase implements Serializable
 		else if (seriesYear.contains("-")) 
 		{  
 			//Spits the two years and stores the input into an ArrayList.   
-			ArrayList<String> parsed = new ArrayList(Arrays.asList(seriesYear.split("-")));  
+			ArrayList<String> parsed = new ArrayList<String>(Arrays.asList(seriesYear.split("-")));  
 			//Converts the two years from String into int. 
 			System.out.println(parsed.get(0));
 			int firstYear = Integer.parseInt(parsed.get(0));  

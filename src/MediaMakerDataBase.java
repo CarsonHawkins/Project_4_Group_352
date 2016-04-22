@@ -1,4 +1,3 @@
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -9,10 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -291,8 +288,6 @@ public class MediaMakerDataBase implements Serializable
 			{
 				nextLine = nextLine.replaceAll("\t", "");
 				
-				String mdbActorRole = "";
-				String mdbBilling = "";
 				String mdbCreditMovie = "";
 				String mdbReleaseYear = "";
 				String mdbMediaType = "";

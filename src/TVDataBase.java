@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -438,8 +439,10 @@ public class TVDataBase implements Serializable
 		FileInputStream fileInputStream = new FileInputStream(fileName);
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		Object object;
-		// while the nextObject isnt null, use instanceof to determine whether it is episode or series and add it to the list
-		while(objectInputStream.readObject() != null){
+		
+		try{
+		// while the there is a line to read, use instanceof to determine whether it is episode or series and add it to the list
+		while(true){
 			object = objectInputStream.readObject();
 			if(object instanceof TVEpisode){
 				TVEpisode episode = (TVEpisode) object;
@@ -450,6 +453,9 @@ public class TVDataBase implements Serializable
 				seriesList.add(series);
 			}
 		}
+	}catch(EOFException e){
+		
+	}
 		objectInputStream.close();
 		return;
 	}

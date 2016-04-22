@@ -1,5 +1,6 @@
 import java.awt.List;
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -525,7 +526,8 @@ public class MediaMakerDataBase implements Serializable
 		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 		Object object;
 		// use instance of to determine the object type to make and add it to its appropriate list
-		while(objectInputStream.readObject() != null){
+		try{
+		while(true){
 			object = objectInputStream.readObject();
 			if(object instanceof Actor){
 				Actor actor = (Actor) object;
@@ -540,6 +542,9 @@ public class MediaMakerDataBase implements Serializable
 				mediaMakerMap.put(producer.toString(), producer);
 			}
 		}
+	}catch(EOFException e){
+		
+	}
 		objectInputStream.close();
 		return;
 	}

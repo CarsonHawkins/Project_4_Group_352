@@ -1,5 +1,10 @@
 import java.awt.event.ActionListener;
 
+/**
+ * The abstract class for any view that is used to enter data
+ * @author Daniel Schon
+ *
+ */
 public abstract class DataEntryView extends View
 {
 

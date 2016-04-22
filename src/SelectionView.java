@@ -25,11 +25,16 @@ import javax.swing.ListSelectionModel;
 
 /**
  * The main view of the project
- * @author dlsch
+ * @author Daniel Schon
  *
  */
 public class SelectionView extends View
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/////// Only exists for testing purposes
 	//public static void main(String[] args){new SelectionView();};
 	
@@ -232,6 +237,10 @@ public class SelectionView extends View
 
 	}
 	
+	/**
+	 * sets model
+	 * @param m
+	 */
 	public void setModel(MediaModel m)
 	{
 		this.model = m;
@@ -239,6 +248,10 @@ public class SelectionView extends View
 	}
 	
 	@Override
+	/**	 * 
+	 * called when an action is performed
+	 * 
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (model == null)
@@ -261,6 +274,19 @@ public class SelectionView extends View
 							   s.isActorsSelected() ||
 							   s.isDirectorsSelected() ||
 							   s.isProducersSelected());
+		
+		boolean enableDisplays = false;
+		if (getSelectedItems().length > 0)
+		{
+			for (ListItem item : getSelectedItems())
+			{
+				if (item instanceof MediaMaker)
+					enableDisplays = true;
+			}
+		}
+		
+		displayHistogramItem.setEnabled(enableDisplays);
+		displayPieChartItem.setEnabled(enableDisplays);
 		
 		itemList.setListData(model.displayList.toArray(new ListItem[model.displayList.size()]));
 
@@ -452,7 +478,7 @@ public class SelectionView extends View
 	{
 		private static final long serialVersionUID = 1L;
 
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus)
 		{
 			Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		    setText(((ListItem) value).getDisplayText()); // where getValue is some method you implement that gets the text you want to render for the component

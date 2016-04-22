@@ -5,6 +5,11 @@ import javax.swing.JFrame;
 import javax.xml.ws.handler.MessageContext;
 
 
+/**
+ * A view that holds a pie chart or histogram for a maker
+ * @author Daniel Schon
+ *
+ */
 public class DisplayView extends View
 {
 	/**

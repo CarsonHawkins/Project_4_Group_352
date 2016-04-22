@@ -5,8 +5,8 @@ import java.util.Arrays;
 import javax.swing.JFileChooser;
 
 /**
- * Essentially a JFileChooser wrapped in a view
- *
+ * Wrapper class that makes file selecting easier
+ * @author Daniel Schon
  */
 public class FileSelector
 {

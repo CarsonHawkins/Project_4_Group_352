@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 /**
  * The main driver class. Kicks it all off
- * @author dlsch
+ * @author Daniel Schon
  *
  */
 public class Driver

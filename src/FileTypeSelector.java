@@ -2,8 +2,18 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Wrapper class that makers selecting a file type easier
+ * @author Daniel Schon
+ *
+ */
 public class FileTypeSelector
 {
+	/**
+	 * Shows the dialog and returns the user's answer
+	 * @param fileName
+	 * @return
+	 */
 	public static String showDialog(String fileName)
 	{
 		String[] options = {"Movies", "TV Series", "Actors", "Producers", "Directors"};

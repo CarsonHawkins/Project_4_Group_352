@@ -7,6 +7,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+/**
+ * Entry view for an episode
+ * @author Daniel Schon
+ *
+ */
 public class EpisodeEntryView extends MediaEntryView
 {
 	/**
@@ -28,6 +33,7 @@ public class EpisodeEntryView extends MediaEntryView
 	
 	/** a list of serieses to choose from*/
 	private Series[] serieses = new Series[]{};
+	/** a reference to the media model */
 	private MediaModel model;
 			 
 	/** initializes the components */
@@ -65,7 +71,9 @@ public class EpisodeEntryView extends MediaEntryView
 		this.setVisible(true);
 	}
 	
-	/** constructor for episodeentryview */
+	/** 
+	 * constructor for episodeentryview 
+	 */
 	public EpisodeEntryView(MediaModel model)
 	{
 		super();
@@ -86,7 +94,9 @@ public class EpisodeEntryView extends MediaEntryView
 		initComponents();
 	}
 	
-	/** creates an instance of movie according to the entered data */
+	/** 
+	 * creates an instance of movie according to the entered data 
+	 */
 	@Override
 	public TVEpisode instantiate()
 	{

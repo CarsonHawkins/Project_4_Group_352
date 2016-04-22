@@ -3,10 +3,19 @@ import java.awt.event.ActionListener;
 
 import org.junit.Test;
 
+/**
+ * A unit test for the makerentryview
+ * @author Daniel Schon
+ *
+ */
 public class TestMakerEntryView
 {
 
 	@Test
+	/**	 * 
+	 * runs the test
+	 * 
+	 */
 	public void test()
 	{
 		MakerEntryView mev = new MakerEntryView(Actor.class, "first", "last", "III");

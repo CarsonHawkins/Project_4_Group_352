@@ -20,6 +20,10 @@ public class SeriesEntryView extends MediaEntryView
 			  endDateArea;
 			 
 	@Override
+	/**	 * 
+	 * initializes the components
+	 * 
+	 */
 	public void initComponents()
 	{
 		super.initComponents();
@@ -76,6 +80,9 @@ public class SeriesEntryView extends MediaEntryView
 	}
 
 	@Override
+	/**	 * instantiates the series object
+	 * @Return the series
+	 */
 	public Series instantiate()
 	{
 		return new Series(titleArea.getText(), 
@@ -84,16 +91,28 @@ public class SeriesEntryView extends MediaEntryView
 						);
 		}
 	
+	/**
+	 * gets the series title
+	 * @return
+	 */
 	public String getSeriesTitle()
 	{
 		return titleArea.getText();
 	}
 
+	/**
+	 * gets the start date
+	 * @return
+	 */
 	public String getStartDate()
 	{
 		return startDateArea.getText();
 	}
 
+	/**
+	 * gets the end date
+	 * @return
+	 */
 	public String getEndDate()
 	{
 		return endDateArea.getText();

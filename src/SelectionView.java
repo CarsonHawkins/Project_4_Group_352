@@ -29,11 +29,6 @@ import javax.swing.ListSelectionModel;
  */
 public class SelectionView extends View
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	/////// Only exists for testing purposes
 	//public static void main(String[] args){new SelectionView();};
 	

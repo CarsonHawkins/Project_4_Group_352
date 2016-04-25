@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * The main view of the project
@@ -221,6 +223,7 @@ public class SelectionView extends View
 		itemList = new JList<ListItem>(new ListItem[0]);
 		itemList.setCellRenderer(new MyRenderer());
 		itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		
 		scrollPane = new JScrollPane(itemList);
 		scrollPane.setPreferredSize(new Dimension(500, 580));
 		
@@ -302,9 +305,9 @@ public class SelectionView extends View
 		
 		
 		boolean enableDisplays = false;
-		if (model.displayList.size() > 0 && getSelectedItems().length > 0)
+		if (model.displayList.size() > 0 )
 		{
-			for (ListItem item : getSelectedItems())
+			for (ListItem item : model.displayList)
 			{
 				if (item instanceof MediaMaker)
 					enableDisplays = true;
@@ -505,6 +508,7 @@ public class SelectionView extends View
 	{
 		dataLabel.setText(labelText);
 	}
+	
 	
 	/**
 	 * Custom renderer for the JList so it diplays getDisplayText instead of ToString,
